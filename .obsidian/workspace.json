@@ -1,0 +1,221 @@
+{
+  "main": {
+    "id": "994b7a2e537752f6",
+    "type": "split",
+    "children": [
+      {
+        "id": "f40025b3dfe0cc5e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6c8a369cf67bf424",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "쿠버네티스 사전(CKA)/9. 네트워크/10. 쿠버네티스에서의 DNS.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "10. 쿠버네티스에서의 DNS"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "50094ce4c62a12fb",
+    "type": "split",
+    "children": [
+      {
+        "id": "5cecad4b65402772",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c80791878d872363",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "fcac6f1bd0d7907b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "Flannel",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "c171b6b16b348ef4",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 254.5
+  },
+  "right": {
+    "id": "ebd9d345193a5f5b",
+    "type": "split",
+    "children": [
+      {
+        "id": "34b6782367ae37eb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3e838af5e0dfe8c4",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "쿠버네티스 사전(CKA)/9. 네트워크/10. 쿠버네티스에서의 DNS.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "10. 쿠버네티스에서의 DNS 의 백링크"
+            }
+          },
+          {
+            "id": "b306a99031c341ea",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Welcome.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Welcome"
+            }
+          },
+          {
+            "id": "eb587315d10b1f0e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "10e2dc523c5370f2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Welcome.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Welcome"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "6c8a369cf67bf424",
+  "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/9. 네트워크/9. 서비스 네트워킹.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/10. 쿠버네티스에서의 DNS.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/8. IP 주소 관리(IPAM).md",
+    "쿠버네티스 사전(CKA)/7. 보안/14. 네트워크 정책(NetworkPolicy).md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/7. Weave CNI 플러그인.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/6. 쿠버네티스 파드 네트워킹.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/5. 컨테이너 네트워크 인터페이스(CNI).md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/4. 스토리지 클래스(Storage Classes).md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/2. 컨테이너 스토리지 인터페이스 및 볼륨 관리.md",
+    "쿠버네티스 사전(CKA)/7. 보안/15. CRD(Custom Resource Definitions).md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/4. Docker Networking.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/3. 네트워크 네임스페이스.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/2. DNS, CoreDNS.md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/1. 도커 스토리지와 파일 시스템.md",
+    "쿠버네티스 사전(CKA)/7. 보안/13. Security Context.md",
+    "쿠버네티스 사전(CKA)/7. 보안/12. 이미지 보안.md",
+    "쿠버네티스 사전(CKA)/7. 보안/11. 서비스 어카운트.md",
+    "쿠버네티스 사전(CKA)/7. 보안/10. RBAC.md",
+    "쿠버네티스 사전(CKA)/7. 보안/8. 쿠버네티스 API.md",
+    "쿠버네티스 사전(CKA)/7. 보안/9. 인가(Authorization).md",
+    "쿠버네티스 사전(CKA)/7. 보안/7. KubeConfig.md",
+    "쿠버네티스 사전(CKA)/9. 네트워크/1. 라우터와 게이트웨이.md",
+    "이미지.md",
+    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
+    "사진/화면 캡처 2025-05-16 131414.png",
+    "사진/Pasted image 20250516131715.png",
+    "사진/화면 캡처 2025-05-16 104320.png",
+    "쿠버네티스 사전(CKA)/9. 네트워크",
+    "쿠버네티스 사전(CKA)/무제.md",
+    "쿠버네티스 사전(CKA)/8. 스토리지",
+    "사진/화면 캡처 2025-05-16 100549.png",
+    "사진/Pasted image 20250516094220.png",
+    "사진/Pasted image 20250516094513.png",
+    "사진/Pasted image 20250516094509.png",
+    "사진/Pasted image 20250515174633.png",
+    "무제.canvas",
+    "사진/화면 캡처 2025-05-15 165314.png",
+    "쿠버네티스 사전(CKA)/기타",
+    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리",
+    "쿠버네티스 사전(CKA)/4. 로깅, 모니터링",
+    "쿠버네티스 사전(CKA)/3. 스케줄링",
+    "쿠버네티스 사전(CKA)/2. 쿠버네티스 리소스",
+    "쿠버네티스 사전(CKA)/1. 쿠버네티스 클러스터",
+    "쿠버네티스 사전(CKA)/7. 보안",
+    "쿠버네티스 사전(CKA)/6. 클러스터 유지관리",
+    "사진/화면 캡처 2025-05-15 133248.png"
+  ]
+}
