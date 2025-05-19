@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/12. Helm/5. Helm CLI 활용 가이드.md",
+                "file": "쿠버네티스 사전(CKA)/12. Helm/4. Helm 차트.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "5. Helm CLI 활용 가이드"
+              "title": "4. Helm 차트"
             }
           }
         ]
@@ -171,14 +171,15 @@
   },
   "active": "6c8a369cf67bf424",
   "lastOpenFiles": [
-    "쿠버네티스 사전(CKA)/12. Helm/4. Helm 차트.md",
+    "쿠버네티스 사전(CKA)/12. Helm/6. 차트 매개변수 사용자 지정.md",
     "쿠버네티스 사전(CKA)/12. Helm/5. Helm CLI 활용 가이드.md",
+    "쿠버네티스 사전(CKA)/12. Helm/무제",
+    "쿠버네티스 사전(CKA)/12. Helm/4. Helm 차트.md",
     "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "무제.md",
     "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치/1. kubeadm을 사용한 쿠버네티스 클러스터 부트스트랩.md",
-    "쿠버네티스 사전(CKA)/12. Helm/무제",
     "쿠버네티스 사전(CKA)/12. Helm",
     "쿠버네티스 사전(CKA)/10. 클러스터 설계/3. etcd의 고가용성 구성.md",
     "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치",
@@ -201,7 +202,6 @@
     "쿠버네티스 사전(CKA)/8. 스토리지/1. 도커 스토리지와 파일 시스템.md",
     "쿠버네티스 사전(CKA)/8. 스토리지/2. 컨테이너 스토리지 인터페이스 및 볼륨 관리.md",
     "쿠버네티스 사전(CKA)/9. 네트워크/2. DNS, CoreDNS.md",
-    "쿠버네티스 사전(CKA)/2. 쿠버네티스 리소스/1. 주요 쿠버네티스 리소스.md",
     "무제.canvas",
     "사진/화면 캡처 2025-05-16 131414.png",
     "사진/Pasted image 20250516131715.png",
