@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
+                "file": "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1. Helm 소개"
+              "title": "3. Helm 구성 요소"
             }
           }
         ]
@@ -169,8 +169,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6c8a369cf67bf424",
+  "active": "c80791878d872363",
   "lastOpenFiles": [
+    "사진/화면 캡처 2025-05-19 175743.png",
+    "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
@@ -179,7 +181,6 @@
     "쿠버네티스 사전(CKA)/12. Helm/5. Helm CLI 활용 가이드.md",
     "쿠버네티스 사전(CKA)/12. Helm/무제",
     "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
-    "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "무제.md",
     "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치/1. kubeadm을 사용한 쿠버네티스 클러스터 부트스트랩.md",
     "쿠버네티스 사전(CKA)/12. Helm",
@@ -201,7 +202,6 @@
     "쿠버네티스 사전(CKA)/7. 보안/7. KubeConfig.md",
     "쿠버네티스 사전(CKA)/8. 스토리지/4. 스토리지 클래스(Storage Classes).md",
     "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
-    "쿠버네티스 사전(CKA)/8. 스토리지/1. 도커 스토리지와 파일 시스템.md",
     "무제.canvas",
     "사진/화면 캡처 2025-05-16 131414.png",
     "사진/Pasted image 20250516131715.png",
