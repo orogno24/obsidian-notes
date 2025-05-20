@@ -1,0 +1,258 @@
+
+## 트랜스포머(Transformer)의 개념
+
+### 트랜스포머란?
+
+- Kustomize에서 쿠버네티스 리소스를 수정/변환하는 기능
+- 여러 YAML 파일에 공통된 변경사항을 한 번에 적용
+- 수동으로 각 파일을 편집하는 대신 선언적 방식으로 변경
+
+### 해결하려는 문제
+
+- 여러 리소스에 동일한 레이블, 접두사, 네임스페이스 등 적용
+- 이미지 변경/업데이트
+- 수동 편집의 한계:
+    - 시간 소모적
+    - 오류 발생 가능성 높음
+    - 확장성 부족
+
+## 공통 트랜스포머(Common Transformers)
+
+### 1. commonLabels
+
+- 모든 리소스에 공통 레이블 추가
+- 구성 예시:
+    
+    ```yaml
+    commonLabels:  department: engineering  environment: dev
+    ```
+    
+
+### 2. namePrefix/nameSuffix
+
+- 모든 리소스 이름에 접두사/접미사 추가
+- 구성 예시:
+    
+    ```yaml
+    namePrefix: "kodecloud-"nameSuffix: "-dev"
+    ```
+    
+
+### 3. namespace
+
+- 모든 리소스를 특정 네임스페이스에 배치
+- 구성 예시:
+    
+    ```yaml
+    namespace: debugging
+    ```
+    
+
+### 4. commonAnnotations
+
+- 모든 리소스에 공통 어노테이션 추가
+- 구성 예시:
+    
+    ```yaml
+    commonAnnotations:  logging: verbose  owner: devops-team
+    ```
+    
+
+## 이미지 트랜스포머(Image Transformer)
+
+### 기능
+
+- 컨테이너 이미지 이름 및 태그 변경
+- 특정 이미지를 사용하는 모든 컨테이너에 적용
+
+### 이미지 이름 변경
+
+```yaml
+images:
+  - name: nginx    # 변경할 이미지 이름
+    newName: haproxy   # 새 이미지 이름
+```
+
+### 이미지 태그 변경
+
+```yaml
+images:
+  - name: nginx    # 변경할 이미지 이름
+    newTag: "2.4"   # 새 태그 (문자열로 지정)
+```
+
+### 이미지 이름과 태그 모두 변경
+
+```yaml
+images:
+  - name: nginx    # 변경할 이미지 이름
+    newName: haproxy   # 새 이미지 이름
+    newTag: "2.4"   # 새 태그
+```
+
+## 트랜스포머 적용 범위
+
+### 루트 kustomization.yaml에 적용
+
+- 해당 kustomization.yaml이 관리하는 모든 리소스에 적용
+- 전체 애플리케이션에 공통 설정을 적용할 때 사용
+
+### 하위 디렉토리 kustomization.yaml에 적용
+
+- 해당 디렉토리 내 리소스에만 적용
+- 특정 구성 요소/서비스에만 변경을 적용할 때 사용
+
+## 데모 예시
+
+### 프로젝트 구조
+
+```
+k8s/
+├── kustomization.yaml    # 루트 파일
+├── api/
+│   ├── kustomization.yaml
+│   ├── api-depl.yaml
+│   └── api-service.yaml
+└── db/
+    ├── kustomization.yaml
+    ├── db-depl.yaml
+    ├── db-service.yaml
+    └── db-config.yaml
+```
+
+### 공통 레이블 추가
+
+**루트 kustomization.yaml**:
+
+```yaml
+resources:
+  - api
+  - db
+
+commonLabels:
+  department: engineering
+```
+
+**결과**: 모든 리소스에 `department: engineering` 레이블 추가됨
+
+**API 디렉토리 kustomization.yaml**:
+
+```yaml
+resources:
+  - api-depl.yaml
+  - api-service.yaml
+
+commonLabels:
+  feature: api
+```
+
+**결과**: API 리소스에만 `feature: api` 레이블 추가됨
+
+**DB 디렉토리 kustomization.yaml**:
+
+```yaml
+resources:
+  - db-depl.yaml
+  - db-service.yaml
+  - db-config.yaml
+
+commonLabels:
+  feature: db
+```
+
+**결과**: DB 리소스에만 `feature: db` 레이블 추가됨
+
+### 네임스페이스 적용
+
+**루트 kustomization.yaml**:
+
+```yaml
+resources:
+  - api
+  - db
+
+namespace: debugging
+```
+
+**결과**: 모든 리소스가 `debugging` 네임스페이스에 배치됨
+
+### 이름 접두사/접미사 추가
+
+**루트 kustomization.yaml**:
+
+```yaml
+resources:
+  - api
+  - db
+
+namePrefix: "KodeKloud-"
+```
+
+**결과**: 모든 리소스 이름이 `KodeKloud-`로 시작
+
+**API 디렉토리 kustomization.yaml**:
+
+```yaml
+resources:
+  - api-depl.yaml
+  - api-service.yaml
+
+nameSuffix: "-web"
+```
+
+**결과**: API 리소스 이름이 `-web`으로 끝남 (예: `KodeKloud-api-deployment-web`)
+
+**DB 디렉토리 kustomization.yaml**:
+
+```yaml
+resources:
+  - db-depl.yaml
+  - db-service.yaml
+  - db-config.yaml
+
+nameSuffix: "-storage"
+```
+
+**결과**: DB 리소스 이름이 `-storage`로 끝남 (예: `KodeKloud-db-deployment-storage`)
+
+### 이미지 변경
+
+**DB 디렉토리 kustomization.yaml**:
+
+```yaml
+resources:
+  - db-depl.yaml
+  - db-service.yaml
+  - db-config.yaml
+
+images:
+  - name: mongo     # 변경할 이미지 이름
+    newName: postgres
+    newTag: "4.2"   # 문자열로 지정 (중요!)
+```
+
+**결과**: `mongo` 이미지를 사용하는 모든 컨테이너가 `postgres:4.2` 이미지를 사용하도록 변경됨
+
+## 주요 팁과 주의사항
+
+1. **태그는 문자열로 지정**:
+    
+    - 이미지 태그는 반드시 따옴표로 감싸 문자열로 지정
+    - 숫자 형식으로 지정 시 오류 발생 (`4.2` ❌, `"4.2"` ✅)
+2. **변환 범위 고려**:
+    
+    - 전체 애플리케이션에 적용: 루트 kustomization.yaml 사용
+    - 특정 구성 요소만 적용: 해당 디렉토리의 kustomization.yaml 사용
+3. **이미지 변환 시 컨테이너 이름과 혼동 주의**:
+    
+    - `name`은 컨테이너 이름이 아닌 이미지 이름을 지정
+    - 예: `containers.name`(web)과 `images.name`(mongo)은 다른 값
+4. **변환 결과 확인**:
+    
+    ```bash
+    kustomize build k8s/
+    ```
+    
+    - 실제 적용 전 결과 확인 권장
+
+트랜스포머는 Kustomize의 가장 강력한 기능 중 하나로, 여러 쿠버네티스 리소스에 일관된 변경사항을 효율적으로 적용할 수 있게 해줍니다. 특히 환경 간 구성 차이나 표준화된 레이블/어노테이션 적용에 유용합니다.
