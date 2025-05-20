@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Flannel",
+                "query": "resources",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -169,7 +170,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6c8a369cf67bf424",
+  "active": "fcac6f1bd0d7907b",
   "lastOpenFiles": [
     "쿠버네티스 사전(CKA)/13. Kustomize/7. Kustomize 패치(Patch).md",
     "쿠버네티스 사전(CKA)/13. Kustomize/8. Kustomize 오버레이(Overlay).md",
