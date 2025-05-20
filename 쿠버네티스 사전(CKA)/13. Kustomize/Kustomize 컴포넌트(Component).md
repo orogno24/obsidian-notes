@@ -1,0 +1,230 @@
+### 컴포넌트란?
+
+- 재사용 가능한 구성 로직을 정의하는 Kustomize 기능
+- 여러 오버레이에 포함될 수 있는 독립적인 구성 블록
+- 선택적 기능을 특정 환경에만 적용할 때 유용
+
+### 컴포넌트가 필요한 이유
+
+- **문제 상황**: 일부 오버레이에만 필요한 기능
+    - 기본(base) 디렉토리에 넣으면: 모든 오버레이에 적용됨 (원하지 않는 결과)
+    - 개별 오버레이에 복사하면: 중복 코드 발생, 유지보수 어려움
+- **해결책**: 컴포넌트로 정의하여 필요한 오버레이에만 포함
+
+### 컴포넌트의 본질
+
+- 특정 기능을 위한 모든 쿠버네티스 구성의 모음
+- 리소스(Deployment, Service 등)
+- 패치(Patch)
+- ConfigMap, Secret 등
+
+## 컴포넌트 활용 사례
+
+### 애플리케이션 배포 시나리오
+
+세 가지 배포 유형:
+
+1. **개발(Development)**: 개발자용
+2. **프리미엄(Premium)**: 프리미엄 고객용
+3. **셀프 호스팅(Self-hosted)**: 고객 자체 호스팅용
+
+### 선택적 기능 요구사항
+
+1. **캐싱 기능** (Redis 사용)
+    - 프리미엄과 셀프 호스팅에만 필요
+    - 개발 환경에는 불필요
+    
+2. **외부 데이터베이스** (PostgreSQL 사용)
+    - 개발과 프리미엄에만 필요
+    - 셀프 호스팅에는 불필요
+
+### 구현 방식 비교
+
+**컴포넌트 없이**:
+
+- 각 오버레이에 중복 코드 작성
+- 유지보수 이슈 발생
+
+**컴포넌트 사용**:
+
+- 기능별 컴포넌트 생성
+- 필요한 오버레이에서 컴포넌트 임포트
+
+## 컴포넌트 구현 방법
+
+### 프로젝트 디렉토리 구조
+
+```
+k8s/
+├── base/                  # 기본 구성
+│   ├── kustomization.yaml
+│   └── api-depl.yaml
+│
+├── components/            # 컴포넌트 모음
+│   ├── caching/           # 캐싱 컴포넌트
+│   │   ├── kustomization.yaml
+│   │   ├── redis-depl.yaml
+│   │   └── deployment-patch.yaml
+│   │
+│   └── database/          # 데이터베이스 컴포넌트
+│       ├── kustomization.yaml
+│       ├── postgres-depl.yaml
+│       └── deployment-patch.yaml
+│
+└── overlays/              # 환경별 오버레이
+    ├── dev/               # 개발 환경
+    │   └── kustomization.yaml
+    ├── premium/           # 프리미엄 환경
+    │   └── kustomization.yaml
+    └── standalone/        # 셀프 호스팅 환경
+        └── kustomization.yaml
+```
+
+### 컴포넌트 구성 파일 설명
+
+#### 1. 컴포넌트 kustomization.yaml
+
+```yaml
+# components/database/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1alpha1  # 주의: 특별한 버전
+kind: Component  # 주의: Component 유형 사용
+
+resources:
+  - postgres-depl.yaml  # 컴포넌트 리소스
+
+secretGenerator:
+  - name: postgres-password
+    literals:
+      - password=admin123  # 데이터베이스 비밀번호
+
+patchesStrategicMerge:
+  - deployment-patch.yaml  # 기본 구성에 적용할 패치
+```
+
+**주요 특징**:
+
+- `apiVersion`: `kustomize.config.k8s.io/v1alpha1` 사용
+- `kind`: `Component` 지정 (일반 Kustomization과 다름)
+- 컴포넌트에 필요한 모든 리소스와 패치 포함
+
+#### 2. 컴포넌트 리소스 파일
+
+```yaml
+# components/database/postgres-depl.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres
+        # 기타 설정...
+```
+
+#### 3. 컴포넌트 패치 파일
+
+```yaml
+# components/database/deployment-patch.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment  # 기본 디렉토리의 배포 타겟
+spec:
+  template:
+    spec:
+      containers:
+      - name: api
+        env:
+        - name: DB_PASSWORD  # 환경 변수 추가
+          valueFrom:
+            secretKeyRef:
+              name: postgres-password
+              key: password
+```
+
+### 오버레이에서 컴포넌트 사용
+
+```yaml
+# overlays/dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base  # 기본 구성 임포트
+
+components:
+  - ../../components/database  # 데이터베이스 컴포넌트 임포트
+```
+
+```yaml
+# overlays/premium/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base  # 기본 구성 임포트
+
+components:
+  - ../../components/database  # 데이터베이스 컴포넌트 임포트
+  - ../../components/caching   # 캐싱 컴포넌트 임포트
+```
+
+```yaml
+# overlays/standalone/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+  - ../../base  # 기본 구성 임포트
+
+components:
+  - ../../components/caching  # 캐싱 컴포넌트만 임포트
+```
+
+## 컴포넌트 작동 방식
+
+1. **컴포넌트 정의**
+    - 독립적인 기능에 필요한 모든 구성 요소 포함
+    - 특수 kustomization.yaml 형식 사용 (kind: Component)
+    
+2. **오버레이에 컴포넌트 포함**
+    - components 섹션에 경로 지정
+    - 하나의 오버레이에 여러 컴포넌트 포함 가능
+    
+3. **빌드 시 병합**
+    - Kustomize가 기본 구성과 컴포넌트를 병합
+    - 컴포넌트의 패치가 기본 구성에 적용됨
+
+## 컴포넌트의 이점
+
+1. **코드 재사용**
+    - 기능별 구성을 한 번만 작성
+    - 여러 오버레이에서 재사용
+    
+2. **모듈화**
+    - 기능을 독립적인 단위로 관리
+    - 각 기능의 구성 요소를 함께 그룹화
+    
+3. **유지보수 용이성**
+    - 변경 사항을 한 곳에서만 적용
+    - 구성 불일치(config drift) 방지
+    
+4. **확장성**
+    - 새로운 오버레이 추가 시 기존 컴포넌트 재사용
+    - 새로운 기능을 컴포넌트로 쉽게 추가
+
+## 요약
+
+Kustomize 컴포넌트는 애플리케이션의 선택적 기능을 모듈화하여 재사용할 수 있게 하는 강력한 기능입니다. 각 컴포넌트는 특정 기능에 필요한 모든 리소스와 패치를 포함하며, 필요한 오버레이에만 적용할 수 있습니다. 이를 통해 코드 중복을 줄이고 유지보수성을 향상시키며, 확장 가능한 구성 관리 시스템을 구축할 수 있습니다.
+
+컴포넌트를 사용하면 여러 환경에 걸쳐 일관된 기능을 제공하면서도, 각 환경의 특성에 맞게 선택적 기능을 구성할 수 있습니다.
