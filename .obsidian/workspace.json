@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/6. 클러스터 유지관리/3. 쿠버네티스 클러스터 업그레이드 프로세스.md",
+                "file": "쿠버네티스 사전(CKA)/14. 트러블슈팅/4. 네트워크 문제 해결.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "3. 쿠버네티스 클러스터 업그레이드 프로세스 의 백링크"
+              "title": "4. 네트워크 문제 해결 의 백링크"
             }
           },
           {
