@@ -172,6 +172,7 @@
   "active": "6c8a369cf67bf424",
   "lastOpenFiles": [
     "쿠버네티스 사전(CKA)/기타/시험에 유용한 명령어.md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
     "쿠버네티스 사전(CKA)/기타/클러스터 업그레이드 실습.md",
     "쿠버네티스 사전(CKA)/7. 보안/7. KubeConfig.md",
     "쿠버네티스 사전(CKA)/15. JSONPath/1. 쿠버네티스에서 JSONPath 활용하기.md",
@@ -205,7 +206,6 @@
     "쿠버네티스 사전(CKA)/13. Kustomize/3. Kustomize 설치 및 기본 사용법.md",
     "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/6. Init 컨테이너.md",
     "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/4. Secrets.md",
-    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/3. 환경변수와 ConfigMap.md",
     "쿠버네티스 사전(CKA)/13. Kustomize/무제",
     "쿠버네티스 사전(CKA)/13. Kustomize",
     "사진/화면 캡처 2025-05-19 175743.png",
