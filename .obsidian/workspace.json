@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/6. 클러스터 유지관리/4. 쿠버네티스 백업 및 복원.md",
+                "file": "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "4. 쿠버네티스 백업 및 복원"
+              "title": "1. 쿠버네티스 보안"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "시크릿",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -171,6 +172,8 @@
   },
   "active": "6c8a369cf67bf424",
   "lastOpenFiles": [
+    "화면 캡처 2025-05-22 162955.png",
+    "쿠버네티스 사전(CKA)/6. 클러스터 유지관리/4. 쿠버네티스 백업 및 복원.md",
     "쿠버네티스 사전(CKA)/기타/시험에 유용한 명령어.md",
     "쿠버네티스 사전(CKA)/15. JSONPath/1. 쿠버네티스에서 JSONPath 활용하기.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/4. 네트워크 문제 해결.md",
@@ -204,8 +207,6 @@
     "쿠버네티스 사전(CKA)/13. Kustomize/8. Kustomize 오버레이(Overlay).md",
     "쿠버네티스 사전(CKA)/13. Kustomize/4. Kustomize를 통한 리소스 관리.md",
     "쿠버네티스 사전(CKA)/13. Kustomize/3. Kustomize 설치 및 기본 사용법.md",
-    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/6. Init 컨테이너.md",
-    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/4. Secrets.md",
     "쿠버네티스 사전(CKA)/13. Kustomize/무제",
     "쿠버네티스 사전(CKA)/13. Kustomize",
     "사진/화면 캡처 2025-05-19 175743.png",
