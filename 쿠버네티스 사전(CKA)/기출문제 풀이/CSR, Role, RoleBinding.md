@@ -20,6 +20,16 @@ spec:
   request: [Base64로 인코딩된 CSR 내용]
 ```
 
+```bash
+# 1. 원본 CSR 파일 확인
+cat /root/CKA/john.csr
+# 결과: -----BEGIN CERTIFICATE REQUEST----- 로 시작하는 텍스트
+
+# 2. Base64로 인코딩 (한 줄로 출력)
+cat /root/CKA/john.csr | base64 -w 0
+# 결과: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K... (긴 문자열)
+```
+
 **실행**:
 
 ```bash
