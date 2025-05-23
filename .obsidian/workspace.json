@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
+                "file": "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "사이드카 컨테이너"
+              "title": "시험 명령어 모음"
             }
           },
           {
@@ -27,15 +27,16 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
+                "file": "쿠버네티스 사전(CKA)/13. Kustomize/7. Kustomize 패치(Patch).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1. 쿠버네티스 보안"
+              "title": "7. Kustomize 패치(Patch)"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -183,20 +184,21 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6c8a369cf67bf424",
+  "active": "e41768778661081b",
   "lastOpenFiles": [
-    "Pasted image 20250523093719.png",
+    "사진/Pasted image 20250523093719.png",
+    "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
+    "사진/Pasted image 20250523094209.png",
+    "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
+    "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
-    "쿠버네티스 사전(CKA)/기타/명령어 모음.md",
     "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치/1. kubeadm을 사용한 쿠버네티스 클러스터 부트스트랩.md",
     "쿠버네티스 사전(CKA)/1. 쿠버네티스 클러스터/1. 쿠버네티스 클러스터 구조.md",
     "쿠버네티스 사전(CKA)/3. 스케줄링/1. 쿠버네티스 스케줄링.md",
     "사진/화면 캡처 2025-05-22 171821.png",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "사진/Pasted image 20250522175726.png",
-    "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
     "사진/Pasted image 20250522175533.png",
-    "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
     "사진/Pasted image 20250522172827.png",
     "사진/Pasted image 20250522172552.png",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/3. 워커 노드 문제 해결.md",
@@ -220,8 +222,6 @@
     "쿠버네티스 사전(CKA)/15. JSONPath",
     "사진/Pasted image 20250521112140.png",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/2. 컨트롤 플레인 문제 해결.md",
-    "사진/화면 캡처 2025-05-21 104127.png",
-    "사진/Pasted image 20250521104405.png",
     "쿠버네티스 사전(CKA)/3. 스케줄링/2. 정적 파드(Static Pod).md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅",
     "쿠버네티스 사전(CKA)/13. Kustomize/무제",
