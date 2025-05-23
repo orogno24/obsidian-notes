@@ -20,7 +20,6 @@ spec:
  resourcePolicy:
    containerPolicies:            # 컨테이너별 정책 설정
    - containerName: '*'
-   - 
      # 🔺 최대 허용 리소스 (상한선)
      maxAllowed:
        cpu: "500m"
@@ -34,3 +33,10 @@ spec:
      # 💡 VPA는 이 범위 내에서만 리소스를 조정함
      # 예: 사용량이 적으면 100m으로, 많으면 500m으로 조정  
 ```
+
+
+1. 먼저 kubernetes 공식 사이트에서 HorizontalPodAutoscaler Walkthrough 접속
+2. hpa yaml파일 복사
+3. api 버전은 v2에서 v1로, scaleTargetRef은 targetRef로 변경, kind도 변경
+4. updatePolicy, resourcePolicy(필요 시) 추가
+5. 주요 구조: spec에 targetRef, updatePolicy, resourcePolicy 추가해야함
