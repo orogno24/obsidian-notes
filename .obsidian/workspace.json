@@ -171,8 +171,9 @@
   },
   "active": "e41768778661081b",
   "lastOpenFiles": [
-    "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
+    "쿠버네티스 사전(CKA)/7. 보안/7. KubeConfig.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
     "쿠버네티스 사전(CKA)/12. Helm/4. Helm 차트.md",
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
@@ -203,7 +204,6 @@
     "사진/Pasted image 20250522172552.png",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/3. 워커 노드 문제 해결.md",
     "쿠버네티스 사전(CKA)/15. JSONPath/1. 쿠버네티스에서 JSONPath 활용하기.md",
-    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/4. Secrets.md",
     "사진/화면 캡처 2025-05-22 162955.png",
     "쿠버네티스 사전(CKA)/기출문제 풀이",
     "사진/Udemy ScreenShot 2025-05-22 11-01-53.jpeg",
