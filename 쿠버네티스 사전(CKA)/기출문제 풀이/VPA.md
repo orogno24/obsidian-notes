@@ -37,6 +37,6 @@ spec:
 
 1. 먼저 kubernetes 공식 사이트에서 HorizontalPodAutoscaler Walkthrough 접속
 2. hpa yaml파일 복사
-3. api 버전은 v2에서 v1로, scaleTargetRef은 targetRef로 변경, kind도 변경
+3. api버전에 .k8s.io/ 추가, 버전은 v2에서 v1로, kind 변경,  scaleTargetRef은 targetRef로 변경
 4. updatePolicy, resourcePolicy(필요 시) 추가
 5. 주요 구조: spec에 targetRef, updatePolicy, resourcePolicy 추가해야함
