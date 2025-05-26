@@ -79,6 +79,7 @@ helm upgrade [릴리스명] [차트명] --version=[버전] -n [네임스페이�
 **핵심**: 문제에서 요구한 "helm repository update"와 "upgrade to version 18.1.15" 모두 완료!
 
 
+rfp -> 제안서 -> 요구사항 정의서/요구사항 명세서
 
 
 
