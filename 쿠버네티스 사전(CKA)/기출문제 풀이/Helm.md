@@ -87,6 +87,12 @@ One application, `webpage-server-01`, is deployed on the Kubernetes cluster by 
   
 Use the `helm` command to validate and install the chart. After successfully installing the newer version, uninstall the older version.
 
+controlplane ~ ✖ helm lint .
+==> Linting .
+Error unable to check Chart.yaml file in chart: stat Chart.yaml: no such file or directory
+
+Error: 1 chart(s) linted, 1 chart(s) failed
+
 controlplane ~ ➜  helm install --generate-name /root/new-version
 NAME: new-version-1748237422
 LAST DEPLOYED: Mon May 26 05:30:22 2025
