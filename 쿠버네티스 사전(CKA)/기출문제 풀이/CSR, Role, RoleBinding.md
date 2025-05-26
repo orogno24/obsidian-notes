@@ -6,7 +6,21 @@
 
 ### 1단계: 사용자 인증 설정 (CSR)
 
-**목적**: john이 클러스터에 접근할 수 있도록 인증서 발급
+1. **이미 주어진 것들:**
+```bash
+ls /root/CKA/
+john.key  # john의 개인키 (이미 있음)
+john.csr  # john의 인증서 요청서 (이미 있음)
+```
+
+2. **CSR을 쿠버네티스가 이해할 수 있는 형태로 변환 🔄**
+```bash
+# john.csr을 Base64로 인코딩
+cat /root/CKA/john.csr | base64 -w 0
+# 결과: LS0tLS1CRUdJTi... (긴 문자열)
+```
+
+3. **쿠버네티스 CSR 객체 생성**
 
 ```yaml
 # csr.yaml - 인증서 서명 요청
@@ -30,11 +44,13 @@ cat /root/CKA/john.csr | base64 -w 0
 # 결과: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K... (긴 문자열)
 ```
 
-**실행**:
+4. **관리자가 승인**
 
 ```bash
 kubectl apply -f csr.yaml
-kubectl certificate approve john-developer  # 인증서 승인
+
+# 승인 (이 순간 john 사용자 생성!)
+kubectl certificate approve john-developer
 ```
 
 ### 2단계: 권한 정의 (Role)
