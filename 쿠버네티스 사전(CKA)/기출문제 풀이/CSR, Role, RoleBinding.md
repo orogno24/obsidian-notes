@@ -108,7 +108,7 @@ kubectl auth can-i create pods --as=john -n development
 
 ## 💡 핵심 포인트
 
-1. **CSR의 signerName**: Kubernetes 1.19부터 필수로 지정해야 함
+1. **CSR의 signerName**: Kubernetes 1.19부터 필수로 지정해야 함(request, signerName, usages 구조)
 2. **Base64 인코딩**: CSR 내용을 `cat john.csr | base64 -w 0`로 인코딩
 3. **네임스페이스**: Role과 RoleBinding 모두 development 네임스페이스에 생성
 4. **검증**: `kubectl auth can-i`로 권한 확인
