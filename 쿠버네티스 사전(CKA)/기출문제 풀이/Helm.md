@@ -78,18 +78,3 @@ helm upgrade [릴리스명] [차트명] --version=[버전] -n [네임스페이�
 
 **핵심**: 문제에서 요구한 "helm repository update"와 "upgrade to version 18.1.15" 모두 완료!
 
-
-On the cluster, the team has installed multiple helm charts on a different namespace. By mistake, those deployed resources include one of the vulnerable images called `kodekloud/webapp-color:v1`. Find out the release name and uninstall it.
-
-helm list -A
-NAME                    NAMESPACE               REVISION        UPDATED                                 STATUS          CHART                       APP VERSION
-atlanta-page-apd        atlanta-page-04         1               2025-05-26 01:10:46.245952796 +0000 UTC deployed        atlanta-page-apd-0.1.0      1.16.0     
-digi-locker-apd         digi-locker-02          1               2025-05-26 01:10:45.553724078 +0000 UTC deployed        digi-locker-apd-0.1.0       1.16.0     
-security-alpha-apd      security-alpha-01       1               2025-05-26 01:10:45.031610328 +0000 UTC deployed        security-alpha-apd-0.1.0    1.16.0     
-web-dashboard-apd       web-dashboard-03        1               2025-05-26 01:10:45.923124126 +0000 UTC deployed        web-dashboard-apd-0.1.0     1.16.0     
-
-cluster1-controlplane ~ ➜  helm get manifest atlanta-page-apd -n atlanta-page-04 | grep -i webapp-color:v1
-          image: "kodekloud/webapp-color:v1"
-
-cluster1-controlplane ~ ✖ helm uninstall atlanta-page-apd -n atlanta-page-04
-release "atlanta-page-apd" uninstalled
