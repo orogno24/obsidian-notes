@@ -78,3 +78,33 @@ helm upgrade [릴리스명] [차트명] --version=[버전] -n [네임스페이�
 
 **핵심**: 문제에서 요구한 "helm repository update"와 "upgrade to version 18.1.15" 모두 완료!
 
+
+
+
+
+One application, `webpage-server-01`, is deployed on the Kubernetes cluster by the Helm tool. Now, the team wants to deploy a new version of the application by replacing the existing one. A new version of the helm chart is given in the `/root/new-version` directory on the terminal. Validate the chart before installing it on the Kubernetes cluster.   
+  
+  
+Use the `helm` command to validate and install the chart. After successfully installing the newer version, uninstall the older version.
+
+controlplane ~ ➜  helm install --generate-name /root/new-version
+NAME: new-version-1748237422
+LAST DEPLOYED: Mon May 26 05:30:22 2025
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+controlplane ~ ➜  helm list
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                       APP VERSION
+new-version-1748237422  default         1               2025-05-26 05:30:22.545857437 +0000 UTC deployed        webpage-server-02-0.1.1     v2         
+webpage-server-01       default         1               2025-05-26 05:28:34.975342474 +0000 UTC deployed        webpage-server-01-0.1.0     v1         
+
+controlplane ~ ➜  helm uninstall webpage-server-01
+release "webpage-server-01" uninstalled
+
+controlplane ~ ➜  helm list
+NAME                    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                       APP VERSION
+new-version-1748237422  default         1               2025-05-26 05:30:22.545857437 +0000 UTC deployed        webpage-server-02-0.1.1     v2         
+
+controlplane ~ ➜  
