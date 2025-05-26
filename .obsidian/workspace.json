@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+                "file": "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Helm"
+              "title": "유용한 경로"
             }
           }
         ]
@@ -171,12 +171,13 @@
   },
   "active": "e41768778661081b",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/3. 스케줄링/2. 정적 파드(Static Pod).md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/7. 보안/10. RBAC.md",
     "쿠버네티스 사전(CKA)/7. 보안/11. 서비스 어카운트.md",
     "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치/1. kubeadm을 사용한 쿠버네티스 클러스터 부트스트랩.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
@@ -196,7 +197,6 @@
     "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/1. 애플리케이션 문제 해결.md",
     "쿠버네티스 사전(CKA)/2. 쿠버네티스 리소스/1. 주요 쿠버네티스 리소스.md",
-    "쿠버네티스 사전(CKA)/13. Kustomize/7. Kustomize 패치(Patch).md",
     "사진/Pasted image 20250523093719.png",
     "사진/Pasted image 20250523094209.png",
     "사진/화면 캡처 2025-05-22 171821.png",
