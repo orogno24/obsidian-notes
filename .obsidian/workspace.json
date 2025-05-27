@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+                "file": "쿠버네티스 사전(CKA)/기타/무제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Helm"
+              "title": "무제"
             }
           }
         ]
@@ -171,8 +171,9 @@
   },
   "active": "e41768778661081b",
   "lastOpenFiles": [
-    "프로젝트/1. 기획안, wbs, 요구사항 명세서.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기타/무제.md",
+    "프로젝트/1. 기획안, wbs, 요구사항 명세서.md",
     "프로젝트",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
@@ -197,7 +198,6 @@
     "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/7. 오토스케일링.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/etcd 스냅샷, 백업.md",
-    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "사진/Pasted image 20250523093719.png",
     "사진/Pasted image 20250523094209.png",
     "사진/화면 캡처 2025-05-22 171821.png",
