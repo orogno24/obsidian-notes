@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/진행 절차.md",
+                "file": "프로젝트/4. WBS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "진행 절차"
+              "title": "4. WBS"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "프로젝트/진행 절차.md",
+                "file": "프로젝트/4. WBS.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "진행 절차 의 백링크"
+              "title": "4. WBS 의 백링크"
             }
           },
           {
@@ -171,6 +171,7 @@
   },
   "active": "e41768778661081b",
   "lastOpenFiles": [
+    "프로젝트/진행 절차.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
@@ -179,7 +180,6 @@
     "프로젝트/무제.md",
     "프로젝트/2. 기획안.md",
     "프로젝트/1. Fruitables — 프로젝트 개요 & 기술 스택 총정리.md",
-    "프로젝트/진행 절차.md",
     "프로젝트/기획안, wbs, 요구사항 명세서.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
     "프로젝트",
