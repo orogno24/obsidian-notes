@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/진행 절차.md",
+                "file": "프로젝트/무제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "진행 절차"
+              "title": "무제"
             }
           }
         ]
@@ -171,12 +171,12 @@
   },
   "active": "e41768778661081b",
   "lastOpenFiles": [
+    "프로젝트/진행 절차.md",
     "프로젝트/3. 요구사항 명세서.md",
     "프로젝트/2. 기획안.md",
     "프로젝트/1. Fruitables — 프로젝트 개요 & 기술 스택 총정리.md",
     "프로젝트/무제.md",
     "프로젝트/기획안, wbs, 요구사항 명세서.md",
-    "프로젝트/진행 절차.md",
     "프로젝트/4. WBS.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
