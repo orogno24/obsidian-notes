@@ -11,10 +11,14 @@
             "id": "d4441c7b13d59285",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "프로젝트/진행 절차.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "진행 절차"
             }
           }
         ]
@@ -165,8 +169,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c80791878d872363",
+  "active": "d4441c7b13d59285",
   "lastOpenFiles": [
+    "프로젝트/3. 요구사항 정의서, 명세서.md",
+    "프로젝트/2. RFP, 기획안.md",
     "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
@@ -183,10 +189,8 @@
     "쿠버네티스 사전(CKA)/기타/로그 확인.md",
     "프로젝트/1. 프로젝트 개요 & 기술 스택 총정리.md",
     "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
-    "프로젝트/3. 요구사항 정의서, 명세서.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "프로젝트/2. RFP, 기획안.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
