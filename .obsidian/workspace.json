@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "78f97913861eb469",
+        "id": "9eef3ab5387019dd",
         "type": "tabs",
         "children": [
           {
-            "id": "417024fe8f330374",
+            "id": "d4441c7b13d59285",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "3. 볼륨, PV, PVC"
+              "title": "새 탭"
             }
           }
         ]
@@ -53,7 +49,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "--kubeconfig",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -169,9 +165,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "417024fe8f330374",
+  "active": "c80791878d872363",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
+    "쿠버네티스 사전(CKA)/7. 보안/13. Security Context.md",
+    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/6. Init 컨테이너.md",
+    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/2. 도커 CMD vs ENTRYPOINT.md",
+    "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
     "프로젝트/진행 절차.md",
@@ -192,12 +194,6 @@
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
     "쿠버네티스 사전(CKA)/15. JSONPath/1. 쿠버네티스에서 JSONPath 활용하기.md",
     "쿠버네티스 사전(CKA)/3. 스케줄링/2. 정적 파드(Static Pod).md",
-    "쿠버네티스 사전(CKA)/7. 보안/10. RBAC.md",
-    "쿠버네티스 사전(CKA)/7. 보안/11. 서비스 어카운트.md",
-    "쿠버네티스 사전(CKA)/11. kubeadm으로 쿠버네티스 설치/1. kubeadm을 사용한 쿠버네티스 클러스터 부트스트랩.md",
-    "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
-    "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 내부DNS 조회.md",
     "사진/Pasted image 20250523093719.png",
     "사진/Pasted image 20250523094209.png",
     "사진/화면 캡처 2025-05-22 171821.png",
