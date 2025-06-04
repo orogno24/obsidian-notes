@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/진행 절차.md",
+                "file": "프로젝트/3. 요구사항 정의서, 명세서.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "진행 절차"
+              "title": "3. 요구사항 정의서, 명세서"
             }
           }
         ]
@@ -171,6 +171,8 @@
   },
   "active": "d4441c7b13d59285",
   "lastOpenFiles": [
+    "Pasted image 20250604135843.png",
+    "프로젝트/진행 절차.md",
     "프로젝트/3. 요구사항 정의서, 명세서.md",
     "프로젝트/2. RFP, 기획안.md",
     "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
@@ -182,7 +184,6 @@
     "쿠버네티스 사전(CKA)/8. 스토리지/3. 볼륨, PV, PVC.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
-    "프로젝트/진행 절차.md",
     "프로젝트/무제.md",
     "프로젝트/4. WBS.md",
     "프로젝트/기획안, wbs, 요구사항 명세서.md",
@@ -197,7 +198,6 @@
     "프로젝트",
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
     "쿠버네티스 사전(CKA)/15. JSONPath/1. 쿠버네티스에서 JSONPath 활용하기.md",
-    "쿠버네티스 사전(CKA)/3. 스케줄링/2. 정적 파드(Static Pod).md",
     "사진/Pasted image 20250523093719.png",
     "사진/Pasted image 20250523094209.png",
     "사진/화면 캡처 2025-05-22 171821.png",
