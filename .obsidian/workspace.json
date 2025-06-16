@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/ArgoCD.md",
+                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ArgoCD"
+              "title": "클러스터 업그레이드"
             }
           }
         ]
@@ -171,8 +171,8 @@
   },
   "active": "d4441c7b13d59285",
   "lastOpenFiles": [
-    "프로젝트/프로젝트 통신.md",
     "오픈소스/ArgoCD.md",
+    "프로젝트/프로젝트 통신.md",
     "오픈소스",
     "사진/Pasted image 20250616164553.png",
     "프로젝트/프로젝트 전체 구조.md",
