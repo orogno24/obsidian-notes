@@ -26,9 +26,7 @@ http://jenkins:d50f8213e4bd18fca3b99b2ecc65f6fa0d656ea8@gitea-http:3000/git-ops/
 #### 🛠️ 방법 1: 저장소 URL에 직접 포함 (간편하지만 비추천)
 
 - 실습, 개발 환경에서는 빠르게 설정 가능
-    
 - 하지만 **URL에 토큰이 그대로 노출**되므로 보안상 좋지 않음
-    
 
 #### 🛡️ 방법 2: Argo CD Credentials 설정 (권장)
 
