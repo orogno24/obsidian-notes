@@ -39,9 +39,7 @@ updatePolicy:
   updateMode: "Auto"
 ```
 
-
-
-
+##### 최종본 
 
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
