@@ -1,3 +1,48 @@
+
+1. 먼저 kubernetes 공식 사이트에서 HorizontalPodAutoscaler Walkthrough 접속
+2. hpa yaml파일 복사
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: php-apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: php-apache
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50
+```
+
+api버전에 .k8s.io/ 추가, 버전은 v2에서 v1로, kind 변경
+```
+autoscaling/v2 -> autoscaling.k8s.io/v1
+```
+
+scaleTargetRef은 targetRef로 변경
+```
+scaleTargetRef: -> targetRef:
+```
+
+updatePolicy, resourcePolicy(필요 시) 추가
+```
+updatePolicy:
+  updateMode: "Auto"
+```
+
+
+
+
+
 ```yaml
 apiVersion: autoscaling.k8s.io/v1
 kind: VerticalPodAutoscaler
@@ -34,9 +79,3 @@ spec:
      # 예: 사용량이 적으면 100m으로, 많으면 500m으로 조정  
 ```
 
-
-1. 먼저 kubernetes 공식 사이트에서 HorizontalPodAutoscaler Walkthrough 접속
-2. hpa yaml파일 복사
-3. api버전에 .k8s.io/ 추가, 버전은 v2에서 v1로, kind 변경,  scaleTargetRef은 targetRef로 변경
-4. updatePolicy, resourcePolicy(필요 시) 추가
-5. 주요 구조: spec에 targetRef, updatePolicy, resourcePolicy 추가해야함
