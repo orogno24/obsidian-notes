@@ -79,6 +79,16 @@ helm upgrade [릴리스명] [차트명] --version=[버전] -n [네임스페이�
 **핵심**: 문제에서 요구한 "helm repository update"와 "upgrade to version 18.1.15" 모두 완료!
 
 
+
+
+
+
+
+
+
+
+
+
 프로젝트 순서: 분석, 설계, 구축, 시험
 
 기획안(ppt) -> wbs -> 요구사항 명세서 -> UI 가이드 -> 클래스 다이어그램(Doxygen) -> 마이크로서비스(3개 이상) -> API 명세서 -> 단위테스트(JUnit)
