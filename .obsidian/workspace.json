@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
+                "file": "쿠버네티스 사전(CKA)/12. Helm/3. Helm 구성 요소.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "시험 명령어 모음"
+              "title": "3. Helm 구성 요소"
             }
           }
         ]
@@ -171,8 +171,10 @@
   },
   "active": "d4441c7b13d59285",
   "lastOpenFiles": [
-    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
+    "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
+    "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
@@ -193,7 +195,6 @@
     "사진/Pasted image 20250616164553.png",
     "프로젝트/5. UI 가이드 & 화면설계서.md",
     "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
-    "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "사진/화면 캡처 2025-06-04 140343.png",
     "사진/Pasted image 20250604140310.png",
     "프로젝트/1. 프로젝트 개요 & 기술 스택 총정리.md",
@@ -201,7 +202,6 @@
     "사진/Pasted image 20250604135843.png",
     "쿠버네티스 사전(CKA)/7. 보안/1. 쿠버네티스 보안.md",
     "쿠버네티스 사전(CKA)/7. 보안/13. Security Context.md",
-    "쿠버네티스 사전(CKA)/5. 애플리케이션 생명주기 관리/6. Init 컨테이너.md",
     "프로젝트",
     "사진/Pasted image 20250523093719.png",
     "사진/Pasted image 20250523094209.png",
