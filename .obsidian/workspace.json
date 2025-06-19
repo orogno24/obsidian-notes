@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "유용한 경로"
             }
+          },
+          {
+            "id": "ee65b2f9b58b1c93",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "무제.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "무제"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -53,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": ".kube/config",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -74,8 +89,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -170,15 +184,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a50ded90ebf039ae",
+  "active": "ee65b2f9b58b1c93",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
+    "무제.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
     "쿠버네티스 사전(CKA)/기타/메모리, CPU, 스토리지.md",
@@ -198,7 +213,6 @@
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
     "프로젝트/4. WBS.md",
-    "프로젝트/3. 요구사항 정의서, 명세서.md",
     "오픈소스",
     "사진/Pasted image 20250616164553.png",
     "사진/화면 캡처 2025-06-04 140343.png",
