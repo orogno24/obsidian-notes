@@ -27,7 +27,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Kubelet 트러블슈팅.md",
+                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
                 "mode": "source",
                 "source": false
               },
@@ -187,15 +187,16 @@
   },
   "active": "ee65b2f9b58b1c93",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
+    "단어사전.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
-    "Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
     "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
     "쿠버네티스 사전(CKA)/기타/메모리, CPU, 스토리지.md",
     "쿠버네티스 사전(CKA)/기타/로그 확인.md",
@@ -213,7 +214,6 @@
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
     "쿠버네티스 사전(CKA)/12. Helm/2. Helm 2와 Helm 3의 차이점.md",
     "쿠버네티스 사전(CKA)/12. Helm/1. Helm 소개.md",
-    "프로젝트/4. WBS.md",
     "오픈소스",
     "사진/Pasted image 20250616164553.png",
     "사진/화면 캡처 2025-06-04 140343.png",
