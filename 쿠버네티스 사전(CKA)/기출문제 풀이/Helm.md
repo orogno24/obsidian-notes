@@ -31,7 +31,7 @@ helm search repo nginx --versions
 **확인**: 18.1.15 버전이 사용 가능함을 확인
 
 ### 4단계: 차트 업그레이드 ⭐
-z
+
 ```bash
 helm upgrade kk-mock1 kk-mock1/nginx --version=18.1.15 -n kk-ns
 ```
