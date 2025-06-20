@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 내부DNS 조회.md",
+                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "클러스터 내부DNS 조회 의 백링크"
+              "title": "사이드카 컨테이너 의 백링크"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "프로젝트/프로젝트 전체 구조.md",
+                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "프로젝트 전체 구조 의 나가는 링크"
+              "title": "사이드카 컨테이너 의 나가는 링크"
             }
           },
           {
@@ -151,7 +151,8 @@
               "title": "Outline of Welcome"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
