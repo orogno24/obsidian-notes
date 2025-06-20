@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 내부DNS 조회.md",
+                "file": "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "클러스터 내부DNS 조회"
+              "title": "시험 명령어 모음"
             }
           }
         ]
@@ -171,6 +171,7 @@
   },
   "active": "ee65b2f9b58b1c93",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 내부DNS 조회.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/CSR, Role, RoleBinding.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
     "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
@@ -181,7 +182,6 @@
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 내부DNS 조회.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "단어사전.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
