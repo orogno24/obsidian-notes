@@ -84,6 +84,113 @@ helm upgrade [릴리스명] [차트명] --version=[버전] -n [네임스페이�
 
 `helm` 명령어를 사용해 차트를 검증하고 설치하세요. 새 버전이 성공적으로 설치되면, 이전 버전은 제거하세요.
 
+## 📱 앱스토어 비유로 이해하는 Helm
+
+|Helm 개념|앱스토어 비유|설명|
+|---|---|---|
+|**Chart**|앱 (APK 파일)|쿠버네티스 애플리케이션 패키지|
+|**Repository**|앱스토어|차트들이 저장된 곳|
+|**Release**|설치된 앱|실제로 배포된 애플리케이션 인스턴스|
+
+---
+
+## 🔧 핵심 명령어 체계
+
+### 1️⃣ **저장소(앱스토어) 관리**
+
+```bash
+helm repo add bitnami https://charts.bitnami.com/bitnami  # 새 스토어 추가
+helm repo list                                           # 연결된 스토어들 확인
+helm repo update                                         # 스토어 정보 업데이트
+helm repo remove bitnami                                 # 스토어 삭제
+```
+
+### 2️⃣ **앱 검색 및 정보 확인**
+
+```bash
+helm search repo nginx                    # 설치 가능한 앱들 검색
+helm search repo nginx --versions         # 모든 버전 보기
+helm show values bitnami/nginx            # 앱 설정 정보 보기
+helm show chart bitnami/nginx             # 앱 기본 정보 보기
+```
+
+### 3️⃣ **앱 설치**
+
+```bash
+helm install my-nginx bitnami/nginx                          # 기본 설치
+helm install my-nginx bitnami/nginx --set replicaCount=3     # 설정 변경하며 설치
+helm install my-nginx bitnami/nginx -f values.yaml          # 파일로 설정하며 설치
+helm install my-nginx bitnami/nginx --dry-run --debug       # 설치 전 테스트
+```
+
+### 4️⃣ **설치된 앱 관리**
+
+```bash
+helm list                                 # 설치된 앱들 확인
+helm list -n kube-system                  # 특정 네임스페이스의 앱들
+helm status my-nginx                      # 앱 상태 확인
+helm get values my-nginx                  # 앱 설정값 확인
+```
+
+### 5️⃣ **앱 업데이트 및 관리**
+
+```bash
+helm upgrade my-nginx bitnami/nginx --set replicaCount=5  # 앱 업그레이드
+helm history my-nginx                                     # 업데이트 내역 확인
+helm rollback my-nginx 1                                  # 이전 버전으로 롤백
+helm uninstall my-nginx                                   # 앱 삭제
+```
+
+---
+
+## 🎯 CKA 시험 관점에서 중요한 포인트
+
+### **반드시 알아야 할 시나리오**
+
+1. **기본 설치**: `helm install app-name chart-name`
+2. **설정 변경**: `--set key=value` 또는 `-f values.yaml`
+3. **업그레이드**: `helm upgrade` 후 `helm rollback`
+4. **문제 해결**: `helm status`, `helm get values`, `kubectl` 조합 사용
+
+### **실습해볼 애플리케이션**
+
+- **nginx**: 웹서버 (가장 기본)
+- **mysql**: 데이터베이스 (상태가 있는 앱)
+- **prometheus**: 모니터링 (복잡한 설정)
+
+---
+
+## ⚡ 빠른 치트시트
+
+```bash
+# 📋 기본 플로우
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo nginx
+helm install my-app bitnami/nginx
+helm list
+helm upgrade my-app bitnami/nginx --set replicaCount=2
+helm rollback my-app 1
+helm uninstall my-app
+
+# 🔍 문제 해결
+helm status my-app                    # 상태 확인
+helm get values my-app                # 설정 확인  
+kubectl get pods -l app=my-app        # 실제 파드 확인
+helm template my-app bitnami/nginx    # 실제 배포될 yaml 미리보기
+```
+
+이제 Helm의 전체 그림이 보이시나요? CKA 실습하실 때 이 순서대로 해보시면 됩니다! 🚀
+
+
+
+
+
+
+
+
+
+
+
 
 
 
