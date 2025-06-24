@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
+                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "VPA"
+              "title": "2025 기출문제"
             }
           }
         ]
@@ -172,11 +172,11 @@
   },
   "active": "ee65b2f9b58b1c93",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "프로젝트/프로젝트 전체 구조.md",
     "프로젝트/프로젝트 통신.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/13. Kustomize/4. Kustomize를 통한 리소스 관리.md",
     "쿠버네티스 사전(CKA)/12. Helm/5. Helm CLI 활용 가이드.md",
     "쿠버네티스 사전(CKA)/10. 클러스터 설계/2. 쿠버네티스의 고가용성.md",
