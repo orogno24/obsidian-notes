@@ -923,7 +923,8 @@ kubeadm certs renew apiserver-kubelet-client
 
 보안 사고 방지를 위해 NetworkPolicy를 생성하세요:
 
-**정책 이름**: `np-backend` (`project-snake` Namespace) **허용 규칙**: `backend-*` Pod들이 다음으로만 연결 가능
+**정책 이름**: `np-backend` (`project-snake` Namespace)
+**허용 규칙**: `backend-*` Pod들이 다음으로만 연결 가능
 
 - `db1-*` Pod의 1111 포트
 - `db2-*` Pod의 2222 포트
