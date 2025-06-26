@@ -1,167 +1,601 @@
-**문제 1** `ssh cka9412`에서 해결:
+## 📋 시험 안내사항
 
-`cka9412`의 kubeconfig 파일 `/opt/course/1/kubeconfig`에서 다음 정보를 추출하세요:
+- 각 문제는 특정 인스턴스에서 해결해야 함
+- 다른 인스턴스로 이동하려면 `exit` 명령어로 메인 터미널로 돌아간 후 ssh 연결
+- 필요시 `sudo -i`로 root 권한 획득
 
-1. 모든 kubeconfig 컨텍스트 이름을 `/opt/course/1/contexts`에 한 줄에 하나씩 작성
-2. 현재 컨텍스트 이름을 `/opt/course/1/current-context`에 작성
-3. 사용자 `account-0027`의 클라이언트 인증서를 base64 디코딩하여 `/opt/course/1/cert`에 작성
+---
 
-**문제 2** `ssh cka7968`에서 해결:
+## 🔧 Question 1 | Contexts
 
-Helm을 사용하여 _네임스페이스_ `minio`에 MinIO Operator를 설치하고 _Tenant_ CRD를 구성 및 생성하세요:
+**인스턴스**: `ssh cka9412`
 
-1. _네임스페이스_ `minio` 생성
-2. 새 _네임스페이스_에 Helm 차트 `minio/operator` 설치. Helm 릴리스 이름은 `minio-operator`
-3. `/opt/course/2/minio-tenant.yaml`의 `Tenant` 리소스를 업데이트하여 `features` 하위에 `enableSFTP: true` 포함
-4. `/opt/course/2/minio-tenant.yaml`에서 `Tenant` 리소스 생성
+### 📝 문제
 
-**문제 3** `ssh cka3962`에서 해결:
+`/opt/course/1/kubeconfig` 파일에서 다음 정보를 추출하여 저장하세요:
 
-_네임스페이스_ `project-h800`에 `o3db-*` 이름의 _파드_ 2개가 있습니다. 프로젝트 H800 관리팀에서 리소스 절약을 위해 이를 1개 복제본으로 축소하도록 요청했습니다.
+1. 모든 kubeconfig context 이름을 `/opt/course/1/contexts`에 한 줄씩 저장
+2. 현재 context 이름을 `/opt/course/1/current-context`에 저장
+3. `account-0027` 사용자의 client-certificate를 base64 디코딩하여 `/opt/course/1/cert`에 저장
 
-**문제 4** `ssh cka2556`에서 해결:
+### 💡 해답
 
-_네임스페이스_ `project-c13`의 모든 사용 가능한 _파드_를 확인하고, 노드의 리소스(cpu 또는 memory)가 부족할 때 먼저 종료될 가능성이 높은 파드들의 이름을 찾으세요.
+**Step 1: Context 이름들 추출**
 
-_파드_ 이름들을 `/opt/course/4/pods-terminated-first.txt`에 작성하세요.
+```bash
+ssh cka9412
 
-**문제 5** `ssh cka5774`에서 해결:
+# 모든 context 확인
+k --kubeconfig /opt/course/1/kubeconfig config get-contexts
 
-이전에 `api-gateway` 애플리케이션이 외부 오토스케일러를 사용했는데, 이제 _HorizontalPodAutoscaler_ (_HPA_)로 교체해야 합니다. 애플리케이션은 _네임스페이스_ `api-gateway-staging`과 `api-gateway-prod`에 다음과 같이 배포되었습니다:
-
-```
-kubectl kustomize /opt/course/5/api-gateway/staging | kubectl apply -f -
-kubectl kustomize /opt/course/5/api-gateway/prod | kubectl apply -f -
+# context 이름만 추출하여 저장
+k --kubeconfig /opt/course/1/kubeconfig config get-contexts -oname > /opt/course/1/contexts
 ```
 
-`/opt/course/5/api-gateway`의 Kustomize 구성을 사용하여 다음을 수행하세요:
+**Step 2: 현재 context 확인**
 
-1. _ConfigMap_ `horizontal-scaling-config` 완전히 제거
-2. _배포_ `api-gateway`에 대해 최소 `2`, 최대 `4` 복제본으로 `api-gateway`라는 _HPA_ 추가. 평균 CPU 사용률 `50%`에서 스케일링
-3. prod에서 _HPA_는 최대 `6` 복제본이어야 함
-4. 변경사항을 staging과 prod에 적용하여 클러스터에 반영
+```bash
+k --kubeconfig /opt/course/1/kubeconfig config current-context > /opt/course/1/current-context
+```
 
-**문제 6** `ssh cka7968`에서 해결:
+**Step 3: 인증서 추출 및 디코딩**
 
-`safari-pv`라는 새로운 _PersistentVolume_을 생성하세요. 용량 _2Gi_, accessMode _ReadWriteOnce_, hostPath `/Volumes/Data`, storageClassName 정의 없음이어야 합니다.
+```bash
+# 방법 1: 수동으로 확인 후 디코딩
+k --kubeconfig /opt/course/1/kubeconfig config view -o yaml --raw
+echo LS0tLS1CRUdJTi... | base64 -d > /opt/course/1/cert
 
-다음으로 _네임스페이스_ `project-t230`에 `safari-pvc`라는 새로운 _PersistentVolumeClaim_을 생성하세요. _2Gi_ 스토리지 요청, accessMode _ReadWriteOnce_, storageClassName 정의 없음이어야 합니다. _PVC_는 _PV_에 올바르게 바인딩되어야 합니다.
+# 방법 2: 자동화
+k --kubeconfig /opt/course/1/kubeconfig config view --raw -ojsonpath="{.users[0].user.client-certificate-data}" | base64 -d > /opt/course/1/cert
+```
 
-마지막으로 _네임스페이스_ `project-t230`에 해당 볼륨을 `/tmp/safari-data`에 마운트하는 새로운 _배포_ `safari`를 생성하세요. 해당 _배포_의 _파드_들은 `httpd:2-alpine` 이미지여야 합니다.
+---
 
-**문제 7** `ssh cka5774`에서 해결:
+## 🔧 Question 2 | MinIO Operator, CRD Config, Helm Install
 
-metrics-server가 클러스터에 설치되었습니다. `kubectl`을 사용하는 두 개의 bash 스크립트를 작성하세요:
+**인스턴스**: `ssh cka7968`
 
-1. 스크립트 `/opt/course/7/node.sh`는 _노드_의 리소스 사용량을 보여줘야 함
-2. 스크립트 `/opt/course/7/pod.sh`는 _파드_와 해당 컨테이너의 리소스 사용량을 보여줘야 함
+### 📝 문제
 
-**문제 8** `ssh cka3962`에서 해결:
+Helm을 사용하여 MinIO Operator를 설치하고 Tenant CRD를 구성하세요:
 
-동료가 노드 `cka3962-node1`이 오래된 Kubernetes 버전을 실행하고 있으며 아직 클러스터의 일부가 아니라고 알려왔습니다.
+1. `minio` Namespace 생성
+2. `minio/operator` Helm chart를 `minio-operator`라는 이름으로 설치
+3. `/opt/course/2/minio-tenant.yaml`에서 `features` 하위에 `enableSFTP: true` 추가
+4. Tenant 리소스 생성
 
-1. 노드의 Kubernetes를 컨트롤플레인의 정확한 버전으로 업데이트
-2. kubeadm을 사용하여 노드를 클러스터에 추가
+### 💡 해답
 
-**문제 9** `ssh cka9412`에서 해결:
+**Step 1: Namespace 생성**
 
-_네임스페이스_ `project-swan`에 _ServiceAccount_ `secret-reader`가 있습니다. 이 _ServiceAccount_를 사용하는 `nginx:1-alpine` 이미지의 `api-contact`라는 _파드_를 생성하세요.
+```bash
+ssh cka7968
+k create ns minio
+```
 
-_파드_에 exec하여 `curl`을 사용해 Kubernetes API에서 모든 _시크릿_을 수동으로 쿼리하세요.
+**Step 2: Helm Chart 설치**
 
-결과를 `/opt/course/9/result.json` 파일에 작성하세요.
+```bash
+# 사용 가능한 chart 확인
+helm repo list
+helm search repo
 
-**문제 10** `ssh cka3962`에서 해결:
+# MinIO operator 설치
+helm -n minio install minio-operator minio/operator
 
-_네임스페이스_ `project-hamster`에 새로운 _ServiceAccount_ `processor`를 생성하세요. `processor`라는 _Role_과 _RoleBinding_도 생성하세요. 이들은 새 _SA_가 해당 _네임스페이스_에서 _시크릿_과 _ConfigMap_만 생성할 수 있도록 허용해야 합니다.
+# 설치 확인
+helm -n minio ls
+k -n minio get pod
+```
 
-**문제 11** `ssh cka2556`에서 해결:
+**Step 3: Tenant YAML 수정**
 
-다음에 대해 _네임스페이스_ `project-tiger`를 사용하세요. `httpd:2-alpine` 이미지와 레이블 `id=ds-important`, `uuid=18426a0b-5f59-4e10-923f-c0e078e82462`로 `ds-important`라는 _DaemonSet_을 생성하세요. 생성되는 _파드_들은 10 millicore cpu와 10 mebibyte 메모리를 요청해야 합니다. 해당 _DaemonSet_의 _파드_들은 컨트롤플레인을 포함한 모든 노드에서 실행되어야 합니다.
+```yaml
+# /opt/course/2/minio-tenant.yaml
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  name: tenant
+  namespace: minio
+  labels:
+    app: minio
+spec:
+  features:
+    bucketDNS: false
+    enableSFTP: true                     # 이 줄 추가
+  image: quay.io/minio/minio:latest
+  # ... 나머지 설정
+```
 
-**문제 12** `ssh cka2556`에서 해결:
+**Step 4: Tenant 리소스 생성**
 
-_네임스페이스_ `project-tiger`에서 다음을 구현하세요:
+```bash
+k -f /opt/course/2/minio-tenant.yaml apply
+k -n minio get tenant
+```
 
-- `3`개 복제본으로 `deploy-important`라는 _배포_ 생성
-- _배포_와 해당 _파드_들은 레이블 `id=very-important`를 가져야 함
-- `nginx:1-alpine` 이미지의 `container1`이라는 첫 번째 컨테이너
-- `google/pause` 이미지의 `container2`라는 두 번째 컨테이너
-- 해당 _배포_의 **하나**의 _파드_만이 **하나**의 워커 노드에서 실행되어야 함. 이를 위해 `topologyKey: kubernetes.io/hostname` 사용
+### 📚 개념 정리
 
-**문제 13** `ssh cka7968`에서 해결:
+- **Helm Chart**: Kubernetes YAML 템플릿 파일들의 패키지
+- **Helm Release**: Chart가 설치된 인스턴스
+- **Operator**: Kubernetes API와 통신하며 CRD와 함께 동작하는 Pod
+- **CRD**: Kubernetes API의 커스텀 확장
 
-프로젝트 r500 팀이 Ingress(networking.k8s.io)를 Gateway Api(gateway.networking.k8s.io) 솔루션으로 교체하고자 합니다. 기존 Ingress는 `/opt/course/13/ingress.yaml`에서 확인할 수 있습니다.
+---
 
-_네임스페이스_ `project-r500`과 이미 존재하는 _Gateway_에 대해 다음을 수행하세요:
+## 🔧 Question 3 | Scale down StatefulSet
 
-1. 기존 Ingress의 라우트를 복제하는 `traffic-director`라는 새로운 _HTTPRoute_ 생성
-2. User-Agent가 정확히 `mobile`이면 mobile로, 그렇지 않으면 desktop으로 리디렉션하는 경로 `/auto`로 새 _HTTPRoute_ 확장
+**인스턴스**: `ssh cka3962`
 
-**문제 14** `ssh cka9412`에서 해결:
+### 📝 문제
 
-클러스터 인증서에 대한 몇 가지 작업을 수행하세요:
+`project-h800` Namespace에 있는 `o3db-*` Pod들을 1개 replica로 스케일 다운하세요.
 
-1. openssl 또는 cfssl을 사용하여 kube-apiserver 서버 인증서의 유효 기간 확인. 만료 날짜를 `/opt/course/14/expiration`에 작성. `kubeadm` 명령을 실행하여 만료 날짜를 나열하고 두 방법이 동일한 날짜를 보여주는지 확인
-2. kube-apiserver 인증서를 갱신하는 `kubeadm` 명령을 `/opt/course/14/kubeadm-renew-certs.sh`에 작성
+### 💡 해답
 
-**문제 15** `ssh cka7968`에서 해결:
+```bash
+ssh cka3962
 
-침입자가 하나의 해킹된 백엔드 _파드_에서 전체 클러스터에 액세스할 수 있었던 보안 사고가 있었습니다.
+# Pod 확인
+k -n project-h800 get pod | grep o3db
 
-이를 방지하기 위해 _네임스페이스_ `project-snake`에 `np-backend`라는 _NetworkPolicy_를 생성하세요. `backend-*` _파드_들이 다음에만 연결할 수 있도록 허용해야 합니다:
+# StatefulSet 확인
+k -n project-h800 get deploy,ds,sts | grep o3db
 
-- 포트 `1111`에서 `db1-*` _파드_들에 연결
-- 포트 `2222`에서 `db2-*` _파드_들에 연결
+# 스케일 다운
+k -n project-h800 scale sts o3db --replicas 1
 
-정책에서 `app` _파드_ 레이블을 사용하세요.
+# 결과 확인
+k -n project-h800 get sts o3db
+```
 
-**문제 16** `ssh cka5774`에서 해결:
+---
 
-클러스터의 CoreDNS 구성을 업데이트해야 합니다:
+## 🔧 Question 4 | Find Pods first to be terminated
 
-1. 기존 구성 Yaml의 백업을 만들어 `/opt/course/16/coredns_backup.yaml`에 저장. 백업에서 빠르게 복구할 수 있어야 함
-2. `SERVICE.NAMESPACE.custom-domain`에 대한 DNS 해상도가 `SERVICE.NAMESPACE.cluster.local`과 정확히 동일하게 작동하고 추가로 작동하도록 클러스터의 CoreDNS 구성 업데이트
+**인스턴스**: `ssh cka2556`
 
-**문제 17** `ssh cka2556`에서 해결:
+### 📝 문제
 
-_네임스페이스_ `project-tiger`에서 `httpd:2-alpine` 이미지의 `tigers-reunite`라는 _파드_를 레이블 `pod=container`, `container=pod`로 생성하세요. _파드_가 예약된 노드를 찾아내세요. 해당 노드에 ssh로 접속하여 해당 _파드_에 속하는 containerd 컨테이너를 찾으세요.
+`project-c13` Namespace에서 리소스 부족 시 가장 먼저 종료될 Pod들을 찾아 `/opt/course/4/pods-terminated-first.txt`에 저장하세요.
 
-`crictl` 명령을 사용하여:
+### 💡 해답
 
-1. 컨테이너의 ID와 `info.runtimeType`을 `/opt/course/17/pod-container.txt`에 작성
-2. 컨테이너의 로그를 `/opt/course/17/pod-container.log`에 작성
+**개념**: 리소스 요청이 없는 Pod들이 먼저 종료됨 (QoS Class: BestEffort)
 
-**미리보기 문제 1 | ETCD 정보**
+```bash
+ssh cka2556
 
-`ssh cka9412`에서 해결:
+# 방법 1: 수동 확인
+k -n project-c13 describe pod | grep -A 3 -E 'Requests|^Name:'
 
-클러스터 관리자가 `cka9412`에서 실행 중인 etcd에 대한 다음 정보를 찾아달라고 요청했습니다:
+# 방법 2: 자동화
+k -n project-c13 get pod -o jsonpath="{range .items[*]} {.metadata.name}{.spec.containers[*].resources}{'\n'}"
 
-- 서버 개인 키 위치
-- 서버 인증서 만료 날짜
-- 클라이언트 인증서 인증이 활성화되어 있는지
+# 방법 3: QoS Class 확인
+k get pods -n project-c13 -o jsonpath="{range .items[*]}{.metadata.name} {.status.qosClass}{'\n'}"
+```
 
-이 정보들을 `/opt/course/p1/etcd-info.txt`에 작성하세요.
+**결과 파일**:
 
-**미리보기 문제 2 | Kube-Proxy iptables**
+```text
+# /opt/course/4/pods-terminated-first.txt
+c13-3cc-runner-heavy-65588d7d6-djtv9map
+c13-3cc-runner-heavy-65588d7d6-v8kf5map
+c13-3cc-runner-heavy-65588d7d6-wwpb4map
+```
 
-`ssh cka2556`에서 해결:
+### 📚 QoS Classes
 
-kube-proxy가 올바르게 실행되고 있는지 확인하도록 요청받았습니다. _네임스페이스_ `project-hamster`에서 다음을 수행하세요:
+- **Guaranteed**: requests = limits
+- **Burstable**: requests < limits
+- **BestEffort**: requests/limits 없음 (먼저 종료됨)
 
-1. `nginx:1-alpine` 이미지로 _파드_ `p2-pod` 생성
-2. 포트 `3000->80`에서 클러스터 내부적으로 _파드_를 노출하는 _서비스_ `p2-service` 생성
-3. 생성된 _서비스_ `p2-service`에 속하는 노드 `cka2556`의 iptables 규칙을 `/opt/course/p2/iptables.txt` 파일에 작성
-4. _서비스_를 삭제하고 iptables 규칙이 다시 사라졌는지 확인
+---
 
-**미리보기 문제 3 | Service CIDR 변경**
+## 🔧 Question 5 | Kustomize configure HPA Autoscaler
 
-`ssh cka9412`에서 해결:
+**인스턴스**: `ssh cka5774`
 
-1. `httpd:2-alpine` 이미지를 사용하여 _네임스페이스_ `default`에 `check-ip`라는 _파드_ 생성
-2. 포트 `80`에서 ClusterIP _서비스_ `check-ip-service`로 노출. 해당 _서비스_의 IP 기억/출력
-3. 클러스터의 Service CIDR을 `11.96.0.0/12`로 변경
-4. 동일한 _파드_를 가리키는 `check-ip-service2`라는 두 번째 _서비스_ 생성
+### 📝 문제
 
-> ℹ️ 두 번째 _서비스_는 새 CIDR 범위에서 IP 주소를 가져야 합니다
+Kustomize를 사용하여 HPA(HorizontalPodAutoscaler)를 구성하세요:
+
+1. `horizontal-scaling-config` ConfigMap 완전 제거
+2. `api-gateway` Deployment용 HPA 추가 (min: 2, max: 4, CPU: 50%)
+3. prod 환경에서는 max 6 replicas
+4. staging과 prod에 변경사항 적용
+
+### 💡 해답
+
+**Step 1: ConfigMap 제거**
+
+```bash
+ssh cka5774
+cd /opt/course/5/api-gateway
+
+# base, staging, prod의 api-gateway.yaml에서 ConfigMap 섹션 제거
+vim base/api-gateway.yaml
+vim staging/api-gateway.yaml  
+vim prod/api-gateway.yaml
+```
+
+**Step 2: Base에 HPA 추가**
+
+```yaml
+# base/api-gateway.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-gateway
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api-gateway
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+---
+# ... 기존 ServiceAccount와 Deployment
+```
+
+**Step 3: Prod에서 maxReplicas 오버라이드**
+
+```yaml
+# prod/api-gateway.yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api-gateway
+spec:
+  maxReplicas: 6
+---
+# ... 기존 Deployment
+```
+
+**Step 4: 변경사항 적용**
+
+```bash
+# Staging 적용
+k kustomize staging | kubectl diff -f -
+k kustomize staging | kubectl apply -f -
+
+# Prod 적용  
+k kustomize prod | kubectl apply -f -
+
+# 기존 ConfigMap 수동 삭제
+k -n api-gateway-staging delete cm horizontal-scaling-config
+k -n api-gateway-prod delete cm horizontal-scaling-config
+```
+
+---
+
+## 🔧 Question 6 | Storage, PV, PVC, Pod volume
+
+**인스턴스**: `ssh cka7968`
+
+### 📝 문제
+
+스토리지 리소스를 생성하세요:
+
+1. PV `safari-pv`: 2Gi, ReadWriteOnce, hostPath `/Volumes/Data`
+2. PVC `safari-pvc`: `project-t230` namespace에 2Gi 요청
+3. Deployment `safari`: PVC를 `/tmp/safari-data`에 마운트
+
+### 💡 해답
+
+**Step 1: PersistentVolume 생성**
+
+```yaml
+# 6_pv.yaml
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+ name: safari-pv
+spec:
+ capacity:
+  storage: 2Gi
+ accessModes:
+  - ReadWriteOnce
+ hostPath:
+  path: "/Volumes/Data"
+```
+
+**Step 2: PersistentVolumeClaim 생성**
+
+```yaml
+# 6_pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: safari-pvc
+  namespace: project-t230
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+     storage: 2Gi
+```
+
+**Step 3: Deployment 생성**
+
+```yaml
+# 6_dep.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: safari
+  name: safari
+  namespace: project-t230
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: safari
+  template:
+    metadata:
+      labels:
+        app: safari
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: safari-pvc
+      containers:
+      - image: httpd:2-alpine
+        name: container
+        volumeMounts:
+        - name: data
+          mountPath: /tmp/safari-data
+```
+
+**적용 및 확인**:
+
+```bash
+k -f 6_pv.yaml create
+k -f 6_pvc.yaml create
+k -f 6_dep.yaml create
+
+# Bound 상태 확인
+k -n project-t230 get pv,pvc
+```
+
+---
+
+## 🔧 Question 7 | Node and Pod Resource Usage
+
+**인스턴스**: `ssh cka5774`
+
+### 📝 문제
+
+kubectl을 사용하는 bash 스크립트 2개를 작성하세요:
+
+1. `/opt/course/7/node.sh`: Node 리소스 사용량 표시
+2. `/opt/course/7/pod.sh`: Pod와 컨테이너 리소스 사용량 표시
+
+### 💡 해답
+
+```bash
+# /opt/course/7/node.sh
+kubectl top node
+
+# /opt/course/7/pod.sh  
+kubectl top pod --containers=true
+```
+
+---
+
+## 🔧 Question 8 | Update Kubernetes Version and join cluster
+
+**인스턴스**: `ssh cka3962`
+
+### 📝 문제
+
+`cka3962-node1` 노드를 업데이트하고 클러스터에 조인하세요:
+
+1. controlplane과 동일한 Kubernetes 버전으로 업데이트
+2. kubeadm을 사용하여 클러스터에 노드 추가
+
+### 💡 해답
+
+**Step 1: 버전 확인**
+
+```bash
+ssh cka3962
+k get node  # controlplane 버전 확인 (v1.32.1)
+
+ssh cka3962-node1
+sudo -i
+kubelet --version  # 현재 버전 확인
+```
+
+**Step 2: kubelet과 kubectl 업데이트**
+
+```bash
+# worker 노드에서
+apt update
+apt install kubectl=1.32.1-1.1 kubelet=1.32.1-1.1
+service kubelet restart
+```
+
+**Step 3: 조인 토큰 생성**
+
+```bash
+# controlplane에서
+sudo -i
+kubeadm token create --print-join-command
+```
+
+**Step 4: 클러스터 조인**
+
+```bash
+# worker 노드에서 위에서 출력된 명령어 실행
+kubeadm join 192.168.100.31:6443 --token xxx --discovery-token-ca-cert-hash sha256:xxx
+
+# 결과 확인
+k get node
+```
+
+---
+
+## 🔧 Question 9 | Contact K8s Api from inside Pod
+
+**인스턴스**: `ssh cka9412`
+
+### 📝 문제
+
+`project-swan` Namespace의 `secret-reader` ServiceAccount을 사용하는 Pod를 생성하고, Pod 내부에서 curl로 Kubernetes API를 쿼리하여 모든 Secret을 조회하세요.
+
+### 💡 해답
+
+**Step 1: Pod 생성**
+
+```yaml
+# 9.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: api-contact
+  name: api-contact
+  namespace: project-swan
+spec:
+  serviceAccountName: secret-reader
+  containers:
+  - image: nginx:1-alpine
+    name: api-contact
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+```
+
+**Step 2: API 호출**
+
+```bash
+k -n project-swan exec api-contact -it -- sh
+
+# ServiceAccount 토큰 사용
+TOKEN=$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)
+curl -k https://kubernetes.default/api/v1/secrets -H "Authorization: Bearer ${TOKEN}"
+
+# 결과를 파일로 저장
+curl -k https://kubernetes.default/api/v1/secrets -H "Authorization: Bearer ${TOKEN}" > result.json
+exit
+
+# 결과 복사
+k -n project-swan exec api-contact -it -- cat result.json > /opt/course/9/result.json
+```
+
+**보안 개선 (CA 인증서 사용)**:
+
+```bash
+CACERT=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+curl --cacert ${CACERT} https://kubernetes.default/api/v1/secrets -H "Authorization: Bearer ${TOKEN}"
+```
+
+---
+
+## 🔧 Question 10 | RBAC ServiceAccount Role RoleBinding
+
+**인스턴스**: `ssh cka3962`
+
+### 📝 문제
+
+`project-hamster` Namespace에 RBAC 설정을 생성하세요:
+
+1. ServiceAccount `processor` 생성
+2. Role `processor`: Secret과 ConfigMap 생성 권한만 허용
+3. RoleBinding `processor`: SA와 Role 연결
+
+### 💡 해답
+
+**Step 1: ServiceAccount 생성**
+
+```bash
+ssh cka3962
+k -n project-hamster create sa processor
+```
+
+**Step 2: Role 생성**
+
+```bash
+k -n project-hamster create role processor --verb=create --resource=secret --resource=configmap
+```
+
+**Step 3: RoleBinding 생성**
+
+```bash
+k -n project-hamster create rolebinding processor --role processor --serviceaccount project-hamster:processor
+```
+
+**Step 4: 권한 테스트**
+
+```bash
+# 허용되는 작업
+k -n project-hamster auth can-i create secret --as system:serviceaccount:project-hamster:processor  # yes
+k -n project-hamster auth can-i create configmap --as system:serviceaccount:project-hamster:processor  # yes
+
+# 허용되지 않는 작업
+k -n project-hamster auth can-i create pod --as system:serviceaccount:project-hamster:processor  # no
+k -n project-hamster auth can-i delete secret --as system:serviceaccount:project-hamster:processor  # no
+```
+
+### 📚 RBAC 조합
+
+- **Role + RoleBinding**: 단일 Namespace에서 사용 가능하고 적용
+- **ClusterRole + ClusterRoleBinding**: 클러스터 전체에서 사용 가능하고 적용
+- **ClusterRole + RoleBinding**: 클러스터 전체에서 사용 가능하지만 단일 Namespace에 적용
+- **Role + ClusterRoleBinding**: 불가능
+
+---
+
+## 🎯 주요 학습 포인트
+
+### kubectl 필수 명령어
+
+```bash
+# 리소스 생성
+k create deployment/service/configmap/secret
+k create role/rolebinding/clusterrole/clusterrolebinding
+k create sa (serviceaccount)
+
+# 설정 관리
+k config get-contexts
+k config current-context
+k config view
+
+# 리소스 관리
+k scale deployment/sts --replicas=N
+k top node/pod
+k auth can-i
+
+# 디버깅
+k describe pod/node/deployment
+k logs pod-name
+k exec pod-name -it -- command
+```
+
+### 중요 개념
+
+- **QoS Classes**: Guaranteed > Burstable > BestEffort
+- **RBAC**: Role, RoleBinding, ClusterRole, ClusterRoleBinding
+- **Storage**: PV, PVC, StorageClass
+- **HPA**: CPU/Memory 기반 자동 스케일링
+- **ServiceAccount**: Pod에서 API 접근 시 사용하는 계정
+- **Kustomize**: YAML 템플릿 관리 도구
+
+### 문제 해결 팁
+
+1. **항상 Namespace 확인**: `-n namespace-name`
+2. **dry-run 활용**: `--dry-run=client -o yaml`
+3. **공식 문서 참조**: kubectl create -h, kubernetes.io/docs
+4. **권한 확인**: `k auth can-i`
+5. **상태 확인**: `k get`, `k describe`, `k logs`
