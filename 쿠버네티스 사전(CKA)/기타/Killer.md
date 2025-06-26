@@ -659,7 +659,7 @@ ssh cka2556
 k -n project-tiger create deployment --image=nginx:1-alpine deploy-important --dry-run=client -o yaml > 12.yaml
 ```
 
-####TopologySpreadConstraints 사용
+**TopologySpreadConstraints 사용**
 
 ```yaml
 # 12.yaml (대안)
