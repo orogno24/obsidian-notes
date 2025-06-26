@@ -1054,7 +1054,7 @@ CoreDNS 설정을 업데이트하세요:
 ssh cka5774
 
 # CoreDNS ConfigMap 백업
-k -n kube-system get cm coredns -oyaml > /opt/course/16/coredns_backup.yaml
+k -n kube-system get cm coredns -o yaml > /opt/course/16/coredns_backup.yaml
 ```
 
 **Step 2: 설정 확인**
