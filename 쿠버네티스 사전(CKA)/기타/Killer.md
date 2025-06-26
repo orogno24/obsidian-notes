@@ -558,3 +558,700 @@ k -n project-hamster auth can-i delete secret --as system:serviceaccount:project
 - **Role + ClusterRoleBinding**: 불가능
 
 ---
+## 🔧 Question 11 | DaemonSet on all Nodes
+
+**인스턴스**: `ssh cka2556`
+
+### 📝 문제
+
+`project-tiger` Namespace에서 다음을 생성하세요:
+
+- **DaemonSet 이름**: `ds-important`
+- **이미지**: `httpd:2-alpine`
+- **레이블**: `id=ds-important`, `uuid=18426a0b-5f59-4e10-923f-c0e078e82462`
+- **리소스 요청**: CPU 10m, 메모리 10Mi
+- **스케줄링**: 모든 노드(controlplane 포함)에서 실행
+
+### 💡 해답
+
+```bash
+ssh cka2556
+
+# Deployment 템플릿으로 시작하여 DaemonSet으로 변경
+k -n project-tiger create deployment --image=httpd:2-alpine ds-important --dry-run=client -o yaml > 11.yaml
+```
+
+**DaemonSet YAML 수정**:
+
+```yaml
+# 11.yaml
+apiVersion: apps/v1
+kind: DaemonSet                                     # Deployment에서 변경
+metadata:
+  labels:                                           # 추가
+    id: ds-important                                # 추가
+    uuid: 18426a0b-5f59-4e10-923f-c0e078e82462      # 추가
+  name: ds-important
+  namespace: project-tiger                          # 중요
+spec:
+  #replicas: 1                                      # 제거 (DaemonSet은 replicas 없음)
+  selector:
+    matchLabels:
+      id: ds-important                              # 추가
+      uuid: 18426a0b-5f59-4e10-923f-c0e078e82462    # 추가
+  #strategy: {}                                     # 제거
+  template:
+    metadata:
+      labels:
+        id: ds-important                            # 추가
+        uuid: 18426a0b-5f59-4e10-923f-c0e078e82462  # 추가
+    spec:
+      containers:
+      - image: httpd:2-alpine
+        name: ds-important
+        resources:
+          requests:                                 # 추가
+            cpu: 10m                                # 추가
+            memory: 10Mi                            # 추가
+      tolerations:                                  # 추가 (controlplane에서 실행하기 위함)
+      - effect: NoSchedule                          # 추가
+        key: node-role.kubernetes.io/control-plane  # 추가
+```
+
+**적용 및 확인**:
+
+```bash
+k -f 11.yaml create
+
+# DaemonSet 상태 확인
+k -n project-tiger get ds
+k -n project-tiger get pod -l id=ds-important -o wide
+```
+
+### 📚 개념 정리
+
+- **DaemonSet**: 각 노드에 정확히 하나의 Pod를 실행
+- **Toleration**: Taint가 있는 노드에서도 Pod 실행을 허용
+- **controlplane Taint**: `node-role.kubernetes.io/control-plane:NoSchedule`
+
+---
+
+## 🔧 Question 12 | Deployment on all Nodes
+
+**인스턴스**: `ssh cka2556`
+
+### 📝 문제
+
+`project-tiger` Namespace에서 다음을 구현하세요:
+
+- **Deployment 이름**: `deploy-important` (3 replicas)
+- **레이블**: `id=very-important`
+- **컨테이너 1**: `container1` (nginx:1-alpine)
+- **컨테이너 2**: `container2` (google/pause)
+- **제약조건**: 하나의 worker 노드에는 하나의 Pod만 실행 (`topologyKey: kubernetes.io/hostname`)
+
+### 💡 해답
+
+**템플릿 생성**:
+
+```bash
+ssh cka2556
+k -n project-tiger create deployment --image=nginx:1-alpine deploy-important --dry-run=client -o yaml > 12.yaml
+```
+
+####TopologySpreadConstraints 사용
+
+```yaml
+# 12.yaml (대안)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    id: very-important
+  name: deploy-important
+  namespace: project-tiger
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      id: very-important
+  template:
+    metadata:
+      labels:
+        id: very-important
+    spec:
+      containers:
+      - image: nginx:1-alpine
+        name: container1
+        resources: {}
+      - image: google/pause
+        name: container2
+      topologySpreadConstraints:                 # 추가
+      - maxSkew: 1                               # 추가
+        topologyKey: kubernetes.io/hostname      # 추가
+        whenUnsatisfiable: DoNotSchedule         # 추가
+        labelSelector:                           # 추가
+          matchLabels:                           # 추가
+            id: very-important                   # 추가
+```
+
+**적용 및 확인**:
+
+```bash
+k -f 12.yaml create
+
+# 결과 확인 (2/3 ready - 하나는 pending)
+k -n project-tiger get deploy -l id=very-important
+k -n project-tiger get pod -o wide -l id=very-important
+```
+
+### 📚 개념 정리
+
+- **PodAntiAffinity**: 특정 레이블의 Pod와 같은 노드에 스케줄링 방지
+- **TopologySpreadConstraints**: Pod를 토폴로지 도메인에 균등하게 분산
+- **topologyKey**: 노드 레이블 기준으로 토폴로지 도메인 정의
+
+---
+
+## 🔧 Question 13 | Gateway API Ingress
+
+**인스턴스**: `ssh cka7968`
+
+### 📝 문제
+
+`project-r500` Namespace에서 기존 Ingress를 Gateway API로 교체하세요:
+
+1. 기존 Ingress(`/opt/course/13/ingress.yaml`)와 동일한 라우팅을 하는 HTTPRoute `traffic-director` 생성
+2. `/auto` 경로 추가: User-Agent가 `mobile`이면 mobile로, 아니면 desktop으로 라우팅
+
+**테스트 명령어**:
+
+```bash
+curl r500.gateway:30080/desktop
+curl r500.gateway:30080/mobile
+curl r500.gateway:30080/auto -H "User-Agent: mobile" 
+curl r500.gateway:30080/auto
+```
+
+### 💡 해답
+
+**Step 1: 기존 Ingress 분석**
+
+```yaml
+# /opt/course/13/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traffic-director
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: r500.gateway
+      http:
+        paths:
+          - backend:
+              service:
+                name: web-desktop
+                port:
+                  number: 80
+            path: /desktop
+            pathType: Prefix
+          - backend:
+              service:
+                name: web-mobile
+                port:
+                  number: 80
+            path: /mobile
+            pathType: Prefix
+```
+
+**Step 2: HTTPRoute 생성**
+
+```yaml
+# traffic-director.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: traffic-director
+  namespace: project-r500
+spec:
+  parentRefs:
+    - name: main   # 기존 Gateway 이름
+  hostnames:
+    - "r500.gateway"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /desktop
+      backendRefs:
+        - name: web-desktop
+          port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /mobile
+      backendRefs:
+        - name: web-mobile
+          port: 80
+    # /auto 경로 - User-Agent: mobile인 경우
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /auto
+          headers:
+          - type: Exact
+            name: user-agent
+            value: mobile
+      backendRefs:
+        - name: web-mobile
+          port: 80
+    # /auto 경로 - 기본값 (desktop)
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /auto
+      backendRefs:
+        - name: web-desktop
+          port: 80
+```
+
+**적용 및 테스트**:
+
+```bash
+ssh cka7968
+k -n project-r500 apply -f traffic-director.yaml
+
+# 테스트
+curl r500.gateway:30080/desktop
+curl r500.gateway:30080/mobile
+curl -H "User-Agent: mobile" r500.gateway:30080/auto
+curl r500.gateway:30080/auto
+```
+
+### 📚 개념 정리
+
+- **Gateway API**: Ingress의 차세대 대안, 더 유연하고 확장 가능
+- **HTTPRoute**: HTTP 트래픽 라우팅 규칙 정의
+- **Rule 순서**: 규칙 순서가 중요 (첫 번째 매치되는 규칙 적용)
+
+---
+
+## 🔧 Question 14 | Check Certificate Validity
+
+**인스턴스**: `ssh cka9412`
+
+### 📝 문제
+
+클러스터 인증서 관련 작업을 수행하세요:
+
+1. `openssl` 또는 `cfssl`로 kube-apiserver 인증서 만료일 확인하여 `/opt/course/14/expiration`에 저장
+2. `kubeadm` 명령어로 만료일 확인하여 두 방법이 같은 결과를 보이는지 확인
+3. kube-apiserver 인증서 갱신 명령어를 `/opt/course/14/kubeadm-renew-certs.sh`에 저장
+
+### 💡 해답
+
+**Step 1: 인증서 파일 찾기**
+
+```bash
+ssh cka9412
+sudo -i
+
+# apiserver 관련 인증서 확인
+find /etc/kubernetes/pki | grep apiserver
+```
+
+**Step 2: openssl로 만료일 확인**
+
+```bash
+# 인증서 정보 확인
+openssl x509 -noout -text -in /etc/kubernetes/pki/apiserver.crt | grep Validity -A2
+
+# 결과 예시:
+#         Validity
+#             Not Before: Oct 29 14:14:27 2024 GMT
+#             Not After : Oct 29 14:19:27 2025 GMT
+```
+
+**만료일 저장**:
+
+```text
+# /opt/course/14/expiration
+Oct 29 14:19:27 2025 GMT
+```
+
+**Step 3: kubeadm으로 확인**
+
+```bash
+# 모든 인증서 만료일 확인
+kubeadm certs check-expiration | grep apiserver
+
+# 결과 예시:
+# apiserver                  Oct 29, 2025 14:19 UTC   356d    ca         no      
+# apiserver-etcd-client      Oct 29, 2025 14:19 UTC   356d    etcd-ca    no      
+# apiserver-kubelet-client   Oct 29, 2025 14:19 UTC   356d    ca         no 
+```
+
+**Step 4: 갱신 명령어 저장**
+
+```bash
+# /opt/course/14/kubeadm-renew-certs.sh
+kubeadm certs renew apiserver
+```
+
+### 📚 인증서 관리 명령어
+
+```bash
+# 모든 인증서 만료일 확인
+kubeadm certs check-expiration
+
+# 모든 인증서 갱신
+kubeadm certs renew all
+
+# 특정 인증서만 갱신
+kubeadm certs renew apiserver
+kubeadm certs renew apiserver-kubelet-client
+```
+
+---
+
+## 🔧 Question 15 | NetworkPolicy
+
+**인스턴스**: `ssh cka7968`
+
+### 📝 문제
+
+보안 사고 방지를 위해 NetworkPolicy를 생성하세요:
+
+**정책 이름**: `np-backend` (`project-snake` Namespace) **허용 규칙**: `backend-*` Pod들이 다음으로만 연결 가능
+
+- `db1-*` Pod의 1111 포트
+- `db2-*` Pod의 2222 포트
+
+**차단 대상**: `backend-*` Pod에서 `vault-*` Pod의 3333 포트 접속
+
+### 💡 해답
+
+**Step 1: 현재 상태 확인**
+
+```bash
+ssh cka7968
+
+# Pod 및 레이블 확인
+k -n project-snake get pod -L app
+k -n project-snake get pod -o wide
+
+# 현재 연결 테스트
+k -n project-snake exec backend-0 -- curl -s 10.44.0.25:1111  # db1
+k -n project-snake exec backend-0 -- curl -s 10.44.0.23:2222  # db2
+k -n project-snake exec backend-0 -- curl -s 10.44.0.22:3333  # vault (차단되어야 함)
+```
+
+**Step 2: NetworkPolicy 생성**
+
+```yaml
+# 15_np.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np-backend
+  namespace: project-snake
+spec:
+  podSelector:
+    matchLabels:
+      app: backend
+  policyTypes:
+    - Egress                    # Egress만 제어
+  egress:
+    -                           # 첫 번째 규칙
+      to:                           # 목적지 조건
+      - podSelector:
+          matchLabels:
+            app: db1
+      ports:                        # 포트 조건
+      - protocol: TCP
+        port: 1111
+    -                           # 두 번째 규칙
+      to:                           # 목적지 조건
+      - podSelector:
+          matchLabels:
+            app: db2
+      ports:                        # 포트 조건
+      - protocol: TCP
+        port: 2222
+```
+
+**적용 및 테스트**:
+
+```bash
+k -f 15_np.yaml create
+
+# 허용된 연결 테스트
+k -n project-snake exec backend-0 -- curl -s 10.44.0.25:1111  # 성공
+k -n project-snake exec backend-0 -- curl -s 10.44.0.23:2222  # 성공
+
+# 차단된 연결 테스트
+k -n project-snake exec backend-0 -- curl -s 10.44.0.22:3333  # 타임아웃
+```
+
+### 📚 NetworkPolicy 이해하기
+
+**올바른 정책 (AND 조건)**:
+
+```yaml
+egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: db1
+    ports:
+    - protocol: TCP
+      port: 1111
+```
+
+→ `app=db1` **AND** `port=1111`
+
+**잘못된 정책 (OR 조건)**:
+
+```yaml
+egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: db1
+    - podSelector:
+        matchLabels:
+          app: db2
+    ports:
+    - protocol: TCP
+      port: 1111
+    - protocol: TCP
+      port: 2222
+```
+
+→ `(app=db1 OR app=db2)` **AND** `(port=1111 OR port=2222)`
+
+---
+
+## 🔧 Question 16 | Update CoreDNS Configuration
+
+**인스턴스**: `ssh cka5774`
+
+### 📝 문제
+
+CoreDNS 설정을 업데이트하세요:
+
+1. 기존 설정을 `/opt/course/16/coredns_backup.yaml`에 백업
+2. `SERVICE.NAMESPACE.custom-domain`이 `SERVICE.NAMESPACE.cluster.local`과 동일하게 작동하도록 설정
+3. 테스트: `nslookup kubernetes.default.svc.cluster.local`과 `nslookup kubernetes.default.svc.custom-domain` 모두 성공해야 함
+
+### 💡 해답
+
+**Step 1: 백업 생성**
+
+```bash
+ssh cka5774
+
+# CoreDNS ConfigMap 백업
+k -n kube-system get cm coredns -oyaml > /opt/course/16/coredns_backup.yaml
+```
+
+**Step 2: 설정 확인**
+
+```yaml
+# 기존 CoreDNS 설정
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+           lameduck 5s
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        # ... 나머지 설정
+    }
+```
+
+**Step 3: 설정 업데이트**
+
+```bash
+k -n kube-system edit cm coredns
+```
+
+**수정된 설정**:
+
+```yaml
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+           lameduck 5s
+        }
+        ready
+        kubernetes custom-domain cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        # ... 나머지 설정
+    }
+```
+
+**Step 4: CoreDNS 재시작 및 테스트**
+
+```bash
+# CoreDNS 재시작
+k -n kube-system rollout restart deploy coredns
+
+# 테스트 Pod 생성
+k run bb --image=busybox:1 -- sh -c 'sleep 1d'
+
+# DNS 해상도 테스트
+k exec -it bb -- sh
+nslookup kubernetes.default.svc.custom-domain
+nslookup kubernetes.default.svc.cluster.local
+```
+
+### 📚 복구 방법
+
+```bash
+# 백업에서 복구
+k delete -f /opt/course/16/coredns_backup.yaml
+k apply -f /opt/course/16/coredns_backup.yaml
+k -n kube-system rollout restart deploy coredns
+```
+
+---
+
+## 🔧 Question 17 | Find Container Info with crictl
+
+**인스턴스**: `ssh cka2556`
+
+### 📝 문제
+
+`project-tiger` Namespace에 Pod를 생성하고 컨테이너 정보를 조사하세요:
+
+1. Pod `tigers-reunite` 생성 (httpd:2-alpine, 레이블: pod=container, container=pod)
+2. Pod가 스케줄된 노드에 SSH 접속
+3. `crictl`로 컨테이너 찾아서:
+    - 컨테이너 ID와 info.runtimeType을 `/opt/course/17/pod-container.txt`에 저장
+    - 컨테이너 로그를 `/opt/course/17/pod-container.log`에 저장
+
+### 💡 해답
+
+**Step 1: Pod 생성 및 노드 확인**
+
+```bash
+ssh cka2556
+
+# Pod 생성
+k -n project-tiger run tigers-reunite --image=httpd:2-alpine --labels "pod=container,container=pod"
+
+# 스케줄된 노드 확인
+k -n project-tiger get pod -o wide
+# 결과 예시: tigers-reunite가 cka2556-node1에 스케줄됨
+```
+
+**Step 2: 워커 노드 접속 및 컨테이너 찾기**
+
+```bash
+# 워커 노드 접속
+ssh cka2556-node1
+sudo -i
+
+# 컨테이너 ID 찾기
+crictl ps | grep tigers-reunite
+# 결과 예시: ba62e5d465ff0   a7ccaadd632cf   2 minutes ago   Running   tigers-reunite
+```
+
+**Step 3: 컨테이너 정보 수집**
+
+```bash
+# runtime 타입 확인
+crictl inspect ba62e5d465ff0 | grep runtimeType
+# 결과: "runtimeType": "io.containerd.runc.v2",
+
+# 컨테이너 로그 확인
+crictl logs ba62e5d465ff0
+```
+
+**Step 4: 결과 파일 생성**
+
+```text
+# /opt/course/17/pod-container.txt
+ba62e5d465ff0 io.containerd.runc.v2
+```
+
+```text
+# /opt/course/17/pod-container.log
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.44.0.29. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.44.0.29. Set the 'ServerName' directive globally to suppress this message
+[Tue Oct 29 15:12:57.211347 2024] [mpm_event:notice] [pid 1:tid 1] AH00489: Apache/2.4.62 (Unix) configured -- resuming normal operations
+[Tue Oct 29 15:12:57.211841 2024] [core:notice] [pid 1:tid 1] AH00094: Command line: 'httpd -D FOREGROUND'
+```
+
+### 📚 crictl 주요 명령어
+
+```bash
+# 실행 중인 컨테이너 확인
+crictl ps
+
+# 모든 컨테이너 확인 (중지된 것 포함)
+crictl ps -a
+
+# 컨테이너 상세 정보
+crictl inspect <container-id>
+
+# 컨테이너 로그 확인
+crictl logs <container-id>
+
+# 이미지 목록
+crictl images
+
+# Pod 목록
+crictl pods
+```
+
+---
+
+## 🎯 주요 학습 포인트
+
+### 고급 스케줄링
+
+- **DaemonSet**: 모든 노드에 Pod 배포
+- **Toleration**: Taint 무시하고 스케줄링
+- **PodAntiAffinity**: Pod 간 반발력 설정
+- **TopologySpreadConstraints**: Pod 분산 제어
+
+### 네트워킹
+
+- **Gateway API**: 차세대 Ingress 대안
+- **HTTPRoute**: HTTP 라우팅 규칙
+- **NetworkPolicy**: 네트워크 트래픽 제어
+- **CoreDNS**: DNS 서버 설정
+
+### 보안 및 인증서
+
+- **TLS 인증서**: openssl로 확인
+- **kubeadm**: 인증서 관리 도구
+- **인증서 갱신**: 클러스터 보안 유지
+
+### 컨테이너 런타임
+
+- **crictl**: containerd 관리 도구
+- **컨테이너 디버깅**: 로그 및 정보 수집
+
+### 문제 해결 전략
+
+1. **백업 먼저**: 중요한 변경 전 반드시 백업
+2. **단계적 접근**: 복잡한 문제를 작은 단위로 분해
+3. **테스트 반복**: 각 단계마다 결과 확인
+4. **공식 문서 활용**: Kubernetes 문서에서 예제 참조
