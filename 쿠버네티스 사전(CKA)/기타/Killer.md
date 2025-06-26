@@ -1222,3 +1222,430 @@ crictl pods
 ```
 
 ---
+## 🔧 Preview Question 1 | ETCD Information
+
+**인스턴스**: `ssh cka9412`
+
+### 📝 문제
+
+클러스터 관리자가 `cka9412`에서 실행 중인 etcd에 대한 다음 정보를 찾아달라고 요청했습니다:
+
+1. **서버 개인키 위치**
+2. **서버 인증서 만료일**
+3. **클라이언트 인증서 인증 활성화 여부**
+
+이 정보들을 `/opt/course/p1/etcd-info.txt`에 작성하세요.
+
+### 💡 해답
+
+**Step 1: 클러스터 구성 확인**
+
+```bash
+ssh cka9412
+
+# 노드 확인
+k get node
+
+# etcd Pod 확인
+sudo -i
+k -n kube-system get pod
+```
+
+**Step 2: etcd 설정 파일 분석**
+
+```bash
+# Static Pod 매니페스트 찾기
+find /etc/kubernetes/manifests/
+
+# etcd 설정 확인
+vim /etc/kubernetes/manifests/etcd.yaml
+```
+
+**etcd.yaml 주요 설정**:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: etcd
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - etcd
+    - --cert-file=/etc/kubernetes/pki/etcd/server.crt            # 서버 인증서
+    - --client-cert-auth=true                                    # 클라이언트 인증 활성화
+    - --key-file=/etc/kubernetes/pki/etcd/server.key             # 서버 개인키
+    # ... 기타 설정들
+```
+
+**Step 3: 인증서 만료일 확인**
+
+```bash
+# openssl로 인증서 정보 확인
+openssl x509 -noout -text -in /etc/kubernetes/pki/etcd/server.crt | grep Validity -A2
+
+# 결과 예시:
+#         Validity
+#             Not Before: Oct 29 14:14:27 2024 GMT
+#             Not After : Oct 29 14:19:27 2025 GMT
+```
+
+**최종 답안**:
+
+```text
+# /opt/course/p1/etcd-info.txt
+Server private key location: /etc/kubernetes/pki/etcd/server.key
+Server certificate expiration date: Oct 29 14:19:27 2025 GMT
+Is client certificate authentication enabled: yes
+```
+
+### 📚 etcd 보안 개념
+
+- **클라이언트 인증**: etcd API 접근 시 클라이언트 인증서 요구
+- **TLS 암호화**: 모든 통신이 TLS로 암호화됨
+- **인증서 관리**: kubeadm이 자동으로 인증서 생성 및 관리
+
+---
+
+## 🔧 Preview Question 2 | Kube-Proxy iptables
+
+**인스턴스**: `ssh cka2556`
+
+### 📝 문제
+
+kube-proxy가 올바르게 작동하는지 확인하세요. `project-hamster` Namespace에서 다음을 수행하세요:
+
+1. `nginx:1-alpine` 이미지로 Pod `p2-pod` 생성
+2. Pod를 클러스터 내부 포트 3000→80으로 노출하는 Service `p2-service` 생성
+3. 생성된 Service에 속하는 노드 `cka2556`의 iptables 규칙을 `/opt/course/p2/iptables.txt`에 저장
+4. Service 삭제 후 iptables 규칙이 사라졌는지 확인
+
+### 💡 해답
+
+**Step 1: Pod 생성**
+
+```bash
+ssh cka2556
+k -n project-hamster run p2-pod --image=nginx:1-alpine
+```
+
+**Step 2: Service 생성**
+
+```bash
+k -n project-hamster expose pod p2-pod --name p2-service --port 3000 --target-port 80
+
+# 연결 상태 확인
+k -n project-hamster get pod,svc,ep
+```
+
+**결과 확인**:
+
+```text
+NAME                 READY   STATUS    RESTARTS   AGE
+pod/p2-pod           1/1     Running   0          2m31s
+
+NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/p2-service   ClusterIP   10.105.128.247   <none>        3000/TCP   1s
+
+NAME                   ENDPOINTS       AGE
+endpoints/p2-service   10.44.0.31:80   1s
+```
+
+**Step 3: kube-proxy iptables 모드 확인 (선택사항)**
+
+```bash
+sudo -i
+
+# kube-proxy 컨테이너 찾기
+crictl ps | grep kube-proxy
+
+# 로그 확인 (iptables 모드 사용 확인)
+crictl logs <container-id>
+# 결과: "Using iptables proxy"
+```
+
+**Step 4: iptables 규칙 확인 및 저장**
+
+```bash
+# Service 관련 iptables 규칙 확인
+iptables-save | grep p2-service
+
+# 파일로 저장
+iptables-save | grep p2-service > /opt/course/p2/iptables.txt
+```
+
+**iptables 규칙 예시**:
+
+```text
+-A KUBE-SEP-55IRFJIRWHLCQ6QX -s 10.44.0.31/32 -m comment --comment "project-hamster/p2-service" -j KUBE-MARK-MASQ
+-A KUBE-SEP-55IRFJIRWHLCQ6QX -p tcp -m comment --comment "project-hamster/p2-service" -m tcp -j DNAT --to-destination 10.44.0.31:80
+-A KUBE-SERVICES -d 10.105.128.247/32 -p tcp -m comment --comment "project-hamster/p2-service cluster IP" -m tcp --dport 3000 -j KUBE-SVC-U5ZRKF27Y7YDAZTN
+-A KUBE-SVC-U5ZRKF27Y7YDAZTN ! -s 10.244.0.0/16 -d 10.105.128.247/32 -p tcp -m comment --comment "project-hamster/p2-service cluster IP" -m tcp --dport 3000 -j KUBE-MARK-MASQ
+-A KUBE-SVC-U5ZRKF27Y7YDAZTN -m comment --comment "project-hamster/p2-service -> 10.44.0.31:80" -j KUBE-SEP-55IRFJIRWHLCQ6QX
+```
+
+**Step 5: Service 삭제 및 규칙 제거 확인**
+
+```bash
+# Service 삭제
+k -n project-hamster delete svc p2-service
+
+# iptables 규칙이 사라졌는지 확인
+iptables-save | grep p2-service
+# 결과: 아무것도 출력되지 않음
+```
+
+### 📚 kube-proxy와 iptables
+
+- **kube-proxy**: Service를 iptables 규칙으로 구현
+- **DNAT**: Destination NAT으로 Service IP를 Pod IP로 변환
+- **Load Balancing**: 여러 Pod 간 트래픽 분산
+- **자동 관리**: Service 생성/삭제 시 iptables 규칙 자동 업데이트
+
+---
+
+## 🔧 Preview Question 3 | Change Service CIDR
+
+**인스턴스**: `ssh cka9412`
+
+### 📝 문제
+
+다음 작업을 수행하세요:
+
+1. `httpd:2-alpine` 이미지로 `default` Namespace에 Pod `check-ip` 생성
+2. 포트 80으로 ClusterIP Service `check-ip-service`로 노출하고 IP 확인
+3. 클러스터의 Service CIDR을 `11.96.0.0/12`로 변경
+4. 같은 Pod를 가리키는 두 번째 Service `check-ip-service2` 생성
+
+> ℹ️ 두 번째 Service는 새로운 CIDR 범위에서 IP 주소를 받아야 합니다.
+
+### 💡 해답
+
+**Step 1: Pod 생성 및 첫 번째 Service 노출**
+
+```bash
+ssh cka9412
+
+# Pod 생성
+k run check-ip --image=httpd:2-alpine
+
+# Service로 노출
+k expose pod check-ip --name check-ip-service --port 80
+
+# Service IP 확인
+k get svc
+```
+
+**첫 번째 결과**:
+
+```text
+NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+check-ip-service   ClusterIP   10.109.84.110   <none>        80/TCP    13s
+kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP   9d
+```
+
+**Step 2: kube-apiserver Service CIDR 변경**
+
+```bash
+sudo -i
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+```
+
+```yaml
+# /etc/kubernetes/manifests/kube-apiserver.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-apiserver
+    - --advertise-address=192.168.100.21
+    # ... 기타 설정들
+    - --service-cluster-ip-range=11.96.0.0/12             # 변경
+    - --tls-cert-file=/etc/kubernetes/pki/apiserver.crt
+    # ... 나머지 설정들
+```
+
+**Step 3: kube-controller-manager Service CIDR 변경**
+
+```bash
+vim /etc/kubernetes/manifests/kube-controller-manager.yaml
+```
+
+```yaml
+# /etc/kubernetes/manifests/kube-controller-manager.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-controller-manager
+  namespace: kube-system
+spec:
+  containers:
+  - command:
+    - kube-controller-manager
+    # ... 기타 설정들
+    - --service-cluster-ip-range=11.96.0.0/12         # 변경
+    - --use-service-account-credentials=true
+```
+
+**Step 4: 컴포넌트 재시작 대기**
+
+```bash
+# kube-apiserver 재시작 확인
+watch crictl ps
+kubectl -n kube-system get pod | grep api
+
+# kube-controller-manager 재시작 확인  
+kubectl -n kube-system get pod | grep controller
+```
+
+**Step 5: 두 번째 Service 생성 및 확인**
+
+```bash
+# 두 번째 Service 생성
+k expose pod check-ip --name check-ip-service2 --port 80
+
+# 결과 확인
+k get svc
+```
+
+**최종 결과**:
+
+```text
+NAME                        TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+service/check-ip-service    ClusterIP   10.109.84.110   <none>        80/TCP    5m55s  # 기존 CIDR
+service/check-ip-service2   ClusterIP   11.105.52.114   <none>        80/TCP    29s    # 새 CIDR
+service/kubernetes          ClusterIP   10.96.0.1       <none>        443/TCP   9d
+```
+
+### 📚 Service CIDR 개념
+
+- **Service CIDR**: ClusterIP Service에 할당되는 IP 범위
+- **kube-apiserver**: Service IP 할당 담당
+- **kube-controller-manager**: Service 엔드포인트 관리
+- **기존 Service**: CIDR 변경 후에도 기존 IP 유지
+- **새 Service**: 새로운 CIDR 범위에서 IP 할당
+
+---
+
+## 🎯 CKA 시험 팁 (Kubernetes 1.32)
+
+### 📚 지식 준비
+
+#### 전반적인 학습 전략
+
+- **커리큘럼 숙지**: 모든 주제를 편안하게 느낄 때까지 학습
+- **실습 중심**: CKA 시뮬레이터로 1-2회 테스트 세션 진행
+- **다양한 접근**: 같은 문제를 여러 방법으로 해결해보기
+- **속도 향상**: alias 설정하고 kubectl 명령어 숙달
+- **CKAD 준비**: CKA 대부분이 리소스 생성 문제이므로 CKAD 학습도 도움
+
+#### 추천 학습 자료
+
+- 🌐 **Killercoda CKA**: https://killercoda.com/killer-shell-cka
+- 🌐 **Killercoda CKAD**: https://killercoda.com/killer-shell-ckad
+- 📝 **자체 시나리오**: 상상력을 발휘해 나만의 문제 만들기
+
+### 🔧 컴포넌트 이해
+
+#### 필수 역량
+
+- **클러스터 디버깅**: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster
+- **고급 스케줄링**: https://kubernetes.io/docs/concepts/scheduling/kube-scheduler
+- **컴포넌트 복구**: 다른 노드/클러스터의 설정을 참고하여 문제 해결
+- **설정 파일 복사**: 정상 동작하는 노드의 설정을 문제 노드로 복사
+
+#### 권장 실습
+
+- **Kubernetes The Hard Way**: 필수는 아니지만 개념 이해에 도움
+- **kubeadm 클러스터**: VM이나 클라우드에서 직접 설치 및 운영
+- **노드 추가**: kubeadm으로 클러스터에 노드 추가하는 방법
+- **Ingress 리소스**: Ingress 생성 및 관리
+- **ETCD 백업/복원**: 다른 머신에서 ETCD 스냅샷 및 복원
+
+### ⚡ 시험 전략
+
+#### 시간 관리
+
+```bash
+# 유용한 alias 설정
+alias k=kubectl
+alias kgp='kubectl get pods'
+alias kgs='kubectl get svc'
+alias kgn='kubectl get nodes'
+export do="--dry-run=client -o yaml"
+```
+
+#### 효율적인 작업 방법
+
+1. **문서 활용**: Kubernetes 공식 문서에서 예제 복사
+2. **단계별 검증**: 각 단계마다 결과 확인
+3. **백업 습관**: 중요한 변경 전 항상 백업
+4. **시간 분배**: 어려운 문제에 너무 오래 매달리지 말기
+
+#### 자주 사용하는 명령어 패턴
+
+```bash
+# 리소스 생성 템플릿
+k create deployment nginx --image=nginx $do > deploy.yaml
+k create service clusterip my-service --tcp=80:80 $do > svc.yaml
+
+# 빠른 확인
+k get pods -o wide --show-labels
+k describe pod <pod-name>
+k logs <pod-name>
+
+# 디버깅
+k get events --sort-by='.lastTimestamp'
+k top nodes
+k top pods
+```
+
+### 🎮 최종 점검 체크리스트
+
+#### 기술적 준비
+
+- [ ] kubectl 명령어 완전 숙달
+- [ ] YAML 작성 능력
+- [ ] 네트워킹 개념 (Service, Ingress, NetworkPolicy)
+- [ ] 스토리지 개념 (PV, PVC, StorageClass)
+- [ ] 보안 개념 (RBAC, ServiceAccount, SecurityContext)
+- [ ] 클러스터 관리 (etcd, 인증서, 업그레이드)
+
+#### 실무적 준비
+
+- [ ] 문제 해결 접근법
+- [ ] 시간 관리 전략
+- [ ] 브라우저 터미널 사용법
+- [ ] 스트레스 관리
+
+### 🚀 성공을 위한 마지막 조언
+
+> **"Perfect practice makes perfect"**  
+> 단순한 반복이 아닌, 정확한 방법으로 반복 연습하세요.
+
+1. **실수 분석**: 틀린 문제는 왜 틀렸는지 분석
+2. **다양한 시나리오**: 비슷한 문제를 다른 방식으로 해결
+3. **시간 압박**: 실제 시험처럼 시간 제한을 두고 연습
+4. **멘탈 관리**: 침착함을 유지하고 단계별로 접근
+
+---
+
+## 📋 요약
+
+### Preview 문제 핵심 학습 포인트
+
+- **ETCD 보안**: 인증서 관리와 클라이언트 인증
+- **kube-proxy 메커니즘**: iptables를 통한 Service 구현
+- **Service CIDR 관리**: 클러스터 네트워크 구성 변경
+
+### 시험 성공 전략
+
+- **기초 탄탄히**: kubectl과 YAML 작성 완벽 숙달
+- **실습 중심**: 이론보다는 실제 환경에서 반복 연습
+- **문제 해결**: 체계적인 디버깅과 트러블슈팅 능력
+- **시간 관리**: 효율적인 작업 순서와 우선순위 설정
