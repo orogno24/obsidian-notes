@@ -166,6 +166,8 @@ k -n project-h800 get sts o3db
 ```bash
 ssh cka2556
 
+kubectl get pod -n project-c13 -o custom-columns=NAME:.metadata.name,QOS:.status.qosClass
+
 # 방법 1: 수동 확인
 k -n project-c13 describe pod | grep -A 3 -E 'Requests|^Name:'
 
