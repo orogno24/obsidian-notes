@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
+                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Killer"
+              "title": "VPA"
             }
           }
         ]
@@ -172,9 +172,9 @@
   },
   "active": "ee65b2f9b58b1c93",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
-    "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
