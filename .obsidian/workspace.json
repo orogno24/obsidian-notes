@@ -8,35 +8,20 @@
         "type": "tabs",
         "children": [
           {
-            "id": "ee65b2f9b58b1c93",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "사이드카 컨테이너"
-            }
-          },
-          {
             "id": "64d064caf705c938",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "프로젝트/프로젝트 전체 구조.md",
+                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "프로젝트 전체 구조"
+              "title": "2025 기출문제"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 313.5
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "ebd9d345193a5f5b",
@@ -187,11 +173,13 @@
   },
   "active": "64d064caf705c938",
   "lastOpenFiles": [
-    "프로젝트/5. UI 가이드 & 화면설계서.md",
+    "오픈소스/ArgoCD.md",
+    "단어사전.md",
+    "무제.md",
     "프로젝트/프로젝트 전체 구조.md",
+    "프로젝트/5. UI 가이드 & 화면설계서.md",
     "프로젝트/프로젝트 통신.md",
     "사진/Pasted image 20250623100418.png",
-    "무제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/기타/Killer.md",
@@ -212,8 +200,6 @@
     "쿠버네티스 사전(CKA)/12. Helm/4. Helm 차트.md",
     "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
-    "단어사전.md",
-    "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
     "kubernetes-house-interactive.html",
     "오픈소스",
     "사진/Pasted image 20250616164553.png",
