@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
+                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 기출문제"
+              "title": "Killer"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 349.5
+    "width": 276.5
   },
   "right": {
     "id": "ebd9d345193a5f5b",
@@ -172,9 +172,9 @@
   },
   "active": "64d064caf705c938",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/3. 워커 노드 문제 해결.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/2. 컨트롤 플레인 문제 해결.md",
-    "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "오픈소스/ArgoCD.md",
     "단어사전.md",
     "무제.md",
