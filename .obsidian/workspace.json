@@ -25,14 +25,12 @@
             "id": "64d064caf705c938",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "무제.md",
-                "mode": "source",
-                "source": false
+                "file": "사진/Pasted image 20250623100418.png"
               },
-              "icon": "lucide-file",
-              "title": "무제"
+              "icon": "lucide-image",
+              "title": "Pasted image 20250623100418"
             }
           }
         ],
@@ -93,7 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 254.5
+    "width": 313.5
   },
   "right": {
     "id": "ebd9d345193a5f5b",
@@ -187,16 +185,16 @@
   },
   "active": "64d064caf705c938",
   "lastOpenFiles": [
-    "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
+    "프로젝트/프로젝트 통신.md",
+    "프로젝트/프로젝트 전체 구조.md",
     "무제.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
-    "프로젝트/프로젝트 전체 구조.md",
-    "프로젝트/프로젝트 통신.md",
     "쿠버네티스 사전(CKA)/13. Kustomize/4. Kustomize를 통한 리소스 관리.md",
     "쿠버네티스 사전(CKA)/12. Helm/5. Helm CLI 활용 가이드.md",
     "쿠버네티스 사전(CKA)/10. 클러스터 설계/2. 쿠버네티스의 고가용성.md",
