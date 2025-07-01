@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
+                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 기출문제"
+              "title": "Killer"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "64d064caf705c938",
   "lastOpenFiles": [
-    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
+    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
     "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
