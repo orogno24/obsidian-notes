@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
+                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Killer"
+              "title": "2025 기출문제"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "resourceq",
+                "query": "journalctl ",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -172,6 +172,7 @@
   },
   "active": "64d064caf705c938",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
@@ -179,7 +180,6 @@
     "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/사이드카 컨테이너.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/3. 워커 노드 문제 해결.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/2. 컨트롤 플레인 문제 해결.md",
