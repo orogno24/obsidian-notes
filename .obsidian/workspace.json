@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/Gitea.md",
+                "file": "오픈소스/ArgoCD.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Gitea"
+              "title": "ArgoCD"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "a47c8c53b1076ecb",
   "lastOpenFiles": [
-    "오픈소스/Kong.md",
     "오픈소스/Gitea.md",
+    "오픈소스/Kong.md",
     "오픈소스/Harbor.md",
     "오픈소스/넥서스.md",
     "오픈소스/젠킨스.md",
