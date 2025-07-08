@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
+                "file": "오픈소스/무제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Killer"
+              "title": "무제"
             }
           }
         ]
@@ -172,6 +172,8 @@
   },
   "active": "a47c8c53b1076ecb",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/Killer.md",
+    "오픈소스/무제.md",
     "단어사전.md",
     "오픈소스/Trivy.md",
     "오픈소스/ArgoCD.md",
@@ -188,7 +190,6 @@
     "프로젝트/3. 요구사항 정의서, 명세서.md",
     "프로젝트/무제.md",
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
-    "쿠버네티스 사전(CKA)/기타/Killer.md",
     "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
     "쿠버네티스 사전(CKA)/기타/무제.md",
     "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
@@ -197,7 +198,6 @@
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/14. 트러블슈팅/3. 워커 노드 문제 해결.md",
-    "쿠버네티스 사전(CKA)/14. 트러블슈팅/2. 컨트롤 플레인 문제 해결.md",
     "사진/Pasted image 20250623100418.png",
     "kubernetes-house-interactive.html",
     "오픈소스",
