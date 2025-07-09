@@ -789,3 +789,10 @@ trivy image --format template \
 # 보고서를 웹 서버에 배포
 scp security-report.html user@webserver:/var/www/security-reports/
 ```
+
+
+보고서 생성 명령어
+
+trivy scan2html image goharbor/chartmuseum-photon:v2.2.0 result20.html
+
+이후 생성된 html은 따로 다운받으면 됨

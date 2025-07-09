@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "독립망 설치 연습.md",
+                "file": "오픈소스/Trivy.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "독립망 설치 연습"
+              "title": "Trivy"
             }
           }
         ],
@@ -185,10 +185,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "77170b8398c393f4",
+  "active": "c80791878d872363",
   "lastOpenFiles": [
-    "단어사전.md",
     "독립망 설치 연습.md",
+    "단어사전.md",
     "오픈소스/무제.md",
     "쿠버네티스 사전(CKA)/기타/Killer.md",
     "오픈소스/Trivy.md",
