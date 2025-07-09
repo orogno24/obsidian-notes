@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/넥서스.md",
+                "file": "독립망 설치 연습.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "넥서스"
+              "title": "독립망 설치 연습"
             }
           }
         ],
@@ -187,6 +187,7 @@
   },
   "active": "77170b8398c393f4",
   "lastOpenFiles": [
+    "오픈소스/넥서스.md",
     "독립망 설치 연습.md",
     "오픈소스/Trivy.md",
     "단어사전.md",
@@ -196,7 +197,6 @@
     "오픈소스/Gitea.md",
     "오픈소스/Kong.md",
     "오픈소스/Harbor.md",
-    "오픈소스/넥서스.md",
     "오픈소스/젠킨스.md",
     "오픈소스/Istio.md",
     "프로젝트/프로젝트 전체 구조.md",
