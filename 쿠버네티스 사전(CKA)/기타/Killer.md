@@ -29,7 +29,7 @@ ssh cka9412
 k --kubeconfig /opt/course/1/kubeconfig config get-contexts
 
 # context 이름만 추출하여 저장
-k --kubeconfig /opt/course/1/kubeconfig config get-contexts -oname > /opt/course/1/contexts
+k --kubeconfig /opt/course/1/kubeconfig config get-contexts -o name > /opt/course/1/contexts
 ```
 
 **Step 2: 현재 context 확인**

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
+                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025 기출문제"
+              "title": "Killer"
             }
           }
         ]
@@ -172,9 +172,16 @@
   },
   "active": "ec0bd594a033cfab",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
+    "쿠버네티스 사전(CKA)/기타/시험 명령어 모음.md",
+    "쿠버네티스 사전(CKA)/기타/메모리, CPU, 스토리지.md",
+    "쿠버네티스 사전(CKA)/기타/로그 확인.md",
+    "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
+    "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "독립망 환경을 위한 Nexus Repository 구축.md",
     "버추얼박스 노드 용량 늘리기.md",
     "단어사전.md",
@@ -191,13 +198,6 @@
     "프로젝트/프로젝트 전체 구조.md",
     "프로젝트/프로젝트 통신.md",
     "프로젝트/5. UI 가이드 & 화면설계서.md",
-    "프로젝트/4. WBS.md",
-    "프로젝트/3. 요구사항 정의서, 명세서.md",
-    "프로젝트/무제.md",
-    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
-    "쿠버네티스 사전(CKA)/기타/무제.md",
-    "쿠버네티스 사전(CKA)/기타/볼륨과 볼륨 마운트.md",
-    "쿠버네티스 사전(CKA)/기출문제 풀이/클러스터 업그레이드.md",
     "사진/Pasted image 20250623100418.png",
     "kubernetes-house-interactive.html",
     "오픈소스",
