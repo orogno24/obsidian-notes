@@ -149,31 +149,3 @@ connect: connection refused
 
 ✅ **CrashLoopBackOff**  
 **원인:** Helm Chart에 명령 미지정 (`sleep infinity` 필요).
-
----
-
-### 🟢 설치 및 검증 팁
-
-- Pod 상태 확인:
-    
-    ```bash
-    kubectl get pods -o wide
-    ```
-    
-- Helm 릴리스 확인:
-    
-    ```bash
-    helm list
-    ```
-    
-- Logs 확인:
-    
-    ```bash
-    kubectl logs <pod>
-    ```
-    
-
----
-
-필요하시면 이 내용을 더 압축하거나, 예제 코드/스크립트 추가도 도와드릴 수 있습니다! 🚀  
-더 다듬어 드리길 원하시면 편하게 말씀해 주세요.
