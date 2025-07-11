@@ -185,8 +185,11 @@ helm install nexus sonatype/nexus-repository-manager \
   --version 64.2.0 \
   -f nexus-values-virtualbox.yaml
 
-# 상태 확인
+# Pod가 Running 상태가 될 때까지 대기
 kubectl get pods -n cicd -w
+
+# 초기 비밀번호 확인
+kubectl exec -n cicd nexus-nexus-repository-manager-65f7d7ddd4-r7l6g -- cat /nexus-data/admin.password
 ```
 
 ---
