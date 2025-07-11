@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b4038ccc02f89603",
+        "id": "733f08b8fdec18cb",
         "type": "tabs",
         "children": [
           {
-            "id": "ec0bd594a033cfab",
+            "id": "9b4c138327f803d8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "쿠버네티스 사전(CKA)/기타/Killer.md",
+                "file": "독립망 환경을 위한 Nexus Repository 구축.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Killer"
+              "title": "독립망 환경을 위한 Nexus Repository 구축"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 282.5
+    "width": 200
   },
   "right": {
     "id": "ebd9d345193a5f5b",
@@ -170,7 +170,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "c80791878d872363",
+  "active": "9b4c138327f803d8",
   "lastOpenFiles": [
     "쿠버네티스 사전(CKA)/기타/Killer.md",
     "무제.md",
