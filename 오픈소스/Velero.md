@@ -121,7 +121,7 @@ sudo chown minio-user:minio-user /mnt/data
 sudo mkdir -p /etc/default
 sudo tee /etc/default/minio <<EOF
 MINIO_VOLUMES="/mnt/data"
-MINIO_OPTS="--console-address :9001"
+MINIO_OPTS="--address 0.0.0.0 --console-address :9001"
 MINIO_ROOT_USER="minioadmin"
 MINIO_ROOT_PASSWORD="minioadmin"
 EOF
@@ -244,6 +244,8 @@ EOF
 Kubernetes Secret으로 등록:
 
 ```bash
+kubectl create namespace opo-inspection
+
 kubectl create secret generic minio.credentials \
   -n op-inspection \
   --from-file=./minio.credentials
