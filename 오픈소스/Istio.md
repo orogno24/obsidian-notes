@@ -306,8 +306,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - node1.example.com
-          - node2.example.com
+          - node1.example.com # jaeger를 배포할 노드 이름
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
