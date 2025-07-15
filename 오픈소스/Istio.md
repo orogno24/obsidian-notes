@@ -242,6 +242,28 @@ kubectl create ns observability
 kubectl apply -f https://github.com/jaegertracing/jaeger-operator/releases/latest/download/jaeger-operator.yaml
 ```
 
+만약 Error from server (InternalError): error when creating "jaeger-operator.yaml" 에러 발생 시 
+
+1. Webhook Configuration 리소스 삭제
+```bash
+kubectl delete validatingwebhookconfiguration cert-manager-webhook
+kubectl delete mutatingwebhookconfiguration cert-manager-webhook
+```
+
+2. cert-manager-webhook Pod 재시작
+
+```bash
+kubectl rollout restart deployment cert-manager-webhook -n cert-manager
+```
+
+3. 다시 Jaeger Operator 생성
+
+이제 다시 Jaeger Operator를 생성하세요.
+
+```bash
+kubectl apply -f jaeger-operator.yaml
+```
+
 #### 3. Elasticsearch 설치 (저장소)
 
 ```bash
@@ -282,6 +304,10 @@ spec:
     count: 1
     config:
       node.store.allow_mmap: false
+```
+
+```
+kubectl apply -f elasticsearch-storage.yaml
 ```
 
 #### 4. Jaeger 프로덕션 인스턴스 생성
