@@ -271,7 +271,7 @@ kubectl apply -f jaeger-operator.yaml
 kubectl apply -f https://download.elastic.co/downloads/eck/2.12.1/crds.yaml
 kubectl apply -f https://download.elastic.co/downloads/eck/2.12.1/operator.yaml
 
-# 스토리지 준비
+# 스토리지 준비(Jaeger를 설치할 노드마다)
 sudo mkdir -p /mnt/data/elasticsearch
 sudo chown -R 1000:1000 /mnt/data/elasticsearch
 ```
@@ -281,16 +281,32 @@ sudo chown -R 1000:1000 /mnt/data/elasticsearch
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: local-es-pv
+  name: elasticsearch-pv
 spec:
   capacity:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: ""
+  storageClassName: local-storage
   hostPath:
     path: /mnt/data/elasticsearch
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node1.example.com
+          - node2.example.com
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
 ---
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
@@ -304,6 +320,29 @@ spec:
     count: 1
     config:
       node.store.allow_mmap: false
+    podTemplate:
+      spec:
+        securityContext:
+          fsGroup: 1000
+        initContainers:
+        - name: fix-permissions
+          image: busybox:latest
+          command: ['sh', '-c', 'chown -R 1000:1000 /usr/share/elasticsearch/data']
+          volumeMounts:
+          - name: elasticsearch-data
+            mountPath: /usr/share/elasticsearch/data
+          securityContext:
+            runAsUser: 0
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: local-storage
 ```
 
 ```
