@@ -219,6 +219,14 @@ spec:
 
 ### Jaeger (분산 트레이싱)
 
+ 기존 리소스가 있다면 삭제 
+```
+kubectl delete namespace observability cert-manager elastic-system --ignore-not-found=true
+kubectl delete pv local-es-pv elasticsearch-pv --ignore-not-found=true
+kubectl delete storageclass local-storage --ignore-not-found=true
+sudo rm -rf /mnt/data/elasticsearch
+```
+
 #### 1. 사전 요구사항: cert-manager 설치
 
 ```bash
