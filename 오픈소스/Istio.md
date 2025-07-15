@@ -317,6 +317,10 @@ spec:
           skip-host-verify: true
 ```
 
+```
+kubectl create -f jaeger-production.yaml
+```
+
 #### 5. Jaeger 접근을 위한 Ingress
 
 ```yaml
@@ -340,6 +344,17 @@ spec:
             port:
               number: 16686
 ```
+
+#### 6. 배포 상태 확인
+
+```
+kubectl get pods -n cert-manager
+kubectl get pods -n observability
+kubectl get ingress -n observability
+```
+
+
+---
 
 ### Kiali (서비스 메시 시각화)
 
