@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "넥서스"
             }
+          },
+          {
+            "id": "1ef58ed07efdbc1e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "오픈소스/Istio.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Istio"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -171,10 +186,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1ed15005521314f1",
+  "active": "1ef58ed07efdbc1e",
   "lastOpenFiles": [
-    "오픈소스/Istio.md",
     "오픈소스/넥서스.md",
+    "오픈소스/Istio.md",
     "독립망 테스트(버추얼박스)/containerd + HTTP 레지스트리 설정.md",
     "오픈소스/젠킨스.md",
     "오픈소스/Velero.md",
