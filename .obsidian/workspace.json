@@ -35,8 +35,7 @@
               "title": "Istio"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -186,10 +185,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "1ef58ed07efdbc1e",
+  "active": "1ed15005521314f1",
   "lastOpenFiles": [
-    "오픈소스/넥서스.md",
     "오픈소스/Istio.md",
+    "오픈소스/넥서스.md",
     "독립망 테스트(버추얼박스)/containerd + HTTP 레지스트리 설정.md",
     "오픈소스/젠킨스.md",
     "오픈소스/Velero.md",
