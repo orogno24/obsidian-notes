@@ -353,4 +353,201 @@ velero restore describe restore-name
 
 ---
 
-필요하시면 **YAML 파일 예시나 Helm 설치 방법**, 혹은 **볼륨 스냅샷 연동**도 추가로 알려드리겠습니다! 🌿
+1. minio 다운로드
+$ wget https://dl.min.io/server/minio/release/linux-amd64/minio
+
+$ chmod +x minio
+
+$ sudo mv minio /usr/local/bin/
+
+$ sudo mkdir -p /data/minio
+
+$ sudo useradd -r minio-user -s /sbin/nologin
+
+$ sudo chown -R minio-user:minio-user /data/minio
+
+$ sudo mkdir -p /etc/default
+
+$ sudo tee /etc/default/minio <<EOF
+
+MINIO_VOLUMES="/data/minio“
+
+MINIO_OPTS="--console-address :9001“
+
+MINIO_ROOT_USER="minioadmin“
+
+MINIO_ROOT_PASSWORD="minioadmin“
+
+EOF
+
+② MinIO 서비스 설정
+$ sudo tee /etc/systemd/system/minio.service <<EOF
+
+[Unit]
+
+Description=MinIO Object Storage
+
+After=network.target
+
+[Service]
+
+User=minio-user
+
+Group=minio-user
+
+EnvironmentFile=/etc/default/minio
+
+ExecStart=/usr/local/bin/minio server \$MINIO_VOLUMES \$MINIO_OPTS
+
+Restart=always
+
+LimitNOFILE=65536
+
+[Install]
+
+WantedBy=multi-user.target
+
+EOF
+
+$ sudo systemctl daemon-reload
+
+$ sudo systemctl enable --now minio
+
+③ MinIO Client 설치
+
+$ wget https://dl.min.io/client/mc/release/linux-amd64/mc
+
+$ sudo mv mc /usr/local/bin/
+
+$ sudo chmod +x /usr/local/bin/mc
+
+④ MinIO 연결 및 Secret 생성
+
+$ mc alias set minio http://localhost:9000 minioadmin minioadmin
+
+$ mc ls minio
+
+$ mc mb minio/velero
+
+$ mc admin user add minio veleroaccess veleropass123
+
+$ mc admin policy attach minio readwrite --user veleroaccess
+
+1.2 벨레로 설치
+① Velero 다운로드
+
+$ VERSION=v1.16.1
+
+$ curl -L -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/${VERSION}/velero-${VERSION}-linux-amd64.tar.gz
+
+$ tar -xvzf velero.tar.gz
+
+$ sudo mv velero-${VERSION}-linux-amd64/velero /usr/local/bin/
+
+$ rm -rf velero-${VERSION}-linux-amd64 velero.tar.gz
+
+② Secret 설정
+
+$ cat <<EOF > minio.credentials
+
+[default]
+
+aws_access_key_id = veleroaccess
+
+aws_secret_access_key = veleropass123
+
+EOF
+
+$ kubectl create secret generic minio.credentials -n op-inspection --from-file=./minio.credentials
+
+③ Velero 설치
+
+$ velero install \
+
+--provider aws \
+
+--plugins velero/velero-plugin-for-aws \
+
+--bucket velero \
+
+--backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://172.25.0.84:9000(※ MinIO 설치된 IP(클러스터 내부에서 접근 가능해야 한다.)) \
+
+--secret-file ./credentials-velero \
+
+--namespace op-inspection \
+
+--use-node-agent \
+
+--default-volumes-to-fs-backup
+
+④ Velero 설치 확인
+
+$ kubectl get all -n op-inspection | grep velero
+
+2.1 백업 전 확인사항
+
+① 백업 대상 네임스페이스 확인
+
+② 네임스페이스 내의 특정 레이블만 백업하는 경우 레이블 설정 필요
+
+# Deployment YAML
+
+…
+
+metadata:
+
+  labels:
+
+    app.kubernetes.io/instance: nexus
+
+…
+
+③ PV도 함께 백업 시 대상 볼륨 어노테이션 지정
+
+# Deployment YAML
+
+…
+
+spec:
+
+  template:
+
+    metatdata:
+
+      annotations:
+
+        backup.velero.io/backup-volumes: nexus-repository-manager-data
+
+    …
+
+    volumes:
+
+    - name: nexus-repository-manager-data
+
+      persistentVolumeClaim:
+
+        claimName: nexus-nexus-repository-manager-data
+       ※ 볼륨명이 nexus-repository-manager-data 일 때 설정 예시
+
+2.2 백업
+① Velero 백업 명령어
+$ velero backup create nexus --include-namespaces cicd \
+
+--selector "app.kubernetes.io/instance=nexus“ \
+
+--namespace op-inspection \
+
+--default-volumes-to-fs-backup
+
+② Velero 백업 리스트 확인
+$ velero backup get -n op-inspection
+
+NAME   STATUS        ERRORS
+
+nexus   Completed   0
+
+③ Velero 백업 상세정보 확인
+$ velero backup describe nexus --namespace op-inspection
+
+④ Velero 백업 로그 확인
+$ velero backup logs nexus -n op-inspection
