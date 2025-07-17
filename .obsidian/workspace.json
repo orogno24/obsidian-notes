@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/넥서스.md",
+                "file": "오픈소스/Istio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "넥서스"
+              "title": "Istio"
             }
           }
         ]
@@ -172,11 +172,11 @@
   },
   "active": "53c7aa55204cc5b9",
   "lastOpenFiles": [
+    "오픈소스/넥서스.md",
     "독립망 테스트(버추얼박스)/containerd + HTTP 레지스트리 설정.md",
     "독립망 테스트(버추얼박스)/버추얼박스 노드 용량 늘리기.md",
     "독립망 테스트(버추얼박스)/독립망 환경을 위한 Nexus Repository 구축.md",
     "오픈소스/Istio.md",
-    "오픈소스/넥서스.md",
     "독립망 테스트(버추얼박스)/넥서스에 Helm 차트 업로드.md",
     "프로젝트/프로젝트 전체 구조.md",
     "오픈소스/젠킨스.md",
