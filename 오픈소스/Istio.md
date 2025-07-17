@@ -587,8 +587,32 @@ kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.
 curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
 ```
 
----
+# 📦 Jaeger와 HTTP 클라이언트 (RestTemplate vs Feign)
 
+## 🛠️ RestTemplate
+
+### ✅ 개요
+- Spring의 동기식 HTTP 클라이언트
+- 간단하게 `GET`, `POST` 등의 요청을 보낼 수 있음
+### 🔗 Jaeger와의 통합
+- **Spring Cloud Sleuth**와의 연동이 **자동**
+- Trace 정보(`traceId`, `spanId`)가 HTTP 요청 헤더에 자동 포함됨
+- **추가 설정 없이 Jaeger에서 전체 흐름 확인 가능**
+
+---
+## 🧩 Feign
+
+### ✅ 개요
+- 선언적 HTTP 클라이언트 (인터페이스 기반)
+- 코드가 간결하고 재사용성 높음
+- `@FeignClient` 사용
+### ⚠️ Jaeger와의 통합 이슈
+- **기본 상태에서는 trace 정보가 자동 전달되지 않을 수 있음**
+- Feign은 내부적으로 OkHttp나 ApacheHttpClient를 쓰며, interceptor가 붙지 않는 경우가 있음
+### 🔧 해결 방법
+- **Feign에 RequestInterceptor를 명시적으로 추가**해야 함
+
+---
 ## 🔧 트러블슈팅
 
 ### Kiali 관련 이슈
@@ -609,7 +633,7 @@ kubectl edit configmap kiali -n istio-system
 
 # Kiali 재시작
 kubectl rollout restart deployment kiali -n istio-system
-```
+
 
 ### 실무 환경 설정
 
