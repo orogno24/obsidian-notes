@@ -497,8 +497,14 @@ velero backup create nexus \
 --include-namespaces cicd \
 --selector "app.kubernetes.io/instance=nexus" \
 --namespace op-inspection \
---default-volumes-to-fs-backup \
---wait
+--default-volumes-to-fs-backup
+
+
+velero backup create nexus-common \
+--include-namespaces op-common \
+--selector "app.kubernetes.io/instance=nexus" \
+--namespace op-inspection \
+--default-volumes-to-fs-backup
 ```
 
 ### 확인
