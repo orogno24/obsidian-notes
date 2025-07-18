@@ -352,6 +352,8 @@ velero restore describe restore-name
     
 
 ---
+# 천안KTC-대구PPP 리소스 이관 가이드
+
 ## 천안 KTC 백업 준비
 ## ✅ 1. MinIO 설치 및 설정
 
@@ -479,6 +481,10 @@ velero install \
 --default-volumes-to-fs-backup
 ```
 
+```
+kubectl get all -n op-inspection | grep velero
+```
+
 ---
 
 ## ✅ 3. 백업 준비 및 수행
@@ -488,7 +494,7 @@ velero install \
 ```yaml
 metadata:
   labels:
-    app.kubernetes.io/instance: nexus
+    app.kubernetes.io/instance: nexus 
 ```
 
 ### ② PV 백업용 어노테이션 추가 (선택)
@@ -496,7 +502,11 @@ metadata:
 ```yaml
 metadata:
   annotations:
-    backup.velero.io/backup-volumes: nexus-repository-manager-data
+    backup.velero.io/backup-volumes: nexus-repository-manager-data # 어노테이션 추가
+
+
+
+
 ```
 
 ---
@@ -518,10 +528,8 @@ velero backup create nexus-common \
 --default-volumes-to-fs-backup
 ```
 
-### 확인
-
 ```bash
-velero backup get -n op-inspection
-velero backup describe nexus --namespace op-inspection
-velero backup logs nexus -n op-inspection
+velero backup get -n op-inspection # 백업 리스트 확인
+velero backup describe nexus --namespace op-inspection # 백업 상세정보 확인
+velero backup logs nexus -n op-inspection # 백업 로그 확인
 ```
