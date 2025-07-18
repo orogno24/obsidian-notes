@@ -352,7 +352,7 @@ velero restore describe restore-name
     
 
 ---
-
+## 천안 KTC 백업 준비
 ## ✅ 1. MinIO 설치 및 설정
 
 ### ① MinIO 설치
@@ -420,7 +420,9 @@ sudo mv mc /usr/local/bin/
 
 ```bash
 mc alias set minio http://localhost:9000 minioadmin minioadmin
+
 mc mb minio/velero
+
 mc admin user add minio veleroaccess veleropass123
 mc admin policy attach minio readwrite --user veleroaccess
 ```
