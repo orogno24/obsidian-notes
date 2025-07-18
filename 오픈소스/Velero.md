@@ -474,7 +474,7 @@ velero install \
 --provider aws \
 --plugins velero/velero-plugin-for-aws \
 --bucket velero \
---backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://<MINIO가 설치된 IP>:9000 \
+--backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://<MINIO가 설치된 노드의 IP>:9000 \
 --secret-file ./minio.credentials \
 --namespace op-inspection \
 --use-node-agent \
