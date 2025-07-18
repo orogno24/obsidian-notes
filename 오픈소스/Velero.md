@@ -544,6 +544,45 @@ mc ls backups
 [2025-07-04 18:04:51 KST] 4.0KiB nexus/
 ```
 
+**만약 mc ls backup으로 보이지 않는다면?**
+
+1 단계 : MinIO alias부터 확인
+
+`mc alias list      # 등록된 alias 확인`
+
+새 세션이라면 alias가 아예 없는 경우도 많으니, 없으면 다시 등록
+
+`mc alias set minio http://<MinIO 가 동작하는 실제 IP>:9000 minioadmin minioadmin`
+
+2 단계 : 버킷과 경로를 정확히 지정
+
+- **버킷 목록 확인**
+    `mc ls minio`
+    여기서 `velero/` 버킷이 보이면 OK.
+
+- **버킷 내부 확인**
+    `mc ls minio/velero # velero 버킷 루트 mc ls minio/velero/backups   # 백업 목록`
+    
+    ➡︎ 가이드에 있던
+    
+    csharp
+    
+    복사편집
+    
+    `[2025-07-04 18:04:51 KST] 4.0KiB nexus/`
+    
+    같은 엔트리가 여기서 보여야 합니다.
+    
+
+> 당신이 실행한 `mc ls velero` 는 **로컬 파일시스템의 `./velero` 디렉터리**를 본 것이고,  
+> `mc ls backups` 는 **alias 이름이 backups 인 것으로 착각**한 명령이었습니다.
+
+
+
+
+
+
+
 ② MinIO 디렉토리 이동
 ```
 $ cd /data/minio
