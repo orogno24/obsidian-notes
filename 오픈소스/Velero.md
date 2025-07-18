@@ -496,18 +496,20 @@ kubectl get all -n op-inspection | grep velero
 # Deployment YAML
 metadata:
   labels:
-    app.kubernetes.io/instance: nexus 
+    app.kubernetes.io/instance: nexus # 벨레로에게 인식시키기 위해 추가
 ```
 
 ### ② PV 백업용 어노테이션 추가 (선택)
 
 ```yaml
-metadata:
-  annotations:
-    backup.velero.io/backup-volumes: nexus-repository-manager-data # 어노테이션 추가
+spec:
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes: nexus-repository-manager-data # 추가해야함
 ...
-volumes:
-  - name: nexus-repository-manager-data # 위의 어노테이션은 볼륨명과 동일하게
+    volumes:
+    - name: nexus-repository-manager-data # 위의 어노테이션은 볼륨명과 동일하게
 ```
 
 ---
@@ -515,18 +517,12 @@ volumes:
 ## ✅ 4. 백업 명령어 실행
 
 ```bash
-velero backup create nexus \
---include-namespaces cicd \
---selector "app.kubernetes.io/instance=nexus" \
---namespace op-inspection \
---default-volumes-to-fs-backup
+velero backup create nexus \  # 백업 이름을 "nexus"로 지정
+--include-namespaces cicd \   # 백업 대상 네임스페이스
+--selector "app.kubernetes.io/instance=nexus" \  # 백업할 리소스를 라벨로 필터링 
+--namespace op-inspection \   # Velero가 설치된 네임스페이스
+--default-volumes-to-fs-backup  # PVC를 파일시스템 단위로 백업 (파일 단위로 저장됨)
 
-
-velero backup create nexus-common \
---include-namespaces op-common \
---selector "app.kubernetes.io/instance=nexus" \
---namespace op-inspection \
---default-volumes-to-fs-backup
 ```
 
 ```bash

@@ -83,78 +83,7 @@
   "right": {
     "id": "ebd9d345193a5f5b",
     "type": "split",
-    "children": [
-      {
-        "id": "34b6782367ae37eb",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "3e838af5e0dfe8c4",
-            "type": "leaf",
-            "state": {
-              "type": "backlink",
-              "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
-                "collapseAll": false,
-                "extraContext": false,
-                "sortOrder": "alphabetical",
-                "showSearch": false,
-                "searchQuery": "",
-                "backlinkCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-coming-in",
-              "title": "Helm 의 백링크"
-            }
-          },
-          {
-            "id": "b306a99031c341ea",
-            "type": "leaf",
-            "state": {
-              "type": "outgoing-link",
-              "state": {
-                "file": "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
-                "linksCollapsed": false,
-                "unlinkedCollapsed": true
-              },
-              "icon": "links-going-out",
-              "title": "Helm 의 나가는 링크"
-            }
-          },
-          {
-            "id": "eb587315d10b1f0e",
-            "type": "leaf",
-            "state": {
-              "type": "tag",
-              "state": {
-                "sortOrder": "frequency",
-                "useHierarchy": true,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-tags",
-              "title": "Tags"
-            }
-          },
-          {
-            "id": "10e2dc523c5370f2",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Welcome.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline of Welcome"
-            }
-          }
-        ],
-        "currentTab": 1
-      }
-    ],
+    "children": [],
     "direction": "horizontal",
     "width": 300,
     "collapsed": true
