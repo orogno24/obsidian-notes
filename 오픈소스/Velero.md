@@ -374,6 +374,8 @@ sudo chown -R minio-user:minio-user /data/minio
 ### ③ 환경 변수 파일 설정
 
 ```bash
+sudo mkdir -p /etc/default
+
 sudo tee /etc/default/minio <<EOF
 MINIO_VOLUMES="/data/minio"
 MINIO_OPTS="--console-address :9001"
@@ -412,15 +414,15 @@ sudo systemctl enable --now minio
 
 ```bash
 wget https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc
 sudo mv mc /usr/local/bin/
+sudo chmod +x /usr/local/bin/mc
 ```
 
 ### MinIO 연결 및 사용자 생성
 
 ```bash
 mc alias set minio http://localhost:9000 minioadmin minioadmin
-
+mc ls minio
 mc mb minio/velero
 
 mc admin user add minio veleroaccess veleropass123
@@ -435,9 +437,13 @@ mc admin policy attach minio readwrite --user veleroaccess
 
 ```bash
 VERSION=v1.16.1
+
 curl -L -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/${VERSION}/velero-${VERSION}-linux-amd64.tar.gz
+
 tar -xvzf velero.tar.gz
+
 sudo mv velero-${VERSION}-linux-amd64/velero /usr/local/bin/
+
 rm -rf velero-${VERSION}-linux-amd64 velero.tar.gz
 ```
 
@@ -449,8 +455,11 @@ cat <<EOF > minio.credentials
 aws_access_key_id = veleroaccess
 aws_secret_access_key = veleropass123
 EOF
+```
 
+```
 kubectl create namespace op-inspection
+
 kubectl create secret generic minio.credentials --namespace op-inspection --from-file=./minio.credentials
 ```
 
@@ -463,7 +472,7 @@ velero install \
 --provider aws \
 --plugins velero/velero-plugin-for-aws \
 --bucket velero \
---backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://<MINIO_IP>:9000 \
+--backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://<MINIO가 설치된 IP>:9000 \
 --secret-file ./minio.credentials \
 --namespace op-inspection \
 --use-node-agent \
