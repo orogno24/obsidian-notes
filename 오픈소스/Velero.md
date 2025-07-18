@@ -517,13 +517,20 @@ spec:
 ## ✅ 4. 백업 명령어 실행
 
 ```bash
-velero backup create nexus \  # 백업 이름을 "nexus"로 지정
---include-namespaces cicd \   # 백업 대상 네임스페이스
---selector "app.kubernetes.io/instance=nexus" \  # 백업할 리소스를 라벨로 필터링 
---namespace op-inspection \   # Velero가 설치된 네임스페이스
---default-volumes-to-fs-backup  # PVC를 파일시스템 단위로 백업 (파일 단위로 저장됨)
-
+velero backup create nexus \
+--include-namespaces cicd \
+--selector "app.kubernetes.io/instance=nexus" \
+--namespace op-inspection \
+--default-volumes-to-fs-backup
 ```
+
+| 옵션                               | 설명                                             |
+| -------------------------------- | ---------------------------------------------- |
+| `velero backup create nexus`     | 백업 이름을 `nexus`로 지정                             |
+| `--include-namespaces <네임스페이스>`  | 선택한 네임스페이스를 백업 대상으로 지정                         |
+| `--selector <"키=값">`             | nexus 리소스만 선택적으로 백업하기 위해 라벨을 사용                |
+| `--namespace <네임스페이스>`           | Velero가 설치된 네임스페이스를 지정                         |
+| `--default-volumes-to-fs-backup` | PVC를 CSI 대신 파일시스템 기반으로 백업(hostPath, NFS 등에 유용) |
 
 ```bash
 velero backup get -n op-inspection # 백업 리스트 확인
