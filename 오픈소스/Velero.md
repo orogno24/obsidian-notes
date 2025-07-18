@@ -574,7 +574,7 @@ mc ls minio/velero/backups   # 백업 목록
 ```
 $ cd /data/minio
 
-$ ls –la
+$ ls -la
 .
 ..
 .minio.sys
