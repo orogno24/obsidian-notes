@@ -601,3 +601,17 @@ nexus   nexus        Completed
 ```
 velero restore describe nexus –n op-inspection
 ```
+
+④ Velero 복원 로그
+```
+velero restore logs nexus –n op-inspection
+```
+
+복원 후 확인
+
+① PV 바운드 확인
+```
+kubectl get pv
+```
+
+② 각 서비스 동작 확인
