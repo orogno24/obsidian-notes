@@ -608,7 +608,7 @@ sudo tar –xzvf velero.tar.gz
 
 ⑦ MinIO 백업 파일 확인
 ```
-$ mc ls backups
+$ mc ls minio/velero/backups 
 [2025-07-04 18:04:51 KST] 4.0KiB nexus/
 ```
 
