@@ -561,27 +561,14 @@ mc ls backups
     여기서 `velero/` 버킷이 보이면 OK.
 
 - **버킷 내부 확인**
-    `mc ls minio/velero # velero 버킷 루트 mc ls minio/velero/backups   # 백업 목록`
-    
+```
+mc ls minio/velero # velero 버킷 루트
+mc ls minio/velero/backups   # 백업 목록
+```
     ➡︎ 가이드에 있던
-    
-    csharp
-    
-    복사편집
-    
     `[2025-07-04 18:04:51 KST] 4.0KiB nexus/`
     
-    같은 엔트리가 여기서 보여야 합니다.
-    
-
-> 당신이 실행한 `mc ls velero` 는 **로컬 파일시스템의 `./velero` 디렉터리**를 본 것이고,  
-> `mc ls backups` 는 **alias 이름이 backups 인 것으로 착각**한 명령이었습니다.
-
-
-
-
-
-
+    같은 엔트리가 여기서 보여야 함
 
 ② MinIO 디렉토리 이동
 ```
@@ -596,7 +583,7 @@ velero
 
 ③ velero 저장소 압축
 ```
-sudo tar –czvf velero.tar.gz ./velero
+sudo tar -czvf velero.tar.gz ./velero
 ```
 ※ velero.tar.gz 파일을 대구PPP로 전송
 
