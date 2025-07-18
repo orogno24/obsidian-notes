@@ -172,8 +172,9 @@
   },
   "active": "31d620fc92b5da2d",
   "lastOpenFiles": [
-    "오픈소스/넥서스.md",
+    "오픈소스/Harbor.md",
     "오픈소스/Velero.md",
+    "오픈소스/넥서스.md",
     "프로젝트/프로젝트 통신.md",
     "프로젝트/프로젝트 전체 구조.md",
     "오픈소스/Istio.md",
@@ -198,7 +199,6 @@
     "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Kubelet 트러블슈팅.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/VPA.md",
-    "단어사전.md",
     "사진/Pasted image 20250623100418.png",
     "kubernetes-house-interactive.html",
     "오픈소스",
