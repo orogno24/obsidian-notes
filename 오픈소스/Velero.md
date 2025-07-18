@@ -517,8 +517,8 @@ spec:
 ## ✅ 4. 백업 명령어 실행
 
 ```bash
-velero backup create nexus \
---include-namespaces cicd \
+velero backup create nexus-common \
+--include-namespaces op-common \
 --selector "app.kubernetes.io/instance=nexus" \
 --namespace op-inspection \
 --default-volumes-to-fs-backup
