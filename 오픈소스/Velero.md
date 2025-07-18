@@ -486,12 +486,13 @@ kubectl get all -n op-inspection | grep velero
 ```
 
 ---
-
+## 천안 KTC 백업
 ## ✅ 3. 백업 준비 및 수행
 
 ### ① Nexus 백업 레이블 확인
 
 ```yaml
+# Deployment YAML
 metadata:
   labels:
     app.kubernetes.io/instance: nexus 
@@ -503,10 +504,9 @@ metadata:
 metadata:
   annotations:
     backup.velero.io/backup-volumes: nexus-repository-manager-data # 어노테이션 추가
-
-
-
-
+...
+volumes:
+  - name: nexus-repository-manager-data # 위의 어노테이션은 볼륨명과 동일하게
 ```
 
 ---
@@ -532,4 +532,72 @@ velero backup create nexus-common \
 velero backup get -n op-inspection # 백업 리스트 확인
 velero backup describe nexus --namespace op-inspection # 백업 상세정보 확인
 velero backup logs nexus -n op-inspection # 백업 로그 확인
+```
+
+① MinIO 백업 파일 확인
+```
+mc ls backups
+[2025-07-04 18:04:51 KST] 4.0KiB nexus/
+```
+
+② MinIO 디렉토리 이동
+```
+$ cd /data/minio
+
+$ ls –la
+.
+..
+.minio.sys
+velero
+```
+
+③ velero 저장소 압축
+```
+sudo tar –czvf velero.tar.gz ./velero
+```
+※ velero.tar.gz 파일을 대구PPP로 전송
+
+## 대구PPP 복원 준비
+
+① MinIO Secret 확인
+
+② Velero 설치 확인
+
+③ PV 연결을 위한 NFS 설치 확인
+
+④ 백업 대상의 nfs명, storageClass명, 네임스페이스 확인
+
+⑤ velero.tar.gz 파일 복사 확인
+
+⑥ MinIO의 볼륨위치에 velero.tar.gz 압축 해제
+
+```
+cd /data/minio
+sudo tar –xzvf velero.tar.gz
+```
+
+⑦ MinIO 백업 파일 확인
+```
+$ mc ls backups
+[2025-07-04 18:04:51 KST] 4.0KiB nexus/
+```
+
+## 대구PPP 복원
+
+① Velero 복원
+```
+velero restore create nexus --from-backup nexus
+```
+
+② Velero 복원 확인
+```
+velero restore get –n op-inspection
+NAME   BACKUP   STATUS
+nexus   nexus        Completed
+```
+※ 상태가 Complete 시 완료
+
+③ Velero 복원 상세정보
+```
+velero restore describe nexus –n op-inspection
 ```
