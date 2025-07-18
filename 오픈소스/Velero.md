@@ -616,7 +616,7 @@ $ mc ls minio/velero/backups
 
 ① Velero 복원
 ```
-velero restore create nexus --from-backup nexus
+velero restore create nexus --from-backup nexus -n op-inspection
 ```
 
 ② Velero 복원 확인
