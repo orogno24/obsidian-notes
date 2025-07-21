@@ -107,252 +107,7 @@ velero restore create --from-backup my-app-backup
 - 복원 시 클러스터를 동일 상태로 되돌린다
 
 ---
-
-# 🌟 MinIO + Velero 설치 및 백업/복원 가이드
-
-## 🚀 1. MinIO 설치 및 구성
-
-### 1.1 MinIO 바이너리 다운로드/설치
-
-```bash
-sudo apt update
-sudo apt install -y wget curl
-wget https://dl.min.io/server/minio/release/linux-amd64/minio
-chmod +x minio
-sudo mv minio /usr/local/bin/
-```
-
-> **MinIO 실행 파일 설치**
-
----
-
-### 1.2 MinIO 사용자 및 데이터 디렉토리 준비
-
-```bash
-sudo useradd -r minio-user -s /sbin/nologin
-sudo mkdir -p /mnt/data
-sudo chown minio-user:minio-user /mnt/data
-```
-
-> **백업 데이터를 저장할 디렉토리 생성**
-
----
-
-### 1.3 MinIO 서비스 설정
-
-환경 변수 파일 생성:
-
-```bash
-sudo mkdir -p /etc/default
-sudo tee /etc/default/minio <<EOF
-MINIO_VOLUMES="/mnt/data"
-MINIO_OPTS="--address 0.0.0.0 --console-address :9001"
-MINIO_ROOT_USER="minioadmin"
-MINIO_ROOT_PASSWORD="minioadmin"
-EOF
-```
-
-서비스 파일 생성:
-
-```bash
-sudo tee /etc/systemd/system/minio.service <<EOF
-[Unit]
-Description=MinIO Object Storage
-After=network.target
-
-[Service]
-User=minio-user
-Group=minio-user
-EnvironmentFile=/etc/default/minio
-ExecStart=/usr/local/bin/minio server \$MINIO_VOLUMES \$MINIO_OPTS
-Restart=always
-LimitNOFILE=65536
-
-[Install]
-WantedBy=multi-user.target
-EOF
-```
-
-서비스 실행 및 활성화:
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable --now minio
-```
-
-> **MinIO를 시스템 서비스로 실행**
-
----
-
-### 1.4 MinIO Client(mc) 설치
-
-```bash
-wget https://dl.min.io/client/mc/release/linux-amd64/mc
-sudo mv mc /usr/local/bin/
-sudo chmod +x /usr/local/bin/mc
-```
-
-> **MinIO CLI 유틸리티 설치**
-
----
-
-### 1.5 MinIO 연결 및 버킷 생성
-
-MinIO 서버 연결:
-
-```bash
-mc alias set minio http://172.27.0.31:9000 minioadmin minioadmin
-```
-
-버킷 생성:
-
-```bash
-mc mb minio/velero
-```
-
-> **백업 데이터를 저장할 버킷 준비**
-
----
-
-### 1.6 Kubernetes Secret 생성
-
-```bash
-kubectl create secret generic minio-secret \
-  --from-literal=accessKey=yYib3R7eoMVnOcqrD49x \
-  --from-literal=secretKey=YYPBj04QeP48S10jnKDRlUFmmKCQKZPosNap9HN5
-```
-
-> **Velero에서 사용할 Access Key/Secret Key 등록**
-
----
-
-### 1.7 S3 Driver 설치 (EBS CSI 예시)
-
-```bash
-helm repo add k8s-sigs https://kubernetes-sigs.github.io/aws-ebs-csi-driver
-helm install s3-csi k8s-sigs/aws-ebs-csi-driver \
-  --namespace kube-system
-```
-
-> **(옵션) CSI Driver 설치 - 실제 스냅샷 사용 시 필요**
-
----
-
-## ☁️ 2. Velero 설치 및 구성
-
----
-
-### 2.1 Velero 바이너리 다운로드/설치
-
-```bash
-VERSION=v1.12.0
-curl -L -o velero.tar.gz https://github.com/vmware-tanzu/velero/releases/download/${VERSION}/velero-${VERSION}-linux-amd64.tar.gz
-tar -xvzf velero.tar.gz
-sudo mv velero-${VERSION}-linux-amd64/velero /usr/local/bin/
-rm -rf velero-${VERSION}-linux-amd64 velero.tar.gz
-```
-
-> **Velero CLI 설치**
-
----
-
-### 2.2 MinIO Credentials 파일 생성
-
-```bash
-cat <<EOF > minio.credentials
-[default]
-aws_access_key_id = <Access Key>
-aws_secret_access_key = <Secret Key>
-EOF
-```
-
-Kubernetes Secret으로 등록:
-
-```bash
-kubectl create namespace opo-inspection
-
-kubectl create secret generic minio.credentials \
-  -n op-inspection \
-  --from-file=./minio.credentials
-```
-
-> **Velero가 MinIO에 인증하기 위한 자격 증명**
-
----
-
-### 2.3 Velero 설치
-
-```bash
-velero install \
-  --provider aws \
-  --plugins velero/velero-plugin-for-aws:v1.6.0 \
-  --bucket velero \
-  --backup-location-config region=minio,s3ForcePathStyle=true,s3Url=http://172.27.0.31:9000 \
-  --secret-file ./minio.credentials \
-  --namespace op-inspection
-```
-
-> **MinIO를 S3 호환 스토리지로 사용하는 Velero 설치**
-
----
-
-## 🔄 3. Velero 백업 및 복원
-
----
-
-### 3.1 백업 생성
-
-```bash
-velero backup create backup-name --include-namespaces <namespace>
-```
-
-> **특정 네임스페이스를 백업**
-
-백업 상태 확인:
-
-```bash
-velero backup describe backup-name
-```
-
-> **백업 상세 정보 확인**
-
----
-
-### 3.2 복원 진행
-
-복원 가능한 백업 목록 조회:
-
-```bash
-velero restore get
-```
-
-복원 실행:
-
-```bash
-velero restore create restore-name --from-backup backup-name
-```
-
-복원 상세 정보 확인:
-
-```bash
-velero restore describe restore-name
-```
-
-> **백업에서 리소스 및 볼륨 복원**
-
----
-
-✅ **Tip**
-
-- `mc ls minio/velero` 명령으로 실제 저장된 백업 파일을 볼 수 있습니다.
-    
-- `velero backup logs backup-name` 명령으로 로그를 확인할 수 있습니다.
-    
-- 네임스페이스, 라벨, 리소스 종류 등으로 백업 대상을 세부 조정할 수 있습니다.
-    
-
----
-# 천안KTC-대구PPP 리소스 이관 가이드
+# MinIO + Velero 설치 및 천안KTC-대구PPP 리소스 이관 
 
 ## 천안 KTC 백업 준비
 ## ✅ 1. MinIO 설치 및 설정
@@ -653,6 +408,84 @@ kubectl get pv
 | **2. Velero 설치**               | 쿠버네티스 리소스 + 볼륨 데이터를 백업하는 도구     |
 | **3. Velero로 백업 수행**           | 지정된 네임스페이스, PVC 등을 tar.gz로 저장   |
 | **4. MinIO에 저장된 백업 압축**        | `.tar.gz`로 만들어 물리 전송 또는 네트워크 전송 |
-| **5. 대구 PPP로 압축파일 복사**         | SFTP, USB, SCP 등으로 전달           |
+| **5. 대구 PPP로 압축파일 복사**         | SFTP로 전달                        |
 | **6. 대구에 MinIO + Velero 설치**   | 복원을 위한 동일한 구조 구축                |
 | **7. 압축 해제 + Velero 복원 명령 실행** | 리소스 + PV 복원                     |
+물론이죠! 방금 말씀하신 내용을 **정리해서 깔끔하게 설명해주는 문서 형식**으로 정리해 드릴게요. 누구나 쉽게 이해할 수 있도록 풀어쓴 버전입니다 👇
+
+---
+
+## 📦 클러스터 간 Velero 백업/복원 방식 비교
+
+### ✅ [1] **일반망 (인터넷 or 사설망 연결 가능)**
+
+> 클러스터 A와 B가 **서로 네트워크로 통신 가능**한 환경
+
+#### 구성
+
+- **클러스터 A**: Velero + MinIO 설치
+- **클러스터 B**: Velero만 설치
+- **전송 방식**: 네트워크 통신 (HTTP/S3 API)
+
+#### 흐름
+
+```plaintext
+클러스터 B의 Velero → 클러스터 A의 MinIO 접속 → 백업 데이터 직접 읽음
+```
+
+#### S3 URL 예시:
+
+```bash
+--s3Url=http://<클러스터 A의 IP>:9000
+```
+
+#### 장점
+
+- 간편함 (MinIO를 한 곳에만 설치)
+- 실시간 전송 가능
+
+#### 조건
+
+- 두 클러스터가 **서로 통신 가능한 망**에 있어야 함
+
+
+### 🚫 [2] **독립망 (공공망, 외부망과 완전 분리된 환경)**
+
+> 클러스터 A와 B가 **물리적으로 분리된 망**(인터넷 불가)일 때
+
+#### 구성
+
+- **클러스터 A**: Velero + MinIO 설치 → 백업 → 압축(tar.gz)
+- **클러스터 B (PPP)**: Velero + MinIO 설치 → tar.gz 복사 후 압축 해제 → 복원
+
+#### 전송 방식
+
+- **SFTP**, **보안 USB**, **망연계 시스템** 등을 통해  
+    압축 파일(`velero.tar.gz`)을 오프라인 전송
+
+#### 흐름
+
+```plaintext
+클러스터 A에서 백업 → MinIO 데이터 압축 → 전송 → PPP 클러스터에서 압축 해제 → 복원
+```
+
+#### 이유
+
+- **독립망이라 네트워크 직접 연결이 불가능**
+- Velero가 외부 MinIO에 접근할 수 없음
+
+---
+
+## 🧠 핵심 정리 요약표
+
+|항목|일반망 (연결 가능)|독립망 (PPP 등)|
+|---|---|---|
+|MinIO 설치 위치|A 클러스터에만 설치|A, B 클러스터 모두 설치|
+|Velero 설치 위치|A, B 모두|A, B 모두|
+|데이터 전송 방식|네트워크 전송 (`s3Url`)|tar.gz로 오프라인 전송|
+|연결 조건|IP 통신 가능해야 함|통신 안 됨 (망분리)|
+|복원 방법|Velero가 직접 읽음|압축 풀고 MinIO에 복사 후 복원|
+
+---
+
+필요하면 이 내용을 슬라이드나 다이어그램으로 만들어서 동료들에게 설명하는 데 쓸 수 있게 정리해드릴 수도 있어요! 원하시나요?
