@@ -83,7 +83,77 @@
   "right": {
     "id": "ebd9d345193a5f5b",
     "type": "split",
-    "children": [],
+    "children": [
+      {
+        "id": "eb17019775fd683a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4cf812409119b713",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "오픈소스/Velero.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Velero 의 백링크"
+            }
+          },
+          {
+            "id": "6d047c0bd439be69",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "오픈소스/Velero.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Velero 의 나가는 링크"
+            }
+          },
+          {
+            "id": "509eea9f8f1af503",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "b4995dbe05b30c23",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "오픈소스/Velero.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Velero 의 개요"
+            }
+          }
+        ]
+      }
+    ],
     "direction": "horizontal",
     "width": 300,
     "collapsed": true
