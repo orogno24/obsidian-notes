@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "디지털 뱃지 정보.md",
+                "file": "디지털 뱃지 문제.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "디지털 뱃지 정보"
+              "title": "디지털 뱃지 문제"
             }
           }
         ]
@@ -171,8 +171,8 @@
   },
   "active": "11cb13ce5467fe99",
   "lastOpenFiles": [
-    "디지털 뱃지 문제.md",
     "디지털 뱃지 정보.md",
+    "디지털 뱃지 문제.md",
     "단어사전.md",
     "오픈소스/Velero.md",
     "오픈소스/Velero 인터넷.md",
