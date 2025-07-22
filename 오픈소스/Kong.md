@@ -1,7 +1,256 @@
 ### Kong이란?
 
 Kong은 **NGINX 기반의 오픈소스 API Gateway**입니다. 마이크로서비스 아키텍처에서 API 트래픽을 중앙 집중적으로 관리하고, 인증, 로깅, 속도 제한 등의 기능을 제공합니다.
+### Kong의 핵심 구성 요소
 
+```
+Client → Routes(라우팅 규칙) → Services(대상 정의) → Upstream(실제 백엔드)
+```
+
+### Kong 접근 방식
+
+### 방식 1: NodePort를 통한 접근
+
+```yaml
+# eris-fe-uags-kong 서비스 예시
+apiVersion: v1
+kind: Service
+metadata:
+  name: eris-fe-uags-kong
+  namespace: kong
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30006        # 외부에서 접속하는 포트
+    port: 80               # Service의 포트
+    targetPort: 8000       # Kong Pod의 실제 포트
+  selector:
+    app: kong-kong         # Kong Pod를 가리킴
+```
+
+**접속 흐름:**
+
+```
+외부 클라이언트
+    ↓
+http://14.63.177.157:30006/
+    ↓
+NodePort Service (eris-fe-uags-kong)
+    ↓
+Kong Pod (app=kong-kong)
+    ↓
+Kong이 Route/Service 규칙에 따라 라우팅
+    ↓
+백엔드 서비스 (eris-fe-uags)
+```
+
+### 방식 2: Ingress를 통한 접근
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kong-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: api.dev.eris.go.kr
+    http:
+      paths:
+      - backend:
+          service:
+            name: kong-kong-proxy
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+```
+
+**접속 흐름:**
+
+```
+외부 클라이언트
+    ↓
+https://api.dev.eris.go.kr/
+    ↓
+Ingress Controller (NGINX)
+    ↓
+Kong Service (kong-kong-proxy)
+    ↓
+Kong Pod (app=kong-kong)
+    ↓
+Kong이 Route/Service 규칙에 따라 라우팅
+    ↓
+백엔드 서비스
+```
+
+## 3. Kong의 라우팅 동작 원리
+
+### 🎯 가장 중요한 핵심 개념
+
+> **"모든 길은 Kong으로 통한다"**
+> 
+> NodePort든 Ingress든 어떤 방식으로 접속하든, 일단 **무조건 Kong Pod로 먼저** 갑니다. Kong은 **교통 정리 경찰**처럼 요청을 받아서 "너는 A 서비스로, 너는 B 서비스로" 안내합니다.
+
+### 쉬운 비유로 이해하기
+
+```
+🏢 Kong = 건물 안내데스크
+
+방문객(요청)이 어떤 문(NodePort/Ingress)으로 들어오든
+→ 무조건 1층 안내데스크(Kong)를 거침
+→ 안내데스크가 "어디서 오셨나요?"(Host) "무슨 일로 오셨나요?"(Path) 확인
+→ 해당 사무실(백엔드 서비스)로 안내
+```
+
+### 핵심 포인트
+
+> **NodePort든 Ingress든 최종 목적지는 Kong Pod입니다!** Kong Pod에 도착한 후, Kong이 자체 라우팅 규칙에 따라 최종 백엔드를 결정합니다.
+
+### Kong 라우팅 프로세스
+
+```
+1. 요청 수신
+   - Kong Pod가 요청을 받음
+   
+2. Route 매칭
+   - 등록된 Routes를 순회하며 매칭 조건 확인
+   - Host 헤더, Path, Method 등을 체크
+   
+3. Service 연결
+   - 매칭된 Route와 연결된 Service 정보 확인
+   
+4. Upstream 전달
+   - Service에 정의된 upstream으로 요청 전달
+```
+
+### Kong Route 설정 예시
+
+```json
+// Route 설정
+{
+  "name": "uags-route",
+  "hosts": ["uags-front.dev.eris.go.kr"],
+  "paths": ["/"],
+  "service": {
+    "id": "uags-service-id"
+  }
+}
+
+// Service 설정
+{
+  "name": "eris-fe-uags",
+  "host": "eris-fe-uags.eris-fe.svc.cluster.local",
+  "port": 8080,
+  "path": "/"
+}
+```
+
+## 4. 실제 라우팅 예제
+
+### 시나리오 1: IP로 직접 접속 (NodePort)
+
+```bash
+# 요청
+curl http://14.63.177.157:30006/
+
+# Kong이 받는 정보
+Host: 14.63.177.157:30006 (또는 Host 헤더 없음)
+Path: /
+
+# Route 매칭
+- hosts: ["uags-front.dev.eris.go.kr"] → ❌ 매칭 안됨
+- paths: ["/"] → ✅ 매칭됨
+
+# 결과
+→ paths만 매칭되어도 라우팅 가능
+→ eris-fe-uags.eris-fe.svc.cluster.local:8080으로 전달
+```
+
+### 시나리오 2: 도메인으로 접속 (Ingress)
+
+```bash
+# 요청
+curl https://api.dev.eris.go.kr/
+
+# Kong이 받는 정보
+Host: api.dev.eris.go.kr
+Path: /
+
+# Route 매칭
+- Kong 내부에 설정된 Routes 확인
+- Host와 Path 기반으로 적절한 백엔드 선택
+```
+
+## 5. 주의사항 및 Best Practices
+
+### ⚠️ 주의사항
+
+1. **모든 NodePort가 같은 Kong을 가리킬 때**
+    
+    ```yaml
+    eris-fe-uags-kong → selector: app=kong-kong
+    eris-fe-ugis-kong → selector: app=kong-kong  # 같은 Kong!
+    ```
+    
+    - 여러 NodePort를 만들어도 의미 없음
+    - Kong 내부 라우팅 규칙으로 구분해야 함
+2. **Path가 모두 "/" 일 때**
+    
+    - IP 접속 시 어느 서비스로 갈지 모호함
+    - 첫 번째 매칭된 Route로 가거나 에러 발생
+
+### ✅ Best Practices
+
+1. **Path 기반 라우팅**
+    
+    ```json
+    // uags 서비스
+    { "paths": ["/uags", "/uags/*"] }
+    
+    // ugis 서비스  
+    { "paths": ["/ugis", "/ugis/*"] }
+    ```
+    
+2. **Host 기반 라우팅**
+    
+    ```json
+    // 각 서비스별 고유 도메인 사용
+    { "hosts": ["uags.dev.eris.go.kr"] }
+    { "hosts": ["ugis.dev.eris.go.kr"] }
+    ```
+    
+3. **단일 진입점 사용**
+    
+    - NodePort 하나 또는 Ingress 하나로 통일
+    - Kong에서 모든 라우팅 처리
+
+## 6. 정리
+
+### Kong을 사용하는 이유
+
+1. **중앙 집중식 관리**: 모든 API 트래픽을 한 곳에서 제어
+2. **확장성**: 새 서비스 추가 시 Kong 설정만 변경
+3. **부가 기능**: 인증, 속도 제한, 로깅 등을 쉽게 추가
+
+### 핵심 이해 포인트
+
+- **외부 접근 방식**(NodePort/Ingress)은 단지 Kong까지 가는 방법
+- **실제 라우팅**은 Kong 내부 설정(Routes/Services)이 결정
+- Kong은 **요청 내용**(Host, Path 등)을 보고 백엔드 결정
+
+### 트래픽 흐름 요약
+
+```
+[외부 접근 계층]
+Client → NodePort/Ingress → Kong Pod
+
+[Kong 내부 라우팅]
+Kong Pod → Routes 매칭 → Services 확인 → Upstream 전달
+
+[최종 목적지]
+→ 실제 애플리케이션 Pod
+```
 ### 핵심 특징
 
 - **NGINX + Lua 기반**: 고성능 처리
