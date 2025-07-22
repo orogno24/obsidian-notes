@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/Kong.md",
+                "file": "오픈소스/넥서스.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Kong"
+              "title": "넥서스"
             }
           },
           {
@@ -185,8 +185,8 @@
   },
   "active": "15ce679c0f9138c9",
   "lastOpenFiles": [
-    "오픈소스/Kong에 도메인 대신 IP 등록.md",
     "오픈소스/Kong.md",
+    "오픈소스/Kong에 도메인 대신 IP 등록.md",
     "디지털 뱃지 문제 정리.md",
     "디지털 뱃지 정보.md",
     "오픈소스/Velero.md",
