@@ -69,10 +69,10 @@ status:
 
 Konga에 Service 등록
 Name: eris-fe-ugis
-Host: eris-fe-uags.eris-fe.svc.cluster.local
+Host: eris-fe-ugis.eris-fe.svc.cluster.local
 Port: 8080
 Path: /
 
 Konga에 Routes 등록
-Hosts: Konga에 서비스 등록
+Hosts: ugis-front.dev.eris.go.kr
 Path: /
