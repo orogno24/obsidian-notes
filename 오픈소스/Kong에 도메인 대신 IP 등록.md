@@ -1,31 +1,22 @@
 
-현재 배포된 eris-fe-uags
-
-eris-fe                pod/eris-fe-uags-5845f4bfc4-799hm                                     3/3     Running            0               17h
-eris-fe                pod/eris-fe-uags-5845f4bfc4-szk86                                     3/3     Running            0               17h
-eris-fe                service/eris-fe-uags                                         ClusterIP      10.233.3.125    <none>                                                                       8080/TCP                                                             17h
-kong                   service/eris-fe-uags-kong                                    NodePort       10.233.51.247   <none>                                                                       80:30006/TCP                                                         56m
-eris-fe                deployment.apps/eris-fe-uags                                             2/2     2            2           25h
-
-eris-fe-uags 서비스
-
+ubuntu@eris-hm-dev-master-node01:~$ k get svc -o yaml -n eris-fe eris-fe-ugis
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"argocd.argoproj.io/instance":"prd-eris-fe-uags"},"name":"eris-fe-uags","namespace":"eris-fe"},"spec":{"ports":[{"port":8080,"protocol":"TCP","targetPort":8080}],"selector":{"app":"eris-fe-uags"},"type":"ClusterIP"}}
-  creationTimestamp: "2025-07-21T07:55:41Z"
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"argocd.argoproj.io/instance":"prd-eris-fe-ugis"},"name":"eris-fe-ugis","namespace":"eris-fe"},"spec":{"ports":[{"port":8080,"protocol":"TCP","targetPort":8080}],"selector":{"app":"eris-fe-ugis"},"type":"ClusterIP"}}
+  creationTimestamp: "2025-07-21T07:54:07Z"
   labels:
-    argocd.argoproj.io/instance: prd-eris-fe-uags
-  name: eris-fe-uags
+    argocd.argoproj.io/instance: prd-eris-fe-ugis
+  name: eris-fe-ugis
   namespace: eris-fe
-  resourceVersion: "54826665"
-  uid: 7d795036-5979-409d-8b43-ea636962e4a3
+  resourceVersion: "54826025"
+  uid: 0cd539b1-2eff-47dd-a320-96984daa6f98
 spec:
-  clusterIP: 10.233.3.125
+  clusterIP: 10.233.21.207
   clusterIPs:
-  - 10.233.3.125
+  - 10.233.21.207
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
@@ -35,39 +26,36 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: eris-fe-uags
+    app: eris-fe-ugis
   sessionAffinity: None
   type: ClusterIP
 status:
   loadBalancer: {}
-
-
-eris-fe-uags-kong 서비스
-
+ubuntu@eris-hm-dev-master-node01:~$ k get svc -o yaml -n kong eris-fe-ugis-kong
 apiVersion: v1
 kind: Service
 metadata:
   annotations:
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"argocd.argoproj.io/instance":"prd-eris-fe-uags"},"name":"eris-fe-uags-kong","namespace":"kong"},"spec":{"ports":[{"nodePort":30006,"port":80,"protocol":"TCP","targetPort":8000}],"selector":{"app":"kong-kong"},"type":"NodePort"}}
-  creationTimestamp: "2025-07-22T00:28:48Z"
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"argocd.argoproj.io/instance":"prd-eris-fe-ugis"},"name":"eris-fe-ugis-kong","namespace":"kong"},"spec":{"ports":[{"nodePort":30005,"port":80,"protocol":"TCP","targetPort":8000}],"selector":{"app":"kong-kong"},"type":"NodePort"}}
+  creationTimestamp: "2025-07-22T00:30:18Z"
   labels:
-    argocd.argoproj.io/instance: prd-eris-fe-uags
-  name: eris-fe-uags-kong
+    argocd.argoproj.io/instance: prd-eris-fe-ugis
+  name: eris-fe-ugis-kong
   namespace: kong
-  resourceVersion: "55225798"
-  uid: 5d307662-14cc-4ff8-9ba3-14da8dbea5b6
+  resourceVersion: "55226483"
+  uid: 15a8f253-0425-4780-99d6-c27f216201f8
 spec:
-  clusterIP: 10.233.51.247
+  clusterIP: 10.233.7.85
   clusterIPs:
-  - 10.233.51.247
+  - 10.233.7.85
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - nodePort: 30006
+  - nodePort: 30005
     port: 80
     protocol: TCP
     targetPort: 8000
@@ -80,7 +68,7 @@ status:
 
 
 Konga에 Service 등록
-Name: eris-fe-uags
+Name: eris-fe-ugis
 Host: eris-fe-uags.eris-fe.svc.cluster.local
 Port: 8080
 Path: /
