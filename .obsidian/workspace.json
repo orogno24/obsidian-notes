@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "디지털 뱃지 문제 정리.md",
+                "file": "오픈소스/Kong에 도메인 대신 IP 등록.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "디지털 뱃지 문제 정리"
+              "title": "Kong에 도메인 대신 IP 등록"
             }
           },
           {
@@ -185,8 +185,9 @@
   },
   "active": "15ce679c0f9138c9",
   "lastOpenFiles": [
-    "디지털 뱃지 정보.md",
     "디지털 뱃지 문제 정리.md",
+    "오픈소스/Kong에 도메인 대신 IP 등록.md",
+    "디지털 뱃지 정보.md",
     "오픈소스/Velero.md",
     "오픈소스/넥서스.md",
     "오픈소스/Velero 인터넷.md",
@@ -211,7 +212,6 @@
     "쿠버네티스 사전(CKA)/기타/메모리, CPU, 스토리지.md",
     "쿠버네티스 사전(CKA)/기타/로그 확인.md",
     "쿠버네티스 사전(CKA)/12. Helm/8. Helm 명령어 종합 정리.md",
-    "쿠버네티스 사전(CKA)/12. Helm/7. Helm 라이프사이클 관리.md",
     "사진/Pasted image 20250623100418.png",
     "kubernetes-house-interactive.html",
     "오픈소스",
