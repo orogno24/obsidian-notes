@@ -77,3 +77,14 @@ spec:
   type: NodePort
 status:
   loadBalancer: {}
+
+
+Konga에 Service 등록
+Name: eris-fe-uags
+Host: eris-fe-uags.eris-fe.svc.cluster.local
+Port: 8080
+Path: /
+
+Konga에 Routes 등록
+Hosts: Konga에 서비스 등록
+Path: /
