@@ -736,7 +736,34 @@ curl http://localhost:8001/routes
 kubectl logs deployment/kong-proxy -n op-common --tail=100
 ```
 
-5. https임에도 불
+### 5. http임에도 불구하고 https로 접속되는 경우
+
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitea-kong-ingress
+  namespace: kong
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: gitea.eris.go.kr
+    http:
+      paths:
+      - backend:
+          service:
+            name: kong-kong-proxy
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+tls:
+  - hosts:
+    - k8s-demo.dev.eris.go.kr
+    secretName: oc-pipeline-tls
+```
+
+인그레스에 tls 설정이 포함되어 있으면 무조건 https로 요청되기 때문에 tls를 빼거나 인그레스 새로 만들어야함
 
 ## 로그 분석
 
