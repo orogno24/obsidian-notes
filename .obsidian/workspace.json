@@ -68,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "while",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -89,7 +89,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,7 +185,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "459eedefe85112fe",
+  "active": "fcac6f1bd0d7907b",
   "lastOpenFiles": [
     "오픈소스/Kong.md",
     "업데이트.md",
