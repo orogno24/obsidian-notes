@@ -226,6 +226,15 @@ velero backup create nexus-common \
 - `--namespace op-inspection`: Velero가 설치된 네임스페이스
 - `--default-volumes-to-fs-backup`: PVC를 파일시스템 기반으로 백업 (hostPath, NFS 등에 유용)
 
+라벨 없이 네임스페이스만으로도 가능
+```
+# 네임스페이스 전체 백업
+velero backup create namespace-backup --include-namespaces my-namespace
+
+# 여러 네임스페이스
+velero backup create multi-ns-backup --include-namespaces ns1,ns2,ns3
+```
+
 ### 3.3 백업 상태 확인
 ```bash
 velero backup get -n op-inspection
