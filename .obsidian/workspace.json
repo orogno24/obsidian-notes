@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/Velero.md",
+                "file": "디지털 뱃지 문제 정리.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Velero"
+              "title": "디지털 뱃지 문제 정리"
             }
           }
         ]
@@ -171,13 +171,13 @@
   },
   "active": "c2267ab78d3488d2",
   "lastOpenFiles": [
+    "오픈소스/Velero.md",
     "오픈소스/무제.md",
     "오픈소스/넥서스.md",
     "오픈소스/Kong.md",
     "오픈소스/Kong에 도메인 대신 IP 등록.md",
     "디지털 뱃지 문제 정리.md",
     "디지털 뱃지 정보.md",
-    "오픈소스/Velero.md",
     "오픈소스/Velero 인터넷.md",
     "오픈소스/Istio.md",
     "디지털 뱃지 문제_정리.md",
