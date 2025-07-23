@@ -736,6 +736,8 @@ curl http://localhost:8001/routes
 kubectl logs deployment/kong-proxy -n op-common --tail=100
 ```
 
+5. https임에도 불
+
 ## 로그 분석
 
 ### Kong 로그 레벨 설정

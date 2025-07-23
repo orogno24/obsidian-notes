@@ -818,17 +818,3 @@ gitea:
     queue:
       TYPE: channel
 ```
-
----
-
-## 📚 참고 자료
-
-- [Gitea 공식 문서](https://docs.gitea.io/)
-- [Gitea Helm Chart](https://gitea.com/gitea/helm-chart)
-- [Git 공식 문서](https://git-scm.com/doc)
-- [GitOps with ArgoCD](https://argo-cd.readthedocs.io/)
-- [Jenkins Git Plugin](https://plugins.jenkins.io/git/)
-
----
-
-**Tags:** #gitea #git #selfhosted #kubernetes #cicd #argocd #jenkins #golang #version-control
