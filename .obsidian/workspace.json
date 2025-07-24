@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/ArgoCD.md",
+                "file": "디지털 뱃지 정보.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ArgoCD"
+              "title": "디지털 뱃지 정보"
             }
           }
         ],
@@ -68,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "readin",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -89,7 +89,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -186,6 +187,7 @@
   },
   "active": "459eedefe85112fe",
   "lastOpenFiles": [
+    "오픈소스/ArgoCD.md",
     "무중단 배포 가이드.md",
     "프로젝트/3. 요구사항 정의서, 명세서.md",
     "오픈소스/Velero.md",
@@ -193,7 +195,6 @@
     "오픈소스/Harbor.md",
     "오픈소스/Gitea.md",
     "오픈소스/젠킨스.md",
-    "오픈소스/ArgoCD.md",
     "디지털 뱃지 정보.md",
     "디지털 뱃지 문제 정리.md",
     "오픈소스/넥서스.md",
