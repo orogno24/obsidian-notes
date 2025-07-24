@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "업데이트.md",
+                "file": "오픈소스/ArgoCD.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "업데이트"
+              "title": "ArgoCD"
             }
           }
         ],
@@ -186,13 +186,13 @@
   },
   "active": "459eedefe85112fe",
   "lastOpenFiles": [
+    "오픈소스/Velero.md",
+    "업데이트.md",
     "디지털 뱃지 정보.md",
     "디지털 뱃지 문제 정리.md",
-    "업데이트.md",
     "오픈소스/Kong.md",
     "오픈소스/Gitea.md",
     "오픈소스/ArgoCD.md",
-    "오픈소스/Velero.md",
     "오픈소스/넥서스.md",
     "오픈소스/무제.md",
     "오픈소스/Kong에 도메인 대신 IP 등록.md",
