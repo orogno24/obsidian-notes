@@ -1109,13 +1109,13 @@ kubectl argo rollouts version
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: app-frontend
-  namespace: production
+  name: app-fe
+  namespace: test-dev
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: frontend
+      app: app-fe
   strategy:
     canary:
       maxSurge: 1
@@ -1124,34 +1124,45 @@ spec:
         - setWeight: 20
         - pause: {}
         - setWeight: 40
-        - pause: { duration: 30 }
+        - pause: { duration: 20 }
         - setWeight: 60
-        - pause: { duration: 30 }
+        - pause: { duration: 20 }
         - setWeight: 80
-        - pause: { duration: 30 }
+        - pause: { duration: 20 }
   minReadySeconds: 30
+  revisionHistoryLimit: 2
   template:
     metadata:
       labels:
-        app: frontend
+        app: app-fe
     spec:
+      imagePullSecrets:
+        - name: harbor-secret
       containers:
-        - name: frontend
-          image: my-registry/frontend:v1.2.0
+        - name: app-fe
+          image: cicd.harbor.dev.eris.go.kr/test-app/front:0.0.15
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+          env:
+            - name: JAEGER_AGENT_HOST
+              value: "localhost"
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+        - name: jaeger-agent
+          image: jaegertracing/jaeger-agent:latest
+          args:
+            - "--reporter.grpc.host-port=jaeger-prod-collector.observability:14250"
+            - "--reporter.type=grpc"
+          ports:
+            - containerPort: 5775
+              protocol: UDP
+            - containerPort: 6831
+              protocol: UDP
+            - containerPort: 6832
+              protocol: UDP
+            - containerPort: 5778
+              protocol: TCP
 ```
 
 ### 2. Service 정의
