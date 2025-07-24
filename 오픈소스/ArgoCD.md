@@ -1020,141 +1020,204 @@ kubectl logs deployment/argocd-server -n op-gitops | grep webhook
 
 ---
 
-## ⚡ 고급 설정
+# ArgoCD + Istio를 통한 무중단 배포
 
-### 1. 다중 클러스터 관리
+무중단 배포는 서비스 중단 없이 새로운 버전을 배포하는 기술입니다.
 
-#### 외부 클러스터 추가
+### 핵심 원칙
+- ✅ 서비스 가용성 유지
+- ✅ 점진적 트래픽 전환
+- ✅ 즉시 롤백 가능
+- ✅ 실시간 모니터링
 
+---
+
+## 배포 전략
+
+### 1. 롤링 업데이트
+**방식**: 기존 파드를 하나씩 새 버전으로 교체
+
+| 장점 | 단점 |
+|------|------|
+| 리소스 효율적 | 일시적 연결 거부 가능 |
+| 구현 간단 | readinessProbe 설정 중요 |
+| 빠른 배포 | 롤백 시 전체 재배포 |
+
+**적용**: 단순한 애플리케이션, 리소스 제약 환경
+
+### 2. 블루-그린 배포
+**방식**: 완전히 새로운 환경 구축 후 트래픽 전환
+
+| 장점 | 단점 |
+|------|------|
+| 빠른 롤백 | 리소스 사용량 2배 |
+| 환경 완전 격리 | 전환 시 일시적 500 에러 |
+| 테스트 환경 활용 가능 | DB 마이그레이션 복잡 |
+
+**적용**: 중요 업무 시스템, 완전한 롤백이 필요한 경우
+
+### 3. 카나리 배포 ⭐
+**방식**: 트래픽을 점진적으로 새 버전으로 전환
+
+| 장점 | 단점 |
+|------|------|
+| 위험 최소화 | 복잡한 설정 |
+| 실시간 모니터링 | 모니터링 인프라 필요 |
+| 세밀한 트래픽 제어 | 장기간 배포 과정 |
+
+**적용**: 대규모 서비스, 안정성이 중요한 경우
+
+---
+
+## ArgoCD Rollouts 설치
+
+### 1. 기본 설치
 ```bash
-# 외부 클러스터 등록
-argocd cluster add my-external-cluster \
-  --server https://external-k8s-api.example.com \
-  --name external-cluster
+# 네임스페이스 생성
+kubectl create namespace argo-rollouts
 
-# 클러스터 목록 확인
-argocd cluster list
-
-# 외부 클러스터에 애플리케이션 배포
-argocd app create external-app \
-  --repo http://gitea-http.op-gitops.svc:3000/user/manifests.git \
-  --path k8s \
-  --dest-server https://external-k8s-api.example.com \
-  --dest-namespace production
+# CRD 및 컨트롤러 설치
+kubectl apply -n argo-rollouts \
+  -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
 ```
 
-### 2. RBAC 설정
+### 2. kubectl 플러그인 설치
+```bash
+# Linux
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-linux-amd64
+sudo install -o root -g root -m 0755 kubectl-argo-rollouts-linux-amd64 /usr/local/bin/kubectl-argo-rollouts
 
-#### ArgoCD RBAC 정책
+# macOS
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-darwin-amd64
+sudo install -o root -g root -m 0755 kubectl-argo-rollouts-darwin-amd64 /usr/local/bin/kubectl-argo-rollouts
 
-```yaml
-# argocd-rbac-cm.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-rbac-cm
-  namespace: op-gitops
-data:
-  policy.default: role:readonly
-  policy.csv: |
-    # 개발팀 권한
-    p, role:developer, applications, *, */*, allow
-    p, role:developer, repositories, *, *, allow
-    
-    # 운영팀 권한  
-    p, role:operator, applications, *, production/*, allow
-    p, role:operator, clusters, *, *, allow
-    
-    # 그룹-역할 매핑
-    g, dev-team, role:developer
-    g, ops-team, role:operator
+# Windows
+curl -LO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-windows-amd64.exe
 ```
 
-### 3. 알림 설정
-
-#### Slack 알림 설정
-
-```yaml
-# argocd-notifications-cm.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: argocd-notifications-cm
-  namespace: op-gitops
-data:
-  service.slack: |
-    token: xoxb-your-slack-bot-token
-  template.app-deployed: |
-    message: |
-      {{if eq .serviceType "slack"}}:white_check_mark:{{end}} Application {{.app.metadata.name}} is now running new version.
-  trigger.on-deployed: |
-    - when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
-      send: [app-deployed]
-  subscriptions: |
-    - recipients:
-      - slack:my-channel
-      triggers:
-      - on-deployed
+### 3. 설치 확인
+```bash
+kubectl argo rollouts version
 ```
 
-### 4. ApplicationSet 사용
+---
 
-#### 여러 환경 자동 생성
+## 실제 구현
 
+### 1. 카나리 배포 Rollout
 ```yaml
-# applicationset.yaml
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Rollout
 metadata:
-  name: multi-env-apps
-  namespace: op-gitops
+  name: app-frontend
+  namespace: production
 spec:
-  generators:
-  - list:
-      elements:
-      - env: dev
-        namespace: development
-      - env: staging  
-        namespace: staging
-      - env: prod
-        namespace: production
+  replicas: 4
+  selector:
+    matchLabels:
+      app: frontend
+  strategy:
+    canary:
+      maxSurge: 1
+      maxUnavailable: 0
+      steps:
+        - setWeight: 20
+        - pause: {}
+        - setWeight: 40
+        - pause: { duration: 30 }
+        - setWeight: 60
+        - pause: { duration: 30 }
+        - setWeight: 80
+        - pause: { duration: 30 }
+  minReadySeconds: 30
   template:
     metadata:
-      name: 'my-app-{{env}}'
+      labels:
+        app: frontend
     spec:
-      project: default
-      source:
-        repoURL: http://gitea-http.op-gitops.svc:3000/user/manifests.git
-        targetRevision: main
-        path: 'envs/{{env}}'
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
+      containers:
+        - name: frontend
+          image: my-registry/frontend:v1.2.0
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
 ```
 
-### 5. 백업 및 복구
-
-#### ArgoCD 설정 백업
-
-```bash
-# 모든 애플리케이션 백업
-argocd app list -o yaml > argocd-apps-backup.yaml
-
-# 저장소 설정 백업
-argocd repo list -o yaml > argocd-repos-backup.yaml
-
-# 클러스터 설정 백업
-argocd cluster list -o yaml > argocd-clusters-backup.yaml
+### 2. Service 정의
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: production
+spec:
+  selector:
+    app: frontend
+  ports:
+    - name: http        # 중요! Istio가 HTTP 프로토콜로 인식
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
 ```
 
-#### 복구
+**⚠️ 포트 이름 규칙**
+- `name: http` 또는 `http-xxx`: HTTP/1.1 프로토콜로 인식
+- `name: http2`, `grpc`: HTTP/2, gRPC 프로토콜로 인식  
+- `name: tcp`, `tls`: TCP 프로토콜로 인식
+- ❌ `name: web`, `api`, `backend`: 프로토콜 인식 실패 → TCP 처리됨
 
-```bash
-# 백업된 설정 복구
-kubectl apply -f argocd-apps-backup.yaml
-kubectl apply -f argocd-repos-backup.yaml
+**이유**: Istio가 포트 이름을 보고 프로토콜을 결정합니다.
+
+---
+## 문제 해결
+
+### 1. Connection Refused 오류
+**증상**: 배포 중 `ECONNREFUSED` 발생
+
+**원인**:
+- readinessProbe 설정 부족
+- 포트 불일치 (특히 Kong 사용 시)
+- 새 파드 준비 전 트래픽 전환
+
+**해결**:
+```yaml
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
 ```
+
+### 2. Kong 포트 문제
+**중요**: Kong은 Service port를 Pod의 실제 포트로 직접 연결하기 때문에 컨테이너포트, 포트, 타겟포트를 통일해야 함
+
+**올바른 설정**:
+```yaml
+# Pod
+spec:
+  containers:
+    - ports:
+        - containerPort: 8080  # 실제 애플리케이션 포트
+
+---
+# Service  
+spec:
+  ports:
+    - port: 8080        # Kong이 연결할 포트
+      targetPort: 8080  # Pod의 실제 포트 (반드시 일치)
+```
+
