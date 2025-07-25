@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/넥서스.md",
+                "file": "인그레스.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "넥서스"
+              "title": "인그레스"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "오픈소스/넥서스.md",
+                "file": "인그레스.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "넥서스 의 백링크"
+              "title": "인그레스 의 백링크"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "오픈소스/넥서스.md",
+                "file": "인그레스.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "넥서스 의 나가는 링크"
+              "title": "인그레스 의 나가는 링크"
             }
           },
           {
@@ -172,8 +172,10 @@
   },
   "active": "44b7b79f8629bd05",
   "lastOpenFiles": [
-    "디지털 뱃지 정보.md",
     "디지털 뱃지 문제 정리.md",
+    "인그레스.md",
+    "오픈소스/넥서스.md",
+    "디지털 뱃지 정보.md",
     "오픈소스/ArgoCD.md",
     "무중단 배포 가이드.md",
     "프로젝트/3. 요구사항 정의서, 명세서.md",
@@ -182,7 +184,6 @@
     "오픈소스/Harbor.md",
     "오픈소스/Gitea.md",
     "오픈소스/젠킨스.md",
-    "오픈소스/넥서스.md",
     "오픈소스/무제.md",
     "오픈소스/Kong에 도메인 대신 IP 등록.md",
     "오픈소스/Velero 인터넷.md",
@@ -197,7 +198,6 @@
     "독립망 테스트(버추얼박스)/독립망 환경을 위한 Nexus Repository 구축.md",
     "독립망 테스트(버추얼박스)/넥서스에 Helm 차트 업로드.md",
     "쿠버네티스 사전(CKA)/기타/유용한 명령어 모음.md",
-    "쿠버네티스 사전(CKA)/기타/유용한 경로.md",
     "독립망 테스트(버추얼박스)",
     "사진/Pasted image 20250623100418.png",
     "kubernetes-house-interactive.html",
