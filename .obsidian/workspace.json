@@ -11,14 +11,10 @@
             "id": "44b7b79f8629bd05",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "인그레스.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "인그레스"
+              "title": "새 탭"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "인그레스.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "인그레스 의 백링크"
+              "title": "백링크"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "인그레스.md",
                 "linksCollapsed": true,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "인그레스 의 나가는 링크"
+              "title": "나가는 링크"
             }
           },
           {
@@ -170,12 +164,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "44b7b79f8629bd05",
+  "active": "c80791878d872363",
   "lastOpenFiles": [
+    "디지털 뱃지 정보.md",
     "디지털 뱃지 문제 정리.md",
     "인그레스.md",
     "오픈소스/넥서스.md",
-    "디지털 뱃지 정보.md",
     "오픈소스/ArgoCD.md",
     "무중단 배포 가이드.md",
     "프로젝트/3. 요구사항 정의서, 명세서.md",
