@@ -174,6 +174,29 @@ https://gitea.dev.gcp.go.kr:30191/
 3. SSH 서버 설정
 4. 메일 서버 설정 (선택사항)
 
+### 5. 독립망일 경우
+
+```yaml
+# gitea deployment 수정
+template:
+  spec:
+    # ① 모든 컨테이너(Init 포함)가 CoreDNS만 보도록 고정
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+        # ⬇️ 실제 CoreDNS ClusterIP 확인 후 넣어주세요
+        # kubectl -n kube-system get svc kube-dns -o=jsonpath='{.spec.clusterIP}'
+        - 10.96.0.10
+      searches:            # 선택 (기본 search 도메인 유지)
+        - cicd.svc.cluster.local
+        - svc.cluster.local
+        - cluster.local
+      options:
+        - name: ndots      # fully‑qualified 도메인일 때 불필요한 search 질의 차단
+          value: "1"
+        - name: single-request-reopen  # IPv4/IPv6 동시 질의 race 방지
+```
+
 ---
 
 ## 🔑 액세스 토큰 관리
