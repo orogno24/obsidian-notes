@@ -8,35 +8,20 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c5fe24f794f7e506",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "obsidian-notes/오픈소스/ArgoCD.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "ArgoCD"
-            }
-          },
-          {
             "id": "6cb08f7584f70260",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "독립망에 리소스 이전/독립망 환경을 위한 Nexus Repository 구축.md",
+                "file": "프로젝트/도메인 주도 설계 (DDD).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "독립망 환경을 위한 Nexus Repository 구축"
+              "title": "도메인 주도 설계 (DDD)"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -193,8 +178,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0c76095b205965b5",
+  "active": "6cb08f7584f70260",
   "lastOpenFiles": [
+    "무제.md",
+    "프로젝트/도메인 주도 설계 (DDD).md",
+    "단어사전.md",
+    "무중단 배포 가이드.md",
+    "트럼본.md",
+    "클러스터 초기 설정.md",
+    "쿠버네티스 사전(CKA)/기타/인그레스.md",
+    "오픈소스/MinIO.md",
+    "무제 1.md",
+    "독립망에 리소스 이전/독립망 환경을 위한 Nexus Repository 구축.md",
     "독립망에 리소스 이전/넥서스와 독립망.md",
     "독립망에 리소스 이전/넥서스에 Helm 차트 업로드.md",
     "오픈소스/Gitea.md",
@@ -203,13 +198,6 @@
     "obsidian-notes/버추얼박스 노드 용량 늘리기.md",
     "obsidian-notes/단어사전.md",
     "obsidian-notes/독립망 환경을 위한 Nexus Repository 구축.md",
-    "트럼본.md",
-    "무제 1.md",
-    "minio.md",
-    "단어사전.md",
-    "인그레스.md",
-    "무중단 배포 가이드.md",
-    "무제.md",
     "conflict-files-obsidian-git.md",
     "obsidian-notes/오픈소스/ArgoCD.md",
     "obsidian-notes/오픈소스/Kong.md",
@@ -218,9 +206,6 @@
     "obsidian-notes/오픈소스/무제.md",
     "프로젝트/프로젝트 통신.md",
     "프로젝트/프로젝트 전체 구조.md",
-    "프로젝트/5. UI 가이드 & 화면설계서.md",
-    "프로젝트/4. WBS.md",
-    "프로젝트/3. 요구사항 정의서, 명세서.md",
     "프로젝트",
     "쿠버네티스 사전(CKA)/기출문제 풀이",
     "쿠버네티스 사전(CKA)/기타",

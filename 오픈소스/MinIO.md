@@ -1,4 +1,3 @@
-
 # ✅ MinIO Operator 기반 MinIO 클러스터 Distributed 모드  구축 전체 정리
 
 ---
