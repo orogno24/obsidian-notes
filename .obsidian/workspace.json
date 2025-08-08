@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "트럼본.md",
+                "file": "obsidian-notes/오픈소스/Gitea.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "트럼본"
+              "title": "Gitea"
             }
           }
         ],
@@ -68,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "dnsPo",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -89,7 +89,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -195,10 +196,10 @@
   },
   "active": "6cb08f7584f70260",
   "lastOpenFiles": [
+    "트럼본.md",
     "무제 1.md",
     "minio.md",
     "단어사전.md",
-    "트럼본.md",
     "인그레스.md",
     "무중단 배포 가이드.md",
     "무제.md",
