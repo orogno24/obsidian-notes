@@ -188,7 +188,7 @@ template:
         # kubectl -n kube-system get svc kube-dns -o=jsonpath='{.spec.clusterIP}'
         - 10.96.0.10
       searches:            # 선택 (기본 search 도메인 유지)
-        - cicd.svc.cluster.local
+        - op-common.svc.cluster.local
         - svc.cluster.local
         - cluster.local
       options:

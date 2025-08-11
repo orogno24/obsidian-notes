@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/MinIO.md",
+                "file": "오픈소스/Gitea.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MinIO"
+              "title": "Gitea"
             }
           }
         ]
@@ -74,7 +74,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -180,6 +181,7 @@
   },
   "active": "6cb08f7584f70260",
   "lastOpenFiles": [
+    "오픈소스/MinIO.md",
     "프로젝트/도메인 주도 설계 (DDD).md",
     "무제.md",
     "단어사전.md",
@@ -187,7 +189,6 @@
     "트럼본.md",
     "클러스터 초기 설정.md",
     "쿠버네티스 사전(CKA)/기타/인그레스.md",
-    "오픈소스/MinIO.md",
     "무제 1.md",
     "독립망에 리소스 이전/독립망 환경을 위한 Nexus Repository 구축.md",
     "독립망에 리소스 이전/넥서스와 독립망.md",
