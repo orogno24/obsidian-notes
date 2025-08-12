@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "오픈소스/Gitea.md",
+                "file": "오픈소스/ArgoCD.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Gitea"
+              "title": "ArgoCD"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "dnsPo",
+                "query": "http",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -181,9 +181,16 @@
   },
   "active": "6cb08f7584f70260",
   "lastOpenFiles": [
-    "오픈소스/ArgoCD.md",
     "오픈소스/Gitea.md",
+    "오픈소스/Harbor.md",
+    "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
+    "쿠버네티스 사전(CKA)/기타/Killer.md",
+    "오픈소스/Istio.md",
+    "오픈소스/Kong.md",
     "오픈소스/MinIO.md",
+    "오픈소스/Trivy.md",
+    "오픈소스/Velero.md",
+    "오픈소스/ArgoCD.md",
     "프로젝트/도메인 주도 설계 (DDD).md",
     "무제.md",
     "단어사전.md",
@@ -200,13 +207,6 @@
     "obsidian-notes/버추얼박스 노드 용량 늘리기.md",
     "obsidian-notes/단어사전.md",
     "obsidian-notes/독립망 환경을 위한 Nexus Repository 구축.md",
-    "conflict-files-obsidian-git.md",
-    "obsidian-notes/오픈소스/ArgoCD.md",
-    "obsidian-notes/오픈소스/Kong.md",
-    "obsidian-notes/오픈소스/Trivy.md",
-    "obsidian-notes/오픈소스/Istio.md",
-    "obsidian-notes/오픈소스/무제.md",
-    "프로젝트/프로젝트 통신.md",
     "프로젝트",
     "쿠버네티스 사전(CKA)/기출문제 풀이",
     "쿠버네티스 사전(CKA)/기타",
