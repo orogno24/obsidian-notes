@@ -174,8 +174,6 @@ https://gitea.dev.gcp.go.kr:30191/
 3. SSH 서버 설정
 4. 메일 서버 설정 (선택사항)
 
-for i in {1..20}; do kubectl exec curl -n system-test -- curl -s syt-sfr-050.system-test.svc.cluster.local:8000 | grep Hostname done | sort | uniq -c
-
 ### 5. 독립망일 경우
 
 ```yaml
