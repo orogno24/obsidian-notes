@@ -11,14 +11,10 @@
             "id": "6cb08f7584f70260",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "시스템 테스트.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "시스템 테스트"
+              "title": "새 탭"
             }
           }
         ]
@@ -178,7 +174,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6cb08f7584f70260",
+  "active": "0c76095b205965b5",
   "lastOpenFiles": [
     "오픈소스/ArgoCD.md",
     "시스템 테스트.md",
