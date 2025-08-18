@@ -11,10 +11,14 @@
             "id": "6cb08f7584f70260",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "단어사전.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "단어사전"
             }
           }
         ]
@@ -176,8 +180,8 @@
   },
   "active": "0c76095b205965b5",
   "lastOpenFiles": [
-    "오픈소스/ArgoCD.md",
     "시스템 테스트.md",
+    "오픈소스/ArgoCD.md",
     "오픈소스/Gitea.md",
     "오픈소스/Harbor.md",
     "쿠버네티스 사전(CKA)/기출문제 풀이/Helm.md",
