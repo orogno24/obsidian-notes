@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "클러스터 초기 설정.md",
+                "file": "무중단 배포 가이드.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "클러스터 초기 설정"
+              "title": "무중단 배포 가이드"
             }
           }
         ]
@@ -169,6 +169,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:새 베이스 생성하기": false,
       "switcher:빠른 전환기 열기": false,
       "graph:그래프 뷰 열기": false,
       "canvas:새 캔버스 만들기": false,
@@ -180,6 +181,8 @@
   },
   "active": "6cb08f7584f70260",
   "lastOpenFiles": [
+    "트럼본.md",
+    "클러스터 초기 설정.md",
     "프로젝트/2. RFP, 제안서.md",
     "단어사전.md",
     "시스템 테스트.md",
@@ -195,8 +198,6 @@
     "오픈소스/Velero.md",
     "프로젝트/도메인 주도 설계 (DDD).md",
     "무중단 배포 가이드.md",
-    "트럼본.md",
-    "클러스터 초기 설정.md",
     "쿠버네티스 사전(CKA)/기타/인그레스.md",
     "무제 1.md",
     "독립망에 리소스 이전/독립망 환경을 위한 Nexus Repository 구축.md",
