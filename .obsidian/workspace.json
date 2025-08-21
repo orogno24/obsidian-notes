@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "무중단 배포 가이드.md",
+                "file": "NAS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "무중단 배포 가이드"
+              "title": "NAS"
             }
           }
         ]
@@ -181,10 +181,16 @@
   },
   "active": "6cb08f7584f70260",
   "lastOpenFiles": [
+    "쿠버네티스 사전(CKA)/기타/유용한 명령어 모음.md",
+    "NAS.md",
+    "쿠버네티스 사전(CKA)/기타/로그 확인.md",
+    "쿠버네티스 사전(CKA)/기타/2025 기출문제.md",
+    "쿠버네티스 사전(CKA)/기타/기타 쿠버네티스 지식.md",
+    "단어사전.md",
     "트럼본.md",
+    "무중단 배포 가이드.md",
     "클러스터 초기 설정.md",
     "프로젝트/2. RFP, 제안서.md",
-    "단어사전.md",
     "시스템 테스트.md",
     "오픈소스/ArgoCD.md",
     "오픈소스/Gitea.md",
@@ -197,16 +203,10 @@
     "오픈소스/Trivy.md",
     "오픈소스/Velero.md",
     "프로젝트/도메인 주도 설계 (DDD).md",
-    "무중단 배포 가이드.md",
     "쿠버네티스 사전(CKA)/기타/인그레스.md",
     "무제 1.md",
     "독립망에 리소스 이전/독립망 환경을 위한 Nexus Repository 구축.md",
     "독립망에 리소스 이전/넥서스와 독립망.md",
-    "독립망에 리소스 이전/넥서스에 Helm 차트 업로드.md",
-    "obsidian-notes/오픈소스/Gitea.md",
-    "obsidian-notes/무제.md",
-    "obsidian-notes/버추얼박스 노드 용량 늘리기.md",
-    "obsidian-notes/단어사전.md",
     "프로젝트",
     "쿠버네티스 사전(CKA)/기출문제 풀이",
     "쿠버네티스 사전(CKA)/기타",
