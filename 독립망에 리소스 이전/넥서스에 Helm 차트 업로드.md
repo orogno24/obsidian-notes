@@ -5,7 +5,6 @@ winscp로 독립망 클러스터에 파일 전송
 이후 압축 해제한 프로젝트별 디렉토리에서 git add, commint "Initial commit"
 
 
-
 ### 🎯 작업 개요
 
 사내 독립망 클러스터에 오픈소스 Helm 차트와 Docker 이미지를 설치하기 위해:
