@@ -4,6 +4,10 @@
 
 쿠버네티스와 nas 연동: /etc/fstab에 이거 추가해야함. csp에도 설정 필요
 
+컴퓨터에서 폴더로 접근 가능하게 하려면 사용자 및 그룹 -> 응용 프로그램에서 SMB 켜야함. 이외에도 DSM, File Station 허용 필요
+
+SMB에서 권한 없는 폴더가 보이지 않도록 하려면 제어판의 파일 서비스 탭에서 권한이 없는 사용자로부터 공유 폴더 숨기기
+
  ```bash
  # /etc/fstab: static file system information.
 #
