@@ -8,7 +8,7 @@
 
 SMB에서 권한 없는 폴더가 보이지 않도록 하려면 제어판의 파일 서비스 탭에서 권한이 없는 사용자로부터 공유 폴더 숨기기
 
-PCd
+PC에 등록한 NAS 정보 삭제하는 방법: cmd 열어서 net use \\\10.185.27.32 /delete 명령어 입력하고 재부팅
 
  ```bash
  # /etc/fstab: static file system information.
