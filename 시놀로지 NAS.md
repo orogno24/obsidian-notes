@@ -8,6 +8,8 @@
 
 SMB에서 권한 없는 폴더가 보이지 않도록 하려면 제어판의 파일 서비스 탭에서 권한이 없는 사용자로부터 공유 폴더 숨기기
 
+PCd
+
  ```bash
  # /etc/fstab: static file system information.
 #
